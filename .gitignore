@@ -23,3 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 .claude/
+
+# Wrangler local cache/state (regenerates automatically)
+.wrangler/
