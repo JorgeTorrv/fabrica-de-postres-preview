@@ -15,6 +15,6 @@ export const BUSINESS = {
   instagramUrl: 'https://www.instagram.com/fabricadepostrestampico/',
   rating: 4.7,
   reviewCount: 41,
-  yearsExperience: 10,
-  eventsCount: '1000+',
+  yearsExperience: 2,
+  customersCount: '500+',
 }

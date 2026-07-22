@@ -3,8 +3,8 @@ import { ImageSlot } from './ImageSlot'
 
 const STATS = [
   { value: `+${BUSINESS.yearsExperience}`, label: 'Años de experiencia' },
-  { value: BUSINESS.eventsCount, label: 'Eventos endulzados' },
-  { value: BUSINESS.rating.toFixed(1), label: 'Calificación promedio' },
+  { value: BUSINESS.customersCount, label: 'Clientes satisfechos' },
+  { value: `${BUSINESS.rating.toFixed(1)}/5`, label: 'Calificación promedio' },
 ]
 
 export function Story() {
