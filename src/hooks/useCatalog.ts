@@ -5,6 +5,7 @@ import type { Catalog } from '../data/types'
 
 const STORAGE_KEY = 'fabrica-de-postres-catalog-cache'
 const FETCH_TIMEOUT_MS = 3000
+const POLL_INTERVAL_MS = 15000
 
 function readCache(): Catalog | null {
   try {
@@ -44,6 +45,9 @@ async function fetchCatalog(): Promise<Catalog> {
  * 2. Fetch a la API en vivo (timeout corto) — actualiza estado + caché.
  * 3. `catalog-fallback.json` empacado en el build — último recurso si es
  *    la primera visita (sin caché) y la API no responde a tiempo.
+ *
+ * Además hace polling cada POLL_INTERVAL_MS: una pestaña dejada abierta
+ * refleja sola los cambios que se hagan desde el panel, sin recargar.
  */
 export function useCatalog(): { catalog: Catalog; loading: boolean; stale: boolean } {
   const cached = readCache()
@@ -54,22 +58,29 @@ export function useCatalog(): { catalog: Catalog; loading: boolean; stale: boole
   useEffect(() => {
     let cancelled = false
 
-    fetchCatalog()
-      .then((fresh) => {
-        if (cancelled) return
-        setCatalog(fresh)
-        setStale(false)
-        writeCache(fresh)
-      })
-      .catch(() => {
-        // Se queda con localStorage o el fallback de build — ya están en pantalla.
-      })
-      .finally(() => {
-        if (!cancelled) setLoading(false)
-      })
+    const poll = () => {
+      fetchCatalog()
+        .then((fresh) => {
+          if (cancelled) return
+          // Evita re-renders innecesarios cuando el poll no trajo cambios.
+          setCatalog((prev) => (JSON.stringify(prev) === JSON.stringify(fresh) ? prev : fresh))
+          setStale(false)
+          writeCache(fresh)
+        })
+        .catch(() => {
+          // Se queda con lo que ya está en pantalla — el próximo poll reintenta solo.
+        })
+        .finally(() => {
+          if (!cancelled) setLoading(false)
+        })
+    }
+
+    poll()
+    const interval = setInterval(poll, POLL_INTERVAL_MS)
 
     return () => {
       cancelled = true
+      clearInterval(interval)
     }
   }, [])
 
