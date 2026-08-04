@@ -1,8 +1,7 @@
 import { useState } from 'react'
-import { Clock, ShoppingBag } from 'lucide-react'
+import { Clock } from 'lucide-react'
 import { useCatalog } from '../hooks/useCatalog'
 import type { MenuItem, Promotion } from '../data/types'
-import { useCart } from '../context/CartContext'
 import { formatCurrency } from '../utils/format'
 import { asset } from '../utils/asset'
 import { DAY_LABELS, partialDays } from '../data/days'
@@ -118,7 +117,6 @@ function PromotionRow({ promo, onOpen }: { promo: Promotion; onOpen: () => void 
  */
 export function Catalog() {
   const { catalog } = useCatalog()
-  const { itemCount, openCart } = useCart()
   const [activeItem, setActiveItem] = useState<{ item: MenuItem; categoryName: string } | null>(null)
   const [activePromo, setActivePromo] = useState<Promotion | null>(null)
 
@@ -130,8 +128,8 @@ export function Catalog() {
   return (
     <section id="menu" className="bg-(--color-cream)">
       <div className="sticky top-[64px] z-30 border-b border-(--color-line) bg-(--color-cream)/95 backdrop-blur lg:top-[76px]">
-        <div className="mx-auto flex items-center justify-between gap-4 px-6 py-3 lg:px-10">
-          <nav className="flex min-w-0 flex-1 gap-4 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="mx-auto px-6 py-3 lg:px-10">
+          <nav className="flex gap-4 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {jumpTargets.map((target) => (
               <button
                 key={target.id}
@@ -143,20 +141,6 @@ export function Catalog() {
               </button>
             ))}
           </nav>
-
-          <button
-            type="button"
-            onClick={openCart}
-            className="relative flex flex-none items-center gap-2 rounded-full bg-(--color-wine) px-5 py-2.5 text-sm font-medium text-(--color-cream) transition-colors hover:bg-(--color-wine-deep)"
-          >
-            <ShoppingBag className="h-4 w-4" strokeWidth={1.5} />
-            <span className="hidden sm:inline">Carrito</span>
-            {itemCount > 0 && (
-              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-(--color-cream) text-xs font-semibold text-(--color-wine)">
-                {itemCount}
-              </span>
-            )}
-          </button>
         </div>
       </div>
 

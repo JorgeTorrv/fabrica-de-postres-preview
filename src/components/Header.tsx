@@ -1,17 +1,16 @@
 import { useEffect, useState } from 'react'
-import { Menu, ShoppingBag, X } from 'lucide-react'
+import { Phone, ShoppingBag } from 'lucide-react'
 import { useCart } from '../context/CartContext'
+import { BUSINESS } from '../data/business'
 import { asset } from '../utils/asset'
 
 const NAV_LINKS = [
   { label: 'Menú', href: '#menu' },
-  { label: 'Nosotros', href: '#nosotros' },
   { label: 'Contacto', href: '#contacto' },
 ]
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false)
-  const [mobileOpen, setMobileOpen] = useState(false)
   const { itemCount, openCart } = useCart()
 
   useEffect(() => {
@@ -21,7 +20,7 @@ export function Header() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const visible = scrolled || mobileOpen
+  const visible = scrolled
 
   return (
     <header
@@ -65,33 +64,15 @@ export function Header() {
             )}
           </button>
 
-          <button
-            type="button"
-            onClick={() => setMobileOpen((v) => !v)}
-            aria-label="Abrir navegación"
-            className="flex h-10 w-10 items-center justify-center rounded-full text-(--color-ink) lg:hidden"
+          <a
+            href={`tel:+${BUSINESS.whatsapp}`}
+            aria-label="Llamar a Fábrica de Postres"
+            className="flex h-10 w-10 items-center justify-center rounded-full text-(--color-ink) transition-colors hover:bg-(--color-cream-dim) lg:hidden"
           >
-            {mobileOpen ? <X className="h-5 w-5" strokeWidth={1.5} /> : <Menu className="h-5 w-5" strokeWidth={1.5} />}
-          </button>
+            <Phone className="h-5 w-5" strokeWidth={1.5} />
+          </a>
         </div>
       </div>
-
-      {mobileOpen && (
-        <div className="min-h-dvh border-t border-(--color-line) bg-(--color-cream) px-6 py-8 lg:hidden">
-          <nav className="flex flex-col gap-6">
-            {NAV_LINKS.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={() => setMobileOpen(false)}
-                className="font-display text-xl text-(--color-ink)"
-              >
-                {link.label}
-              </a>
-            ))}
-          </nav>
-        </div>
-      )}
     </header>
   )
 }
