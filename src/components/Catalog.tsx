@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import { ShoppingBag } from 'lucide-react'
+import { Clock, ShoppingBag } from 'lucide-react'
 import { useCatalog } from '../hooks/useCatalog'
 import type { MenuItem, Promotion } from '../data/types'
 import { useCart } from '../context/CartContext'
 import { formatCurrency } from '../utils/format'
 import { asset } from '../utils/asset'
+import { DAY_LABELS, partialDays } from '../data/days'
 import { ProductModal } from './ProductModal'
 import { PromotionModal } from './PromotionModal'
 
@@ -12,6 +13,30 @@ const PROMOTIONS_ID = '__promociones__'
 
 function scrollToSection(id: string) {
   document.getElementById(`cat-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
+
+/**
+ * Chip informativo de días — solo tiene sentido para un subconjunto parcial
+ * de la semana; sin días marcados o con los 7 marcados no se muestra nada
+ * (ambos casos significan "disponible siempre").
+ */
+function DaysBadge({ days }: { days?: string[] }) {
+  const shown = partialDays(days)
+  if (shown.length === 0) return null
+
+  return (
+    <div className="mt-1 flex flex-wrap gap-1.5">
+      {shown.map((code) => (
+        <span
+          key={code}
+          className="flex items-center gap-1 rounded-full border border-(--color-ink)/15 px-2 py-0.5 text-[11px] font-medium uppercase tracking-wide text-(--color-ink-soft)"
+        >
+          <Clock className="h-3 w-3" strokeWidth={1.5} />
+          {DAY_LABELS[code]}
+        </span>
+      ))}
+    </div>
+  )
 }
 
 /**
@@ -36,7 +61,7 @@ function MenuRow({ item, onOpen }: { item: MenuItem; onOpen: () => void }) {
       <div className="flex items-baseline justify-between gap-4">
         <span className="flex items-center gap-1.5 font-display text-lg text-(--color-ink)">
           {item.name}
-          {item.featured && <img src={asset('/images/Icons/CerezaIcon.png')} alt="Destacado" className="h-4 w-4" />}
+          {item.featured && <img src={asset('/images/Icons/CerezaIcon.png')} alt="Destacado" className="h-8 w-8" />}
         </span>
         {item.customQuote ? (
           <span className="flex-none text-sm text-(--color-ink-soft)">Cotización</span>
@@ -61,6 +86,8 @@ function MenuRow({ item, onOpen }: { item: MenuItem; onOpen: () => void }) {
       )}
 
       {item.soldOut && <p className="text-xs font-medium text-(--color-wine)">Agotado</p>}
+
+      <DaysBadge days={item.availableDays} />
     </button>
   )
 }
@@ -77,6 +104,8 @@ function PromotionRow({ promo, onOpen }: { promo: Promotion; onOpen: () => void 
         {promo.price != null && <span className="flex-none font-medium text-(--color-ink)">{formatCurrency(promo.price)}</span>}
       </div>
       {promo.description && <p className="text-sm text-(--color-ink-soft)">{promo.description}</p>}
+
+      <DaysBadge days={promo.availableDays} />
     </button>
   )
 }

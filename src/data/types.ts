@@ -28,6 +28,8 @@ export type MenuItem = {
   customQuote?: boolean
   /** Oculta el botón de agregar y muestra "Agotado". */
   soldOut?: boolean
+  /** Días en los que aplica (códigos "mon".."sun"). Sin restricción si vacío/undefined. */
+  availableDays?: string[]
   /** URL absoluta servida por la API del panel admin, o undefined si aún no hay foto. */
   image?: string
 }
@@ -45,6 +47,8 @@ export type Promotion = {
   description?: string
   price?: number
   badgeLabel?: string
+  /** Días en los que aplica (códigos "mon".."sun"). Sin restricción si vacío/undefined. */
+  availableDays?: string[]
   image?: string
 }
 

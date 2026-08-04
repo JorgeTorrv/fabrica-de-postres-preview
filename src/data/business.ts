@@ -8,6 +8,8 @@ export const BUSINESS = {
   whatsapp: '528333480255',
   hours: 'Todos los días, 10:00 a.m. – 8:00 p.m.',
   hoursShort: 'Horario · 10:00 a.m. – 8:00 p.m., todos los días',
+  /** Mismo horario los 7 días — se repite tal cual en el modal de horarios. */
+  hoursDaily: '10:00 – 20:00',
   mapsUrl: 'https://maps.app.goo.gl/gY3pSxB11cFB6fHM9',
   mapsEmbedUrl:
     'https://www.google.com/maps?q=Lomas+de+Rosales+401C,+Lomas+de+Rosales,+89100+Tampico,+Tamps.&output=embed',

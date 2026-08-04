@@ -1,6 +1,8 @@
+import { useState } from 'react'
 import { Clock, MapPin } from 'lucide-react'
 import { BUSINESS } from '../data/business'
 import { asset } from '../utils/asset'
+import { HorariosModal } from './HorariosModal'
 
 function scrollToMenu() {
   document.getElementById('menu')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -14,6 +16,8 @@ function scrollToMenu() {
  * Header.tsx) — aquí no debe competir con el logo.
  */
 export function Hero() {
+  const [showHours, setShowHours] = useState(false)
+
   return (
     <section id="top" className="flex min-h-dvh flex-col items-center justify-center gap-10 px-6 py-12 text-center">
       <img
@@ -32,15 +36,14 @@ export function Hero() {
         </button>
 
         <div className="flex flex-col gap-2 sm:flex-row">
-          <a
-            href={BUSINESS.mapsUrl}
-            target="_blank"
-            rel="noreferrer"
+          <button
+            type="button"
+            onClick={() => setShowHours(true)}
             className="flex flex-1 items-center justify-center gap-2 rounded-full border border-(--color-ink)/15 px-4 py-3 text-xs font-medium uppercase tracking-wide text-(--color-ink) transition-colors hover:border-(--color-wine) hover:text-(--color-wine)"
           >
             <Clock className="h-4 w-4 flex-none" strokeWidth={1.5} />
             <span className="truncate">Horarios</span>
-          </a>
+          </button>
           <a
             href={BUSINESS.mapsUrl}
             target="_blank"
@@ -48,10 +51,12 @@ export function Hero() {
             className="flex flex-1 items-center justify-center gap-2 rounded-full border border-(--color-ink)/15 px-4 py-3 text-xs font-medium uppercase tracking-wide text-(--color-ink) transition-colors hover:border-(--color-wine) hover:text-(--color-wine)"
           >
             <MapPin className="h-4 w-4 flex-none" strokeWidth={1.5} />
-            <span className="truncate">{BUSINESS.city}</span>
+            <span className="truncate">Ubicación</span>
           </a>
         </div>
       </div>
+
+      {showHours && <HorariosModal onClose={() => setShowHours(false)} />}
     </section>
   )
 }

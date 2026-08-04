@@ -90,7 +90,7 @@ export function ProductModal({ item, categoryName, onClose }: ProductModalProps)
           <p className="text-sm text-(--color-ink-soft)">{categoryName}</p>
           <h3 className="mt-1 flex items-center gap-2 font-display text-3xl text-(--color-ink)">
             {item.name}
-            {item.featured && <img src={asset('/images/Icons/CerezaIcon.png')} alt="Destacado" className="h-6 w-6" />}
+            {item.featured && <img src={asset('/images/Icons/CerezaIcon.png')} alt="Destacado" className="h-12 w-12" />}
           </h3>
           {item.description && <p className="mt-2 text-sm text-(--color-ink-soft)">{item.description}</p>}
           {item.note && <p className="mt-2 text-sm italic text-(--color-ink-soft)">{item.note}</p>}
