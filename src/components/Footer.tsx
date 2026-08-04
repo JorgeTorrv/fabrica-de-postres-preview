@@ -7,7 +7,7 @@ import { InstagramIcon } from './icons/InstagramIcon'
 export function Footer() {
   return (
     <footer className="border-t border-(--color-line) bg-(--color-cream-dim)">
-      <div className="mx-auto flex max-w-7xl flex-col gap-6 px-6 py-10 sm:flex-row sm:items-center sm:justify-between lg:px-10">
+      <div className="mx-auto flex max-w-7xl flex-col items-center gap-6 px-6 py-10 sm:flex-row sm:justify-center lg:px-10">
         <a href="#top" className="flex items-center">
           <img
             src={asset('/images/logo/logo.png')}
