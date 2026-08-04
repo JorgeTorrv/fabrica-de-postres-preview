@@ -55,40 +55,43 @@ export function PromotionModal({ promo, onClose }: PromotionModalProps) {
           <p className="text-sm text-(--color-ink-soft)">Promoción</p>
           <h3 className="mt-1 font-display text-3xl text-(--color-ink)">{promo.title}</h3>
           {promo.description && <p className="mt-2 text-sm text-(--color-ink-soft)">{promo.description}</p>}
+          {promo.soldOut && <p className="mt-3 text-sm font-medium text-(--color-wine)">Agotado por ahora</p>}
 
-          <div className="mt-7">
-            <label htmlFor="promo-comment" className="text-sm font-medium text-(--color-ink)">
-              Comentario
-            </label>
-            <textarea
-              id="promo-comment"
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-              rows={2}
-              className="mt-2 w-full resize-none rounded-xl border border-(--color-line) bg-(--color-paper) px-4 py-3 text-sm text-(--color-ink) placeholder:text-(--color-ink-soft)/70 focus:border-(--color-wine) focus:outline-none"
-            />
-          </div>
+          <div className={promo.soldOut ? 'pointer-events-none opacity-50' : undefined}>
+            <div className="mt-7">
+              <label htmlFor="promo-comment" className="text-sm font-medium text-(--color-ink)">
+                Comentario
+              </label>
+              <textarea
+                id="promo-comment"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                rows={2}
+                className="mt-2 w-full resize-none rounded-xl border border-(--color-line) bg-(--color-paper) px-4 py-3 text-sm text-(--color-ink) placeholder:text-(--color-ink-soft)/70 focus:border-(--color-wine) focus:outline-none"
+              />
+            </div>
 
-          <div className="mt-7 flex items-center justify-between">
-            <p className="text-sm font-medium text-(--color-ink)">Cantidad</p>
-            <div className="flex items-center gap-4 rounded-full border border-(--color-line) px-3 py-1.5">
-              <button
-                type="button"
-                onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                aria-label="Reducir cantidad"
-                className="flex h-7 w-7 items-center justify-center text-(--color-ink)"
-              >
-                <Minus className="h-4 w-4" strokeWidth={1.5} />
-              </button>
-              <span className="w-4 text-center text-sm">{quantity}</span>
-              <button
-                type="button"
-                onClick={() => setQuantity((q) => q + 1)}
-                aria-label="Aumentar cantidad"
-                className="flex h-7 w-7 items-center justify-center text-(--color-ink)"
-              >
-                <Plus className="h-4 w-4" strokeWidth={1.5} />
-              </button>
+            <div className="mt-7 flex items-center justify-between">
+              <p className="text-sm font-medium text-(--color-ink)">Cantidad</p>
+              <div className="flex items-center gap-4 rounded-full border border-(--color-line) px-3 py-1.5">
+                <button
+                  type="button"
+                  onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                  aria-label="Reducir cantidad"
+                  className="flex h-7 w-7 items-center justify-center text-(--color-ink)"
+                >
+                  <Minus className="h-4 w-4" strokeWidth={1.5} />
+                </button>
+                <span className="w-4 text-center text-sm">{quantity}</span>
+                <button
+                  type="button"
+                  onClick={() => setQuantity((q) => q + 1)}
+                  aria-label="Aumentar cantidad"
+                  className="flex h-7 w-7 items-center justify-center text-(--color-ink)"
+                >
+                  <Plus className="h-4 w-4" strokeWidth={1.5} />
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -96,11 +99,16 @@ export function PromotionModal({ promo, onClose }: PromotionModalProps) {
         <div className="border-t border-(--color-line) px-7 py-5">
           <button
             type="button"
-            onClick={handleAdd}
-            className="flex w-full items-center justify-between rounded-full bg-(--color-wine) px-7 py-4 text-sm font-medium text-(--color-cream) transition-colors hover:bg-(--color-wine-deep)"
+            onClick={promo.soldOut ? undefined : handleAdd}
+            disabled={promo.soldOut}
+            className={`flex w-full items-center justify-between rounded-full px-7 py-4 text-sm font-medium transition-colors ${
+              promo.soldOut
+                ? 'cursor-not-allowed bg-(--color-cream-dim) text-(--color-ink-soft)'
+                : 'bg-(--color-wine) text-(--color-cream) hover:bg-(--color-wine-deep)'
+            }`}
           >
-            <span>{justAdded ? 'Agregado al carrito' : 'Agregar al carrito'}</span>
-            <span>{promo.price != null ? formatCurrency(promo.price * quantity) : ''}</span>
+            <span>{promo.soldOut ? 'Agotado' : justAdded ? 'Agregado al carrito' : 'Agregar al carrito'}</span>
+            {!promo.soldOut && <span>{promo.price != null ? formatCurrency(promo.price * quantity) : ''}</span>}
           </button>
         </div>
       </div>

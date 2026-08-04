@@ -94,7 +94,9 @@ export function ProductModal({ item, categoryName, onClose }: ProductModalProps)
           </h3>
           {item.description && <p className="mt-2 text-sm text-(--color-ink-soft)">{item.description}</p>}
           {item.note && <p className="mt-2 text-sm italic text-(--color-ink-soft)">{item.note}</p>}
+          {item.soldOut && <p className="mt-3 text-sm font-medium text-(--color-wine)">Agotado por ahora</p>}
 
+          <div className={item.soldOut ? 'pointer-events-none opacity-50' : undefined}>
           {item.flavors && item.flavors.length > 0 && (
             <div className="mt-7">
               <p className="text-sm font-medium text-(--color-ink)">{item.flavorsLabel ?? 'Sabor'}</p>
@@ -225,16 +227,22 @@ export function ProductModal({ item, categoryName, onClose }: ProductModalProps)
               </button>
             </div>
           </div>
+          </div>
         </div>
 
         <div className="border-t border-(--color-line) px-7 py-5 sm:px-9">
           <button
             type="button"
-            onClick={handleAdd}
-            className="flex w-full items-center justify-between rounded-full bg-(--color-wine) px-7 py-4 text-sm font-medium text-(--color-cream) transition-colors hover:bg-(--color-wine-deep)"
+            onClick={item.soldOut ? undefined : handleAdd}
+            disabled={item.soldOut}
+            className={`flex w-full items-center justify-between rounded-full px-7 py-4 text-sm font-medium transition-colors ${
+              item.soldOut
+                ? 'cursor-not-allowed bg-(--color-cream-dim) text-(--color-ink-soft)'
+                : 'bg-(--color-wine) text-(--color-cream) hover:bg-(--color-wine-deep)'
+            }`}
           >
-            <span>{justAdded ? 'Agregado al carrito' : 'Agregar al carrito'}</span>
-            <span>{item.customQuote ? 'A cotizar' : formatCurrency(total)}</span>
+            <span>{item.soldOut ? 'Agotado' : justAdded ? 'Agregado al carrito' : 'Agregar al carrito'}</span>
+            {!item.soldOut && <span>{item.customQuote ? 'A cotizar' : formatCurrency(total)}</span>}
           </button>
         </div>
       </div>

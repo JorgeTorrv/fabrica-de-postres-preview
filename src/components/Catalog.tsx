@@ -53,9 +53,8 @@ function MenuRow({ item, onOpen }: { item: MenuItem; onOpen: () => void }) {
   return (
     <button
       type="button"
-      disabled={item.soldOut}
       onClick={onOpen}
-      className="flex w-full flex-col gap-1 border-b border-(--color-line) py-4 text-left transition-colors last:border-b-0 hover:bg-(--color-cream-dim)/50 disabled:cursor-not-allowed disabled:opacity-50"
+      className="flex w-full flex-col gap-1 border-b border-(--color-line) py-4 text-left transition-colors last:border-b-0 hover:bg-(--color-cream-dim)/50"
     >
       <div className="flex items-baseline justify-between gap-4">
         <span className="flex items-center gap-1.5 font-display text-lg text-(--color-ink)">
@@ -103,6 +102,8 @@ function PromotionRow({ promo, onOpen }: { promo: Promotion; onOpen: () => void 
         {promo.price != null && <span className="flex-none font-medium text-(--color-ink)">{formatCurrency(promo.price)}</span>}
       </div>
       {promo.description && <p className="text-sm text-(--color-ink-soft)">{promo.description}</p>}
+
+      {promo.soldOut && <p className="text-xs font-medium text-(--color-wine)">Agotado</p>}
 
       <DaysBadge days={promo.availableDays} />
     </button>
@@ -173,7 +174,7 @@ export function Catalog() {
         )}
       </div>
 
-      {activeItem && !activeItem.item.soldOut && (
+      {activeItem && (
         <ProductModal item={activeItem.item} categoryName={activeItem.categoryName} onClose={() => setActiveItem(null)} />
       )}
 

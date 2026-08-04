@@ -49,6 +49,8 @@ export type Promotion = {
   badgeLabel?: string
   /** Días en los que aplica (códigos "mon".."sun"). Sin restricción si vacío/undefined. */
   availableDays?: string[]
+  /** true si hoy no es uno de los días disponibles. */
+  soldOut?: boolean
   image?: string
 }
 
