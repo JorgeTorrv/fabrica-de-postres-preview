@@ -1,25 +1,57 @@
-import { Phone } from 'lucide-react'
+import { Clock, MapPin } from 'lucide-react'
 import { BUSINESS } from '../data/business'
+import { asset } from '../utils/asset'
+
+function scrollToMenu() {
+  document.getElementById('menu')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
 
 /**
- * Franja mínima, sin imagen: el catálogo es el protagonista y empieza justo
- * debajo. Solo el nombre, una línea de contexto y el teléfono — nada que
- * compita por atención con el menú.
+ * Pantalla de bienvenida a pantalla completa: lo único visible al cargar la
+ * página (nada de menú a la vista todavía). Logo grande, un botón que hace
+ * scroll suave al catálogo, y dos datos rápidos (horario, dirección). El
+ * header con navegación aparece recién cuando el usuario hace scroll (ver
+ * Header.tsx) — aquí no debe competir con el logo.
  */
 export function Hero() {
   return (
-    <section id="top" className="border-b border-(--color-line) px-6 pb-6 pt-28 text-center lg:pt-32">
-      <h1 className="font-display text-3xl text-(--color-ink) sm:text-4xl">{BUSINESS.name}</h1>
-      <p className="mt-2 text-sm text-(--color-ink-soft)">
-        Pasteles, cheesecakes, galletas y cafetería en {BUSINESS.city}. Pide en línea, recibe por WhatsApp.
-      </p>
-      <a
-        href={`tel:+52${BUSINESS.whatsapp.slice(2)}`}
-        className="mt-3 inline-flex items-center gap-1.5 text-sm text-(--color-wine) hover:underline"
-      >
-        <Phone className="h-3.5 w-3.5" strokeWidth={1.5} />
-        {BUSINESS.phoneDisplay}
-      </a>
+    <section id="top" className="flex min-h-dvh flex-col items-center justify-center gap-10 px-6 py-12 text-center">
+      <img
+        src={asset('/images/logo/logo.png')}
+        alt={`${BUSINESS.name} · ${BUSINESS.tagline}`}
+        className="w-full max-w-xs sm:max-w-sm"
+      />
+
+      <div className="flex w-full max-w-sm flex-col gap-3">
+        <button
+          type="button"
+          onClick={scrollToMenu}
+          className="w-full rounded-full bg-(--color-wine) px-7 py-4 text-sm font-semibold uppercase tracking-wide text-(--color-cream) transition-colors hover:bg-(--color-wine-deep)"
+        >
+          Ver menú
+        </button>
+
+        <div className="flex flex-col gap-2 sm:flex-row">
+          <a
+            href={BUSINESS.mapsUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="flex flex-1 items-center justify-center gap-2 rounded-full border border-(--color-ink)/15 px-4 py-3 text-xs font-medium uppercase tracking-wide text-(--color-ink) transition-colors hover:border-(--color-wine) hover:text-(--color-wine)"
+          >
+            <Clock className="h-4 w-4 flex-none" strokeWidth={1.5} />
+            <span className="truncate">Horarios</span>
+          </a>
+          <a
+            href={BUSINESS.mapsUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="flex flex-1 items-center justify-center gap-2 rounded-full border border-(--color-ink)/15 px-4 py-3 text-xs font-medium uppercase tracking-wide text-(--color-ink) transition-colors hover:border-(--color-wine) hover:text-(--color-wine)"
+          >
+            <MapPin className="h-4 w-4 flex-none" strokeWidth={1.5} />
+            <span className="truncate">{BUSINESS.city}</span>
+          </a>
+        </div>
+      </div>
     </section>
   )
 }

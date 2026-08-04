@@ -137,6 +137,32 @@ nada.
   propia fila — la lista ya muestra todos los precios sin necesidad de
   abrir el modal, que es lo que pedía la referencia, sin tener que
   multiplicar el número de productos en la base de datos.
+  **Revertido en la siguiente pasada** (ver abajo): el cliente sí quería
+  cada sabor como producto independiente, por el control individual de
+  foto/agotado que eso permite.
+
+### Tercera pasada: splash de bienvenida + cada sabor es su propio producto
+
+- **Pantalla de bienvenida a pantalla completa** (`Hero.tsx`): logo real
+  grande, un botón "Ver menú" y dos accesos rápidos (horario, ubicación) —
+  es lo único visible al cargar la página, sin menú a la vista todavía. El
+  botón hace scroll suave hasta `#menu` (misma técnica que un `href="#ancla"`
+  nativo, vía `scrollIntoView`).
+- **El header con navegación estaba compitiendo con el splash.** Antes era
+  un `fixed` siempre visible con el logo (chico) encima del logo gigante del
+  splash. Ahora `Header.tsx` empieza oculto (`opacity-0 -translate-y-full`)
+  y aparece deslizándose al primer scroll — el splash queda como la única
+  pantalla al cargar, tal como se pidió.
+- **Cada sabor es su propio producto**, no una opción/chip dentro de un
+  producto compartido. Decisión revertida de la pasada anterior: el cliente
+  quiere poder subir una foto y marcar "agotado" por sabor individualmente
+  (ej. que se acabe el Red Velvet sin afectar el Zanahoria). Los 12
+  productos agrupados se explotaron en 69 productos individuales — total 94
+  productos, 0 filas en `product_flavors` (ver
+  `AdminPanel_FabricaPostres/drizzle/0003_flatten_flavors.sql`). El sitio
+  público no necesitó cambios de código para esto: `Catalog.tsx` y
+  `ProductModal.tsx` ya renderizaban un producto individual correctamente,
+  solo cambiaron los datos.
 
 ## Stack
 

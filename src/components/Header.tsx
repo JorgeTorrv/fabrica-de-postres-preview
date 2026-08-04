@@ -9,10 +9,6 @@ const NAV_LINKS = [
   { label: 'Contacto', href: '#contacto' },
 ]
 
-function scrollToMenu() {
-  document.getElementById('menu')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-}
-
 export function Header() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -25,10 +21,12 @@ export function Header() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  const visible = scrolled || mobileOpen
+
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-40 transition-colors duration-300 ${
-        scrolled || mobileOpen ? 'bg-(--color-cream)/95 shadow-[0_1px_0_var(--color-line)] backdrop-blur' : 'bg-transparent'
+      className={`fixed inset-x-0 top-0 z-40 bg-(--color-cream)/95 shadow-[0_1px_0_var(--color-line)] backdrop-blur transition-all duration-300 ${
+        visible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-10">
@@ -69,14 +67,6 @@ export function Header() {
 
           <button
             type="button"
-            onClick={scrollToMenu}
-            className="hidden items-center rounded-full bg-(--color-wine) px-5 py-2.5 text-sm font-medium text-(--color-cream) transition-colors hover:bg-(--color-wine-deep) sm:flex"
-          >
-            Ver menú y pedir
-          </button>
-
-          <button
-            type="button"
             onClick={() => setMobileOpen((v) => !v)}
             aria-label="Abrir navegación"
             className="flex h-10 w-10 items-center justify-center rounded-full text-(--color-ink) lg:hidden"
@@ -87,7 +77,7 @@ export function Header() {
       </div>
 
       {mobileOpen && (
-        <div className="min-h-[100dvh] border-t border-(--color-line) bg-(--color-cream) px-6 py-8 lg:hidden">
+        <div className="min-h-dvh border-t border-(--color-line) bg-(--color-cream) px-6 py-8 lg:hidden">
           <nav className="flex flex-col gap-6">
             {NAV_LINKS.map((link) => (
               <a
@@ -99,16 +89,6 @@ export function Header() {
                 {link.label}
               </a>
             ))}
-            <button
-              type="button"
-              onClick={() => {
-                setMobileOpen(false)
-                scrollToMenu()
-              }}
-              className="mt-2 rounded-full bg-(--color-wine) px-5 py-3 text-center text-sm font-medium text-(--color-cream)"
-            >
-              Ver menú y pedir
-            </button>
           </nav>
         </div>
       )}
