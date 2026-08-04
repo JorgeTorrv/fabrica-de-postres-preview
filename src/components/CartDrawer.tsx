@@ -3,9 +3,11 @@ import { Minus, Plus, ShoppingBag, Store, Trash2, Truck, X } from 'lucide-react'
 import { useCart } from '../context/CartContext'
 import { formatCurrency } from '../utils/format'
 import { buildOrderMessage, buildWhatsAppUrl, type DeliveryMethod } from '../utils/whatsapp'
+import { registerOrder } from '../lib/orders'
 import { ImageSlot } from './ImageSlot'
 
 const EMPTY_ADDRESS = { street: '', neighborhood: '', references: '' }
+const PHONE_DIGITS_MIN = 10
 
 const DELIVERY_OPTIONS: { value: DeliveryMethod; label: string; hint: string; icon: typeof Store }[] = [
   { value: 'pickup', label: 'Recoger en tienda', hint: 'Lomas de Rosales, Tampico', icon: Store },
@@ -16,19 +18,42 @@ export function CartDrawer() {
   const { items, isCartOpen, closeCart, removeItem, updateQuantity, updateComment, subtotal, hasQuoteItems, clearCart } =
     useCart()
   const [name, setName] = useState('')
+  const [phone, setPhone] = useState('')
   const [generalNote, setGeneralNote] = useState('')
   const [delivery, setDelivery] = useState<DeliveryMethod | null>(null)
   const [address, setAddress] = useState(EMPTY_ADDRESS)
+  const [requestedDate, setRequestedDate] = useState('')
+  const [requestedTime, setRequestedTime] = useState('')
+  const [showValidation, setShowValidation] = useState(false)
 
   if (!isCartOpen) return null
 
   const needsAddress = delivery === 'delivery'
   const addressComplete = address.street.trim() !== '' && address.neighborhood.trim() !== ''
-  const canSend = delivery !== null && (!needsAddress || addressComplete)
+  const phoneDigits = phone.replace(/\D/g, '')
+  const phoneComplete = phoneDigits.length >= PHONE_DIGITS_MIN
+  const canSend = delivery !== null && phoneComplete && (!needsAddress || addressComplete)
 
   const handleSend = () => {
-    if (!canSend || !delivery) return
-    const message = buildOrderMessage(items, name, generalNote, delivery, address)
+    if (!delivery) return
+    if (!canSend) {
+      setShowValidation(true)
+      return
+    }
+
+    const order = {
+      items,
+      customerName: name,
+      customerPhone: phone,
+      generalNote,
+      deliveryMethod: delivery,
+      address,
+      requestedDate,
+      requestedTime,
+    }
+    const message = buildOrderMessage(order)
+
+    registerOrder(order, message, subtotal)
     window.open(buildWhatsAppUrl(message), '_blank', 'noopener')
   }
 
@@ -62,9 +87,9 @@ export function CartDrawer() {
                 {items.map((item) => (
                   <div key={item.cartId} className="flex gap-3 border-b border-(--color-line) pb-5 last:border-b-0">
                     <ImageSlot
-                      src={item.image ? `/images/menu/${item.image}` : ''}
+                      src={item.image ?? ''}
                       alt={item.name}
-                      placeholderLabel={item.image ?? item.name}
+                      placeholderLabel={item.name}
                       className="h-16 w-16 flex-none rounded-lg"
                     />
                     <div className="min-w-0 flex-1">
@@ -141,7 +166,7 @@ export function CartDrawer() {
             </div>
 
             <div className="border-t border-(--color-line) px-6 py-5">
-              <div className="flex flex-col gap-3">
+              <div className="grid grid-cols-2 gap-3">
                 <input
                   type="text"
                   value={name}
@@ -149,14 +174,42 @@ export function CartDrawer() {
                   placeholder="Tu nombre"
                   className="w-full rounded-lg border border-(--color-line) bg-(--color-paper) px-3.5 py-2.5 text-sm text-(--color-ink) placeholder:text-(--color-ink-soft)/70 focus:border-(--color-wine) focus:outline-none"
                 />
-                <textarea
-                  value={generalNote}
-                  onChange={(e) => setGeneralNote(e.target.value)}
-                  placeholder="Nota general (fecha y hora de entrega, evento, dirección si es a domicilio...)"
-                  rows={2}
-                  className="w-full resize-none rounded-lg border border-(--color-line) bg-(--color-paper) px-3.5 py-2.5 text-sm text-(--color-ink) placeholder:text-(--color-ink-soft)/70 focus:border-(--color-wine) focus:outline-none"
+                <input
+                  type="tel"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder="Tu teléfono *"
+                  className="w-full rounded-lg border border-(--color-line) bg-(--color-paper) px-3.5 py-2.5 text-sm text-(--color-ink) placeholder:text-(--color-ink-soft)/70 focus:border-(--color-wine) focus:outline-none"
                 />
               </div>
+              {showValidation && !phoneComplete && (
+                <p className="mt-1.5 text-xs text-(--color-wine)">Escribe un teléfono válido (10 dígitos).</p>
+              )}
+
+              <div className="mt-3 grid grid-cols-2 gap-3">
+                <input
+                  type="date"
+                  value={requestedDate}
+                  onChange={(e) => setRequestedDate(e.target.value)}
+                  aria-label="Fecha deseada (opcional)"
+                  className="w-full rounded-lg border border-(--color-line) bg-(--color-paper) px-3.5 py-2.5 text-sm text-(--color-ink) focus:border-(--color-wine) focus:outline-none"
+                />
+                <input
+                  type="time"
+                  value={requestedTime}
+                  onChange={(e) => setRequestedTime(e.target.value)}
+                  aria-label="Hora deseada (opcional)"
+                  className="w-full rounded-lg border border-(--color-line) bg-(--color-paper) px-3.5 py-2.5 text-sm text-(--color-ink) focus:border-(--color-wine) focus:outline-none"
+                />
+              </div>
+
+              <textarea
+                value={generalNote}
+                onChange={(e) => setGeneralNote(e.target.value)}
+                placeholder="Nota general (evento, dedicatoria, etc.)"
+                rows={2}
+                className="mt-3 w-full resize-none rounded-lg border border-(--color-line) bg-(--color-paper) px-3.5 py-2.5 text-sm text-(--color-ink) placeholder:text-(--color-ink-soft)/70 focus:border-(--color-wine) focus:outline-none"
+              />
 
               <fieldset className="mt-5">
                 <legend className="text-sm font-medium text-(--color-ink)">Forma de entrega</legend>
@@ -227,17 +280,16 @@ export function CartDrawer() {
               <button
                 type="button"
                 onClick={handleSend}
-                disabled={!canSend}
-                className="mt-4 w-full rounded-full bg-(--color-wine) px-7 py-4 text-sm font-medium text-(--color-cream) transition-colors hover:bg-(--color-wine-deep) disabled:cursor-not-allowed disabled:bg-(--color-ink)/25"
+                className="mt-4 w-full rounded-full bg-(--color-wine) px-7 py-4 text-sm font-medium text-(--color-cream) transition-colors hover:bg-(--color-wine-deep)"
               >
                 Enviar pedido por WhatsApp
               </button>
-              {!delivery && (
+              {showValidation && !delivery && (
                 <p className="mt-2 text-center text-xs text-(--color-ink-soft)">
                   Elige una forma de entrega para continuar.
                 </p>
               )}
-              {needsAddress && !addressComplete && (
+              {showValidation && needsAddress && !addressComplete && (
                 <p className="mt-2 text-center text-xs text-(--color-ink-soft)">
                   Completa tu dirección (calle y colonia) para continuar.
                 </p>

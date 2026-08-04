@@ -1,0 +1,760 @@
+{
+  "categories": [
+    {
+      "id": "pasteles",
+      "name": "Pasteles",
+      "items": [
+        {
+          "id": "pastel-clasico",
+          "name": "Pastel clásico",
+          "flavors": [
+            "Zanahoria",
+            "Chocolate Hershey's",
+            "Red Velvet",
+            "Chocolate Alemán",
+            "Vainilla",
+            "Piña",
+            "Marmoleado",
+            "Pistache"
+          ],
+          "flavorsLabel": "Sabor",
+          "options": [
+            {
+              "label": "Pastel para 10 personas",
+              "price": 580
+            },
+            {
+              "label": "Rebanada",
+              "price": 85
+            }
+          ],
+          "optionsLabel": "Presentación"
+        },
+        {
+          "id": "pastel-especial",
+          "name": "Pastel de sabor especial",
+          "flavors": [
+            "Biscoff Lotus",
+            "Ferrero"
+          ],
+          "flavorsLabel": "Sabor",
+          "options": [
+            {
+              "label": "Pastel para 10 personas",
+              "price": 800
+            },
+            {
+              "label": "Rebanada",
+              "price": 100
+            }
+          ],
+          "optionsLabel": "Presentación"
+        }
+      ]
+    },
+    {
+      "id": "mini-pasteles",
+      "name": "Mini pasteles",
+      "items": [
+        {
+          "id": "mini-pastel",
+          "name": "Mini pastel",
+          "flavors": [
+            "Chocolate",
+            "Red Velvet",
+            "Vainilla con dulce de leche",
+            "Zanahoria"
+          ],
+          "flavorsLabel": "Sabor",
+          "options": [
+            {
+              "label": "3-4 personas",
+              "price": 250
+            }
+          ],
+          "optionsLabel": "Presentación"
+        }
+      ]
+    },
+    {
+      "id": "dot-cakes",
+      "name": "Dot cakes",
+      "items": [
+        {
+          "id": "dot-cake",
+          "name": "Dot cake",
+          "flavors": [
+            "Red Velvet",
+            "Dulce de Leche",
+            "Lotus",
+            "Chocolate"
+          ],
+          "flavorsLabel": "Sabor",
+          "options": [
+            {
+              "label": "Individual",
+              "price": 100
+            }
+          ],
+          "optionsLabel": "Presentación"
+        }
+      ]
+    },
+    {
+      "id": "galletas-estilo-ny",
+      "name": "Galletas estilo NY",
+      "items": [
+        {
+          "id": "galleta-estilo-ny",
+          "name": "Galleta estilo NY",
+          "flavors": [
+            "Choconutella",
+            "S'mores",
+            "Reese's",
+            "Oreo",
+            "Red Velvet",
+            "Regias Fresa",
+            "M&M's",
+            "Biscoff Lotus",
+            "Kinder Bueno",
+            "Chocolate Dubai"
+          ],
+          "flavorsLabel": "Sabor",
+          "options": [
+            {
+              "label": "Individual",
+              "price": 65
+            }
+          ],
+          "optionsLabel": "Presentación"
+        }
+      ]
+    },
+    {
+      "id": "brownies",
+      "name": "Brownies",
+      "items": [
+        {
+          "id": "brownie",
+          "name": "Brownie",
+          "description": "Brownie de chocolate horneado en casa.",
+          "options": [
+            {
+              "label": "Alemán (Grande)",
+              "price": 40
+            },
+            {
+              "label": "Philadelphia + Kisses (Grande)",
+              "price": 40
+            },
+            {
+              "label": "Reese's (Grande)",
+              "price": 40
+            },
+            {
+              "label": "Azúcar Glass (Grande)",
+              "price": 40
+            },
+            {
+              "label": "Tortuga (Grande)",
+              "price": 40
+            },
+            {
+              "label": "Lotus",
+              "price": 45
+            }
+          ],
+          "optionsLabel": "Sabor"
+        },
+        {
+          "id": "big-brownie",
+          "name": "Big Brownie",
+          "flavors": [
+            "Lotus",
+            "Nutella con frutos rojos"
+          ],
+          "flavorsLabel": "Sabor",
+          "options": [
+            {
+              "label": "Individual",
+              "price": 200
+            }
+          ],
+          "optionsLabel": "Presentación"
+        }
+      ]
+    },
+    {
+      "id": "galletas-y-empanadas",
+      "name": "Galletas y empanadas",
+      "items": [
+        {
+          "id": "empanada-pina",
+          "name": "Empanada de piña",
+          "options": [
+            {
+              "label": "Bolsa",
+              "price": 40
+            },
+            {
+              "label": "Caja",
+              "price": 100
+            }
+          ],
+          "optionsLabel": "Presentación"
+        },
+        {
+          "id": "empanada-cajeta",
+          "name": "Empanada de cajeta",
+          "options": [
+            {
+              "label": "Bolsa",
+              "price": 40
+            },
+            {
+              "label": "Caja",
+              "price": 100
+            }
+          ],
+          "optionsLabel": "Presentación"
+        },
+        {
+          "id": "besos-nuez-canelitas",
+          "name": "Besos de nuez y canelitas",
+          "options": [
+            {
+              "label": "Bolsita",
+              "price": 30
+            },
+            {
+              "label": "Caja",
+              "price": 100
+            }
+          ],
+          "optionsLabel": "Presentación"
+        }
+      ]
+    },
+    {
+      "id": "cheesecake",
+      "name": "Cheesecake",
+      "items": [
+        {
+          "id": "cheesecake",
+          "name": "Cheesecake",
+          "options": [
+            {
+              "label": "Fresa (Chico)",
+              "price": 500
+            },
+            {
+              "label": "Plátano (Chico)",
+              "price": 500
+            },
+            {
+              "label": "Dulce de Leche (Chico)",
+              "price": 500
+            },
+            {
+              "label": "Tortuga (Chico)",
+              "price": 500
+            },
+            {
+              "label": "Biscoff Lotus (Chico)",
+              "price": 550
+            },
+            {
+              "label": "Guayaba (6-8 personas, Chico)",
+              "price": 500
+            }
+          ],
+          "optionsLabel": "Sabor"
+        }
+      ]
+    },
+    {
+      "id": "cuchareable",
+      "name": "Cuchareable",
+      "items": [
+        {
+          "id": "cuchareable",
+          "name": "Cuchareable",
+          "flavors": [
+            "Tres Leches",
+            "Tiramisú"
+          ],
+          "flavorsLabel": "Sabor",
+          "options": [
+            {
+              "label": "Individual",
+              "price": 100
+            }
+          ],
+          "optionsLabel": "Presentación"
+        }
+      ]
+    },
+    {
+      "id": "panque",
+      "name": "Panqué",
+      "items": [
+        {
+          "id": "panque",
+          "name": "Panqué",
+          "options": [
+            {
+              "label": "Zanahoria (Chico)",
+              "price": 260
+            },
+            {
+              "label": "Manzana (Chico)",
+              "price": 260
+            },
+            {
+              "label": "Plátano (Chico)",
+              "price": 260
+            },
+            {
+              "label": "Frutos Rojos (Chico)",
+              "price": 260
+            },
+            {
+              "label": "Naranja (Chico)",
+              "price": 260
+            },
+            {
+              "label": "Pistache (Chico)",
+              "price": 260
+            },
+            {
+              "label": "Elote (Chico)",
+              "price": 260
+            },
+            {
+              "label": "Chocolate Especiado (Chico)",
+              "price": 260
+            },
+            {
+              "label": "Higos con Queso de Cabra (Chico)",
+              "price": 280
+            }
+          ],
+          "optionsLabel": "Sabor"
+        }
+      ]
+    },
+    {
+      "id": "mostachon",
+      "name": "Mostachón",
+      "items": [
+        {
+          "id": "mostachon",
+          "name": "Mostachón",
+          "options": [
+            {
+              "label": "Plátano (10-12 personas)",
+              "price": 580
+            },
+            {
+              "label": "Fresa (10-12 personas)",
+              "price": 580
+            },
+            {
+              "label": "Durazno (10-12 personas)",
+              "price": 580
+            },
+            {
+              "label": "Dulce de Leche (10-12 personas)",
+              "price": 580
+            },
+            {
+              "label": "Mango (10-12 personas)",
+              "price": 580
+            },
+            {
+              "label": "Frutos del Bosque con Mermelada y Lotus (10-12 personas)",
+              "price": 650
+            }
+          ],
+          "optionsLabel": "Sabor"
+        },
+        {
+          "id": "mostachon-mini",
+          "name": "Mostachón mini",
+          "flavors": [
+            "Dulce de Leche",
+            "Fresa",
+            "Mango"
+          ],
+          "flavorsLabel": "Sabor",
+          "options": [
+            {
+              "label": "3-4 personas",
+              "price": 200
+            }
+          ],
+          "optionsLabel": "Presentación"
+        }
+      ]
+    },
+    {
+      "id": "cafe",
+      "name": "Café",
+      "items": [
+        {
+          "id": "espresso",
+          "name": "Espresso",
+          "options": [
+            {
+              "label": "2 oz",
+              "price": 35
+            }
+          ],
+          "optionsLabel": "Presentación",
+          "featured": true
+        },
+        {
+          "id": "espresso-americano",
+          "name": "Espresso Americano",
+          "options": [
+            {
+              "label": "12 oz",
+              "price": 55
+            }
+          ],
+          "optionsLabel": "Presentación"
+        },
+        {
+          "id": "cappuccino",
+          "name": "Cappuccino",
+          "options": [
+            {
+              "label": "Chico - 12 oz",
+              "price": 65
+            },
+            {
+              "label": "Grande - 16 oz",
+              "price": 85
+            }
+          ],
+          "optionsLabel": "Tamaño",
+          "featured": true
+        },
+        {
+          "id": "flat-white",
+          "name": "Flat White",
+          "options": [
+            {
+              "label": "6 oz",
+              "price": 70
+            }
+          ],
+          "optionsLabel": "Presentación"
+        },
+        {
+          "id": "cortado",
+          "name": "Cortado",
+          "options": [
+            {
+              "label": "4 oz",
+              "price": 75
+            }
+          ],
+          "optionsLabel": "Presentación"
+        },
+        {
+          "id": "affogato",
+          "name": "Affogato",
+          "options": [
+            {
+              "label": "2 oz",
+              "price": 65
+            }
+          ],
+          "optionsLabel": "Presentación",
+          "featured": true
+        }
+      ]
+    },
+    {
+      "id": "latte-bar",
+      "name": "Latte Bar",
+      "items": [
+        {
+          "id": "hot-latte",
+          "name": "Hot Latte",
+          "options": [
+            {
+              "label": "Chico - 12 oz",
+              "price": 65
+            },
+            {
+              "label": "Grande - 16 oz",
+              "price": 85
+            }
+          ],
+          "optionsLabel": "Tamaño"
+        },
+        {
+          "id": "ice-latte",
+          "name": "Ice Latte",
+          "options": [
+            {
+              "label": "Chico - 12 oz",
+              "price": 65
+            },
+            {
+              "label": "Grande - 16 oz",
+              "price": 98
+            }
+          ],
+          "optionsLabel": "Tamaño",
+          "featured": true
+        },
+        {
+          "id": "hot-matcha",
+          "name": "Hot Matcha",
+          "options": [
+            {
+              "label": "Chico - 12 oz",
+              "price": 70
+            },
+            {
+              "label": "Grande - 16 oz",
+              "price": 100
+            }
+          ],
+          "optionsLabel": "Tamaño"
+        },
+        {
+          "id": "ice-matcha",
+          "name": "Ice Matcha",
+          "options": [
+            {
+              "label": "Chico - 12 oz",
+              "price": 80
+            },
+            {
+              "label": "Grande - 16 oz",
+              "price": 110
+            }
+          ],
+          "optionsLabel": "Tamaño"
+        },
+        {
+          "id": "ice-matcha-mango",
+          "name": "Ice Matcha Mango",
+          "options": [
+            {
+              "label": "Chico - 12 oz",
+              "price": 90
+            },
+            {
+              "label": "Grande - 16 oz",
+              "price": 120
+            }
+          ],
+          "optionsLabel": "Tamaño",
+          "featured": true
+        },
+        {
+          "id": "ice-matcha-fresa",
+          "name": "Ice Matcha Fresa",
+          "options": [
+            {
+              "label": "Chico - 12 oz",
+              "price": 90
+            },
+            {
+              "label": "Grande - 16 oz",
+              "price": 120
+            }
+          ],
+          "optionsLabel": "Tamaño"
+        },
+        {
+          "id": "ice-matcha-banana",
+          "name": "Ice Matcha Banana",
+          "options": [
+            {
+              "label": "Chico - 12 oz",
+              "price": 90
+            },
+            {
+              "label": "Grande - 16 oz",
+              "price": 120
+            }
+          ],
+          "optionsLabel": "Tamaño"
+        },
+        {
+          "id": "te",
+          "name": "Té",
+          "options": [
+            {
+              "label": "Individual",
+              "price": 40
+            }
+          ],
+          "optionsLabel": "Presentación"
+        }
+      ]
+    },
+    {
+      "id": "frappes",
+      "name": "Frappés",
+      "items": [
+        {
+          "id": "frappe-frapuccino",
+          "name": "Frapuccino",
+          "options": [
+            {
+              "label": "Individual",
+              "price": 70
+            }
+          ],
+          "optionsLabel": "Presentación",
+          "note": "Contiene café"
+        },
+        {
+          "id": "frappe-red-velvet",
+          "name": "Red Velvet",
+          "options": [
+            {
+              "label": "Individual",
+              "price": 70
+            }
+          ],
+          "optionsLabel": "Presentación",
+          "note": "Contiene café"
+        },
+        {
+          "id": "frappe-brownie",
+          "name": "Brownie",
+          "options": [
+            {
+              "label": "Individual",
+              "price": 70
+            }
+          ],
+          "optionsLabel": "Presentación"
+        },
+        {
+          "id": "frappe-chocoavellana",
+          "name": "Chocoavellana",
+          "options": [
+            {
+              "label": "Individual",
+              "price": 70
+            }
+          ],
+          "optionsLabel": "Presentación"
+        },
+        {
+          "id": "frappe-cookies-cream",
+          "name": "Cookies & Cream",
+          "options": [
+            {
+              "label": "Individual",
+              "price": 70
+            }
+          ],
+          "optionsLabel": "Presentación"
+        },
+        {
+          "id": "frappe-arroz-leche",
+          "name": "Arroz con Leche",
+          "options": [
+            {
+              "label": "Individual",
+              "price": 70
+            }
+          ],
+          "optionsLabel": "Presentación"
+        },
+        {
+          "id": "frappe-lotus-biscoff",
+          "name": "Lotus Biscoff",
+          "options": [
+            {
+              "label": "Individual",
+              "price": 100
+            }
+          ],
+          "optionsLabel": "Presentación",
+          "featured": true
+        }
+      ]
+    },
+    {
+      "id": "smoothies",
+      "name": "Smoothies",
+      "items": [
+        {
+          "id": "smoothie",
+          "name": "Smoothie",
+          "flavors": [
+            "Mango",
+            "Mango Chamoy",
+            "Limón",
+            "Fresa",
+            "Piña Colada",
+            "Limón Chamoy",
+            "Frutos Rojos"
+          ],
+          "flavorsLabel": "Sabor",
+          "options": [
+            {
+              "label": "Individual",
+              "price": 70
+            }
+          ],
+          "optionsLabel": "Presentación"
+        },
+        {
+          "id": "smoothie-pay-limon",
+          "name": "Smoothie Pay de Limón",
+          "options": [
+            {
+              "label": "Individual",
+              "price": 70
+            }
+          ],
+          "optionsLabel": "Presentación",
+          "featured": true
+        }
+      ]
+    }
+  ],
+  "promotions": [
+    {
+      "id": "promo-galletas-ny",
+      "title": "5 Galletas Estilo NY",
+      "description": "No incluye sabor Dubai",
+      "price": 300
+    },
+    {
+      "id": "promo-2-rebanadas",
+      "title": "2 Rebanadas",
+      "description": "Lunes, martes, jueves, viernes, sábado y domingo",
+      "price": 150
+    },
+    {
+      "id": "promo-2-rebanadas-miercoles",
+      "title": "2 Rebanadas Miércoles",
+      "description": "Precio especial de miércoles",
+      "price": 120
+    },
+    {
+      "id": "promo-latte-rebanada",
+      "title": "Latte y Rebanada",
+      "price": 140
+    },
+    {
+      "id": "promo-latte-galleta",
+      "title": "Latte con Galleta",
+      "description": "No incluye sabor Dubai",
+      "price": 120
+    }
+  ]
+}

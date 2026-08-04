@@ -14,6 +14,17 @@ export type DeliveryAddress = {
   references: string
 }
 
+export type OrderDetails = {
+  items: CartItem[]
+  customerName: string
+  customerPhone: string
+  generalNote: string
+  deliveryMethod: DeliveryMethod
+  address: DeliveryAddress
+  requestedDate?: string
+  requestedTime?: string
+}
+
 function lineForItem(item: CartItem, index: number): string {
   const parts: string[] = []
   const title = item.flavor ? `${item.name} (${item.flavor})` : item.name
@@ -33,13 +44,10 @@ function lineForItem(item: CartItem, index: number): string {
   return parts.join('\n')
 }
 
-export function buildOrderMessage(
-  items: CartItem[],
-  customerName: string,
-  generalNote: string,
-  deliveryMethod: DeliveryMethod,
-  address: DeliveryAddress,
-): string {
+export function buildOrderMessage(order: OrderDetails): string {
+  const { items, customerName, customerPhone, generalNote, deliveryMethod, address, requestedDate, requestedTime } =
+    order
+
   const greeting = customerName.trim()
     ? `Hola, quisiera hacer un pedido a nombre de ${customerName.trim()}:`
     : 'Hola, quisiera hacer un pedido:'
@@ -54,6 +62,11 @@ export function buildOrderMessage(
     if (address.references.trim()) tail.push(`Referencias: ${address.references.trim()}`)
   }
 
+  if (requestedDate || requestedTime) {
+    tail.push(`Fecha/hora: ${[requestedDate, requestedTime].filter(Boolean).join(' ')}`)
+  }
+
+  if (customerPhone.trim()) tail.push(`Teléfono: ${customerPhone.trim()}`)
   if (generalNote.trim()) tail.push(`Nota: ${generalNote.trim()}`)
 
   return [greeting, '', lines.join('\n\n'), '', tail.join('\n')].join('\n')

@@ -46,19 +46,16 @@ Objetivos del negocio que definieron el sitio:
   el cierre tipo "¿me confirman disponibilidad?" — esas preguntas las hace el
   negocio en la conversación real, no hace falta simularlas en el mensaje
   inicial.
-- **Fotos como placeholders con nombre de archivo esperado:** como no había
-  fotografía profesional lista al momento de construir el sitio, cada slot de
-  imagen muestra el nombre de archivo que espera (`hero-principal.jpg`,
-  `story-taller.jpg`, etc.). En cuanto se coloca el archivo real con ese
-  nombre exacto, aparece solo — no requiere tocar código. Mientras tanto, se
-  usaron fotos de stock (Unsplash/Openverse) temporales solo para que el
-  cliente vea el sitio con contenido visual real y no cajas vacías.
-- **Galería como carrusel automático + grid con lightbox:** el negocio tiene
-  muchas fotos de trabajos anteriores en Facebook. Se decidió combinar un
-  carrusel destacado (loop infinito, gira solo, sin que el usuario tenga que
-  interactuar) para momentos destacados, y una cuadrícula ampliable con
-  lightbox para navegar más fotos a detalle — cubre tanto "vitrina rápida"
-  como "explorar a fondo".
+- **Fotos del hero/logo como placeholders con nombre de archivo esperado**
+  (`hero-principal.jpg`, etc.) — siguen siendo archivos estáticos del sitio
+  público, no editables desde el panel. **Las fotos de productos ya no
+  siguen este patrón**: desde el rediseño a menú digital se suben desde el
+  panel admin (`ImageUploader` → R2), no por nombre de archivo exacto. Las
+  fotos de stock (Unsplash/Openverse) que se usaron temporalmente para
+  productos (`public/images/menu/`) se retiraron del repo al hacer ese
+  cambio — el placeholder actual para un producto sin foto es el mismo
+  patrón visual (`ImageSlot`), solo que ahora se activa por `image` vacío
+  en la respuesta de la API en vez de un archivo faltante.
 - **Sin secciones "de relleno" tipo IA genérica:** por pedido explícito del
   cliente, se evitaron patrones visuales que delatan un sitio armado
   rápido/genérico (etiquetas pequeñas sobre títulos, iconos en esquinas de
@@ -71,16 +68,57 @@ Objetivos del negocio que definieron el sitio:
   inventadas, ni calificaciones aproximadas — se dejaron espacios claramente
   vacíos/placeholder antes que rellenar con información no verificada.
 
+## Rediseño: de landing page a menú digital (2026)
+
+El sitio pasó de ser una landing page (historia de marca, galería, reseñas,
+con el menú escondido detrás de un botón que abría un overlay) a un menú
+digital donde el catálogo es la portada misma. Decisión del cliente: "quiero
+transformar la página de una landing page informativa a una plataforma de
+menú digital y generación de pedidos por WhatsApp".
+
+- **`MenuOverlay` → `Catalog`, ya no un overlay.** El mismo componente que
+  antes se abría sobre la página ahora es una sección normal de la portada,
+  con filtro real de categoría (ya no solo scroll a ancla) y sticky bar de
+  categorías + carrito.
+- **Story/Gallery/Reviews eliminados, no solo ocultados.** El nuevo mapa de
+  secciones (Header → Hero compacto → Promociones y destacados → Catálogo →
+  Sobre nosotros breve → Contacto → Footer) no los incluye. Se borró el
+  código y las fotos de stock asociadas (`public/images/{story,gallery,
+  featured}/`), no se dejaron enterrados sin usar.
+- **Hero recortado deliberadamente.** Antes ocupaba casi toda la primera
+  pantalla con imagen doble superpuesta, redes sociales y horario. Ahora es
+  un mensaje corto + una imagen, para no competir por atención con el
+  catálogo que viene justo debajo.
+- **"Sobre nosotros" en vez de "Historia".** 2-3 líneas al final de la
+  página, sin la sección elaborada de antes (estadísticas, doble imagen). El
+  catálogo es el protagonista; esto es solo contexto.
+- **Backend real por primera vez**, ver `AdminPanel_FabricaPostres/CONTEXTO.md`
+  (repo hermano) para el porqué completo de esa arquitectura. En resumen: el
+  catálogo ya no vive en `menu.ts` estático, sino en D1, administrado desde
+  un panel nuevo, y el sitio público lo consulta en cada visita.
+- **Carrito extendido con teléfono y fecha/hora deseada**, campos que el
+  cliente pidió explícitamente ("nombre, teléfono, tipo de entrega... fecha,
+  hora"). El teléfono es obligatorio (el negocio necesita poder contactar de
+  vuelta); fecha/hora son opcionales.
+- **`POST /api/orders` es fire-and-forget.** El pedido real sigue siendo el
+  mensaje de WhatsApp — este registro solo alimenta el panel para que la
+  clienta tenga un historial. Si la API falla, el flujo de WhatsApp no se ve
+  afectado.
+
 ## Stack
 
-- **React 19 + Vite + TypeScript** — sitio estático de una sola página, sin
-  necesidad de backend ni SSR; Vite da un build rápido y ligero para un sitio
-  de este tamaño.
+- **React 19 + Vite + TypeScript** — SPA, sin SSR.
 - **Tailwind CSS v4** — estilos utilitarios, config basada en CSS.
 - **lucide-react** — iconografía.
-- Sin base de datos, sin backend, sin autenticación: el "estado" del pedido
-  vive en el navegador (carrito en memoria/localStorage) y el único destino
-  final del pedido es un enlace `wa.me` con el mensaje ya armado.
+- **Backend propio** (repo hermano `AdminPanel_FabricaPostres`): Hono + D1 +
+  R2 vía Cloudflare Pages Functions. El catálogo se consulta en runtime
+  (`useCatalog`, tres capas de respaldo: localStorage → fetch en vivo →
+  JSON empacado en el build) — no hay SSR ni build-time data fetching real,
+  solo un fallback generado antes de cada build por si la API falla justo en
+  ese momento.
+- El "estado" del carrito sigue viviendo en el navegador
+  (memoria/localStorage); el pedido final sigue siendo un enlace `wa.me`
+  con el mensaje ya armado, más un registro paralelo en la API.
 
 ## Despliegue
 

@@ -48,11 +48,6 @@
     text-wrap: balance;
   }
 
-  .hairline {
-    background-image: linear-gradient(to right, transparent, var(--color-gold-soft), transparent);
-    height: 1px;
-  }
-
   .placeholder-frame {
     background-image: repeating-linear-gradient(
       135deg,
@@ -79,26 +74,8 @@
   animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-@keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-.animate-marquee {
-  animation: marquee 50s linear infinite;
-  will-change: transform;
-}
-
-.marquee-group:hover .animate-marquee {
-  animation-play-state: paused;
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .animate-marquee {
+  .animate-fade-up {
     animation: none;
   }
 }

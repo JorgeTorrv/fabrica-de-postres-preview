@@ -11,6 +11,8 @@ export type ExtraOption = {
 export type MenuItem = {
   id: string
   name: string
+  /** Descripción corta para el grid y el modal (distinta de `note`). */
+  description?: string
   /** Informational flavor/topping list shown as a single-select chip group. Does not change price. */
   flavors?: string[]
   flavorsLabel?: string
@@ -21,9 +23,13 @@ export type MenuItem = {
   extras?: ExtraOption[]
   note?: string
   recommended?: boolean
+  /** Se muestra en la franja de destacados de la portada. */
+  featured?: boolean
   /** True for made-to-order items with no fixed price (quote on request). */
   customQuote?: boolean
-  /** Image filename inside /public/images/menu/, e.g. "pastel-clasico.jpg" */
+  /** Oculta el botón de agregar y muestra "Agotado". */
+  soldOut?: boolean
+  /** URL absoluta servida por la API del panel admin, o undefined si aún no hay foto. */
   image?: string
 }
 
@@ -32,4 +38,18 @@ export type MenuCategory = {
   name: string
   description?: string
   items: MenuItem[]
+}
+
+export type Promotion = {
+  id: string
+  title: string
+  description?: string
+  price?: number
+  badgeLabel?: string
+  image?: string
+}
+
+export type Catalog = {
+  categories: MenuCategory[]
+  promotions: Promotion[]
 }

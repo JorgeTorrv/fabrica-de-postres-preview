@@ -4,17 +4,16 @@ import { useCart } from '../context/CartContext'
 import { asset } from '../utils/asset'
 
 const NAV_LINKS = [
-  { label: 'Historia', href: '#historia' },
-  { label: 'Galería', href: '#galeria' },
-  { label: 'Opiniones', href: '#opiniones' },
-  { label: 'Visítanos', href: '#contacto' },
+  { label: 'Menú', href: '#menu' },
+  { label: 'Nosotros', href: '#nosotros' },
+  { label: 'Contacto', href: '#contacto' },
 ]
 
-type HeaderProps = {
-  onOpenMenu: () => void
+function scrollToMenu() {
+  document.getElementById('menu')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
 
-export function Header({ onOpenMenu }: HeaderProps) {
+export function Header() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const { itemCount, openCart } = useCart()
@@ -70,7 +69,7 @@ export function Header({ onOpenMenu }: HeaderProps) {
 
           <button
             type="button"
-            onClick={onOpenMenu}
+            onClick={scrollToMenu}
             className="hidden items-center rounded-full bg-(--color-wine) px-5 py-2.5 text-sm font-medium text-(--color-cream) transition-colors hover:bg-(--color-wine-deep) sm:flex"
           >
             Ver menú y pedir
@@ -104,7 +103,7 @@ export function Header({ onOpenMenu }: HeaderProps) {
               type="button"
               onClick={() => {
                 setMobileOpen(false)
-                onOpenMenu()
+                scrollToMenu()
               }}
               className="mt-2 rounded-full bg-(--color-wine) px-5 py-3 text-center text-sm font-medium text-(--color-cream)"
             >

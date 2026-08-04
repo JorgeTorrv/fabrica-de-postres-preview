@@ -19,7 +19,9 @@ type ImageSlotProps = {
 export function ImageSlot({ src, alt, className = '', placeholderLabel, variant = 'label' }: ImageSlotProps) {
   const [failed, setFailed] = useState(false)
 
-  if (failed) {
+  // Sin `src` (producto sin foto todavía) va directo al placeholder: un
+  // <img src=""> no dispara onError de forma confiable en todos los navegadores.
+  if (failed || !src) {
     if (variant === 'monogram') {
       const initials = alt
         .split(' ')

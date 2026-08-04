@@ -1,107 +1,116 @@
-# Fábrica de Postres — sitio web
+# Fábrica de Postres — sitio web (menú digital)
 
-Sitio de una sola página para Fábrica de Postres (Tampico). React + Vite + TypeScript + Tailwind CSS v4.
+Menú digital y generador de pedidos por WhatsApp para Fábrica de Postres
+(Tampico). React + Vite + TypeScript + Tailwind CSS v4.
+
+El catálogo (categorías, productos, precios, promociones) **ya no vive en
+este repo**: se administra desde el panel admin del repo hermano
+`AdminPanel_FabricaPostres` y este sitio lo consulta en cada visita. Ver
+`CONTEXTO.md` para el porqué del rediseño.
 
 ## Correr el proyecto
 
+Necesita el backend corriendo aparte (repo hermano `AdminPanel_FabricaPostres`)
+para tener datos reales; sin él, el sitio sigue funcionando con el catálogo
+de respaldo empacado en el build (`src/data/catalog-fallback.json`).
+
 ```bash
 npm install
-npm run dev       # servidor local
-npm run build     # build de producción en /dist
+npm run dev       # servidor local — usa VITE_API_URL de .env.development
+npm run build     # build de producción en /dist (actualiza el catálogo de respaldo primero)
 npm run preview   # revisar el build de producción
 ```
+
+Para desarrollo con datos en vivo, levanta primero el backend
+(`AdminPanel_FabricaPostres/README.md`, sección "Desarrollo local") y luego
+este proyecto — `.env.development` ya apunta a `http://localhost:8788`.
 
 ## Estructura
 
 ```
 src/
-  components/   secciones y piezas de UI (Header, Hero, Gallery, ProductModal, CartDrawer...)
-  context/      CartContext (carrito global, persistido en localStorage)
-  data/         menu.ts (todo el menú), business.ts (datos del negocio), types.ts
-  utils/        formato de moneda y armado del mensaje de WhatsApp
+  components/
+    Catalog.tsx        catálogo completo (antes MenuOverlay), sección principal de la portada
+    ProductModal.tsx   modal de producto: sabores, opciones, extras, comentario, cantidad
+    CartDrawer.tsx     carrito + datos de entrega + envío por WhatsApp
+    PromotionsStrip.tsx  promociones y productos destacados (datos reales de la API)
+    Hero.tsx           hero compacto
+    AboutSection.tsx   "Sobre nosotros" breve, al final
+    Contact.tsx        dirección, teléfono, horario, mapa
+    Header.tsx / Footer.tsx
+  hooks/
+    useCatalog.ts      catálogo en vivo con 3 capas de respaldo (ver abajo)
+  context/
+    CartContext.tsx    carrito global, persistido en localStorage
+  data/
+    types.ts             tipos del catálogo (MenuItem, MenuCategory, Promotion)
+    catalog-fallback.json  respaldo generado antes de cada build (no editar a mano)
+    business.ts           dirección, teléfono, horario, redes — esto sí se edita aquí
+  lib/
+    config.ts          URL base de la API
+    orders.ts           registra el pedido en la API (fire-and-forget) antes de abrir WhatsApp
+  utils/
+    whatsapp.ts         arma el mensaje y el link de WhatsApp
+    format.ts            formato de moneda
+scripts/
+  fetch-catalog.mjs    corre antes de `vite build`, actualiza catalog-fallback.json
 public/
-  images/       todas las fotos reales del negocio van aquí (ver guía abajo)
+  images/{logo,hero}/  únicas fotos que siguen siendo archivos estáticos de este repo
 ```
+
+## De dónde sale el catálogo: `useCatalog`
+
+Tres capas, para que el sitio nunca se quede en blanco ni se sienta lento:
+
+1. **`localStorage`** — si ya visitaste el sitio, se pinta al instante
+   mientras se revalida en segundo plano.
+2. **Fetch a la API en vivo** (`VITE_API_URL`, timeout ~3s) — actualiza
+   estado y caché.
+3. **`src/data/catalog-fallback.json`** — generado por
+   `scripts/fetch-catalog.mjs` antes de cada build. Último recurso si es la
+   primera visita (sin caché) y la API no responde a tiempo.
+
+Para actualizar productos, precios, sabores, categorías o promociones: eso
+se hace desde el panel admin, **no editando este repo**. Este repo solo
+cambia si se rediseña la portada o el flujo del carrito.
 
 ## Cómo agregar las fotos reales
 
-Todo el sitio ya está listo para las fotos: mientras no exista el archivo, se muestra un
-recuadro con el nombre esperado, así siempre es obvio dónde va cada imagen. En cuanto
-guardes la foto **con ese nombre exacto** en la carpeta indicada, aparece sola — no hay que
-tocar código.
+- **Logo y hero** (`public/images/logo/`, `public/images/hero/`): siguen el
+  patrón de siempre — mientras no exista el archivo, se muestra un
+  placeholder con el nombre esperado; en cuanto guardas la foto con ese
+  nombre exacto, aparece sola.
+  - `logo/logo.png`
+  - `hero/hero-principal.jpg` — foto ancha de una mesa de postres.
+- **Fotos de productos y promociones**: se suben desde el panel admin
+  (botón "Subir foto" en cada producto/promoción), no en este repo. Ver
+  `AdminPanel_FabricaPostres/README.md`.
 
-Formatos aceptados: `.jpg` (o cambia la extensión en el archivo de datos correspondiente si
-usas `.png`/`.webp`). Recomendado: fotos horizontales de buena luz, sin marcas de agua.
+## El carrito y el pedido por WhatsApp
 
-### `public/images/logo/`
-- `logo.png` — logotipo circular o cuadrado, fondo transparente. Mientras no exista, se
-  muestra un monograma "FP" en el header y el footer.
-
-### `public/images/hero/`
-- `hero-principal.jpg` — foto ancha de una mesa de postres, la imagen grande de portada.
-- `hero-detalle.jpg` — foto cuadrada de detalle (un postre solo), la que se sobrepone.
-
-### `public/images/story/`
-- `story-taller.jpg` — foto vertical del taller/equipo trabajando.
-- `story-detalle.jpg` — foto cuadrada de detalle artesanal.
-
-### `public/images/featured/` (sección "Nuestros postres más amados")
-- `featured-biscoff.jpg`
-- `featured-pistache.jpg`
-- `featured-galletas.jpg`
-
-### `public/images/gallery/carousel/` (carrusel de momentos, en la home)
-- `momento-1.jpg` … `momento-6.jpg` — fotos de eventos, entregas, celebraciones.
-
-### `public/images/gallery/grid/` (galería completa con lightbox)
-- `galeria-1.jpg` … `galeria-10.jpg` — tantas fotos de trabajos como quieras mostrar. Si
-  necesitas más, agrega otro número y sube el conteo en
-  `src/components/Gallery.tsx` (`GRID_IMAGES`).
-
-### `public/images/menu/` (una foto por producto del menú)
-
-El nombre de archivo de cada producto ya está definido en `src/data/menu.ts` (campo
-`image`). Lista completa esperada:
-
-```
-affogato.jpg              matcha-mango.jpg
-americano.jpg              mini-tarta.jpg
-brownie.jpg                 mostachon.jpg
-capuchino.jpg               panque-clasico.jpg
-cheesecake-biscoff.jpg      panque-higos.jpg
-cheesecake-clasico.jpg      panque-personalizado.jpg
-cortado.jpg                 pastel-clasico.jpg
-espresso.jpg                pastel-especial.jpg
-flat-white.jpg              pastel-personalizado.jpg
-frappe-arroz-leche.jpg      smoothie-fresa.jpg
-frappe-brownie.jpg          smoothie-frutos-rojos.jpg
-frappe-chocoavellana.jpg    smoothie-limon-chamoy.jpg
-frappe-cookies-cream.jpg    smoothie-limon.jpg
-frappe-lotus.jpg            smoothie-mango-chamoy.jpg
-frappe-red-velvet.jpg       smoothie-mango.jpg
-frappuccino.jpg             smoothie-pay-limon.jpg
-galleta-nueva-york.jpg      smoothie-pina-colada.jpg
-granel.jpg                  te.jpg
-latte.jpg                   tiramisu.jpg
-matcha-banana.jpg           tres-leches-domo.jpg
-matcha-fresa.jpg            tres-leches-vaso.jpg
-matcha.jpg
-```
-
-Si agregas un producto nuevo en `src/data/menu.ts`, dale un `image` con el nombre que
-quieras y guarda la foto con ese mismo nombre en esta carpeta.
-
-## El menú y el carrito
-
-- Todo el contenido del menú (sabores, tamaños, precios, extras) vive en
-  `src/data/menu.ts` — para cambiar un precio o agregar un sabor, se edita ahí.
-- El pedido se arma en el carrito (`CartDrawer`) y se envía como un mensaje de WhatsApp
-  redactado automáticamente al número del negocio (`src/data/business.ts`, campo
-  `whatsapp`). No hay checkout de e-commerce ni cobro en línea.
-- Los productos de "Pasteles personalizados" no tienen precio fijo: se agregan al
-  carrito marcados como cotización y el mensaje de WhatsApp lo aclara.
+- El pedido se arma en el carrito (`CartDrawer`) y se envía como un mensaje
+  de WhatsApp redactado automáticamente al número del negocio
+  (`src/data/business.ts`, campo `whatsapp`). No hay checkout de e-commerce
+  ni cobro en línea.
+- Antes de enviar se piden: nombre, **teléfono (obligatorio)**, forma de
+  entrega, dirección si es a domicilio, y opcionalmente fecha/hora deseada.
+- Al enviar, el pedido también se registra en la API (`POST /api/orders`,
+  fire-and-forget) para que aparezca en el panel admin — si eso falla, el
+  mensaje de WhatsApp se abre de todos modos.
+- Los productos marcados como cotización personalizada (`customQuote`) no
+  tienen precio fijo: se agregan al carrito como "a cotizar" y el mensaje de
+  WhatsApp lo aclara.
 
 ## Datos del negocio
 
-Dirección, teléfono, horario, número de WhatsApp y enlaces (Facebook, Google Maps) están
-centralizados en `src/data/business.ts`.
+Dirección, teléfono, horario, número de WhatsApp y enlaces (Facebook,
+Instagram, Google Maps) están centralizados en `src/data/business.ts` — eso
+sí sigue viviendo en este repo, no en la base de datos.
+
+## Despliegue
+
+Sin cambios respecto a como ya operaba: GitHub Pages + Cloudflare Pages en
+paralelo, vía GitHub Actions en cada push a `main` (ver
+`.github/workflows/`). La única adición es la variable `VITE_API_URL` en el
+paso de build de esos workflows, apuntando al dominio del panel admin en
+producción.

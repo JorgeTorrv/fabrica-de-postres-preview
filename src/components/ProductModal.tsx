@@ -74,12 +74,7 @@ export function ProductModal({ item, categoryName, onClose }: ProductModalProps)
     <div className="fixed inset-0 z-[60] flex items-end justify-center bg-(--color-ink)/60 sm:items-center sm:p-6">
       <div className="flex max-h-[92vh] w-full max-w-2xl flex-col overflow-hidden rounded-t-[2rem] bg-(--color-paper) sm:rounded-[1.75rem]">
         <div className="relative">
-          <ImageSlot
-            src={`/images/menu/${item.image}`}
-            alt={item.name}
-            placeholderLabel={`menu/${item.image}`}
-            className="h-56 w-full sm:h-64"
-          />
+          <ImageSlot src={item.image ?? ''} alt={item.name} placeholderLabel={item.name} className="h-56 w-full sm:h-64" />
           <button
             type="button"
             onClick={onClose}
@@ -93,6 +88,7 @@ export function ProductModal({ item, categoryName, onClose }: ProductModalProps)
         <div className="flex-1 overflow-y-auto px-7 py-7 sm:px-9">
           <p className="text-sm text-(--color-ink-soft)">{categoryName}</p>
           <h3 className="mt-1 font-display text-3xl text-(--color-ink)">{item.name}</h3>
+          {item.description && <p className="mt-2 text-sm text-(--color-ink-soft)">{item.description}</p>}
           {item.note && <p className="mt-2 text-sm italic text-(--color-ink-soft)">{item.note}</p>}
           {item.recommended && (
             <p className="mt-2 text-sm text-(--color-wine)">Recomendación de la casa</p>
