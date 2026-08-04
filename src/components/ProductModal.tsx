@@ -3,6 +3,7 @@ import { Minus, Plus, X } from 'lucide-react'
 import type { MenuItem } from '../data/types'
 import { useCart } from '../context/CartContext'
 import { formatCurrency } from '../utils/format'
+import { asset } from '../utils/asset'
 import { ImageSlot } from './ImageSlot'
 
 type ProductModalProps = {
@@ -87,12 +88,12 @@ export function ProductModal({ item, categoryName, onClose }: ProductModalProps)
 
         <div className="flex-1 overflow-y-auto px-7 py-7 sm:px-9">
           <p className="text-sm text-(--color-ink-soft)">{categoryName}</p>
-          <h3 className="mt-1 font-display text-3xl text-(--color-ink)">{item.name}</h3>
+          <h3 className="mt-1 flex items-center gap-2 font-display text-3xl text-(--color-ink)">
+            {item.name}
+            {item.featured && <img src={asset('/images/Icons/CerezaIcon.png')} alt="Destacado" className="h-6 w-6" />}
+          </h3>
           {item.description && <p className="mt-2 text-sm text-(--color-ink-soft)">{item.description}</p>}
           {item.note && <p className="mt-2 text-sm italic text-(--color-ink-soft)">{item.note}</p>}
-          {item.recommended && (
-            <p className="mt-2 text-sm text-(--color-wine)">Recomendación de la casa</p>
-          )}
 
           {item.flavors && item.flavors.length > 0 && (
             <div className="mt-7">

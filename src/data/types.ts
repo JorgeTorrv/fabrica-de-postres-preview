@@ -22,7 +22,6 @@ export type MenuItem = {
   /** Optional multi-select add-ons with additive price. */
   extras?: ExtraOption[]
   note?: string
-  recommended?: boolean
   /** Se muestra en la franja de destacados de la portada. */
   featured?: boolean
   /** True for made-to-order items with no fixed price (quote on request). */

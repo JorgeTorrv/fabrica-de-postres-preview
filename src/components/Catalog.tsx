@@ -4,7 +4,9 @@ import { useCatalog } from '../hooks/useCatalog'
 import type { MenuItem, Promotion } from '../data/types'
 import { useCart } from '../context/CartContext'
 import { formatCurrency } from '../utils/format'
+import { asset } from '../utils/asset'
 import { ProductModal } from './ProductModal'
+import { PromotionModal } from './PromotionModal'
 
 const PROMOTIONS_ID = '__promociones__'
 
@@ -32,7 +34,10 @@ function MenuRow({ item, onOpen }: { item: MenuItem; onOpen: () => void }) {
       className="flex w-full flex-col gap-1 border-b border-(--color-line) py-4 text-left transition-colors last:border-b-0 hover:bg-(--color-cream-dim)/50 disabled:cursor-not-allowed disabled:opacity-50"
     >
       <div className="flex items-baseline justify-between gap-4">
-        <span className="font-display text-lg text-(--color-ink)">{item.name}</span>
+        <span className="flex items-center gap-1.5 font-display text-lg text-(--color-ink)">
+          {item.name}
+          {item.featured && <img src={asset('/images/Icons/CerezaIcon.png')} alt="Destacado" className="h-4 w-4" />}
+        </span>
         {item.customQuote ? (
           <span className="flex-none text-sm text-(--color-ink-soft)">Cotización</span>
         ) : item.options.length === 1 ? (
@@ -56,20 +61,23 @@ function MenuRow({ item, onOpen }: { item: MenuItem; onOpen: () => void }) {
       )}
 
       {item.soldOut && <p className="text-xs font-medium text-(--color-wine)">Agotado</p>}
-      {!item.soldOut && item.recommended && <p className="text-xs text-(--color-wine)">Recomendación de la casa</p>}
     </button>
   )
 }
 
-function PromotionRow({ promo }: { promo: Promotion }) {
+function PromotionRow({ promo, onOpen }: { promo: Promotion; onOpen: () => void }) {
   return (
-    <div className="flex flex-col gap-1 border-b border-(--color-line) py-4 last:border-b-0">
+    <button
+      type="button"
+      onClick={onOpen}
+      className="flex w-full flex-col gap-1 border-b border-(--color-line) py-4 text-left transition-colors last:border-b-0 hover:bg-(--color-cream-dim)/50"
+    >
       <div className="flex items-baseline justify-between gap-4">
         <span className="font-display text-lg text-(--color-ink)">{promo.title}</span>
         {promo.price != null && <span className="flex-none font-medium text-(--color-ink)">{formatCurrency(promo.price)}</span>}
       </div>
       {promo.description && <p className="text-sm text-(--color-ink-soft)">{promo.description}</p>}
-    </div>
+    </button>
   )
 }
 
@@ -83,6 +91,7 @@ export function Catalog() {
   const { catalog } = useCatalog()
   const { itemCount, openCart } = useCart()
   const [activeItem, setActiveItem] = useState<{ item: MenuItem; categoryName: string } | null>(null)
+  const [activePromo, setActivePromo] = useState<Promotion | null>(null)
 
   const jumpTargets = [
     ...(catalog.promotions.length > 0 ? [{ id: PROMOTIONS_ID, name: 'Promociones' }] : []),
@@ -128,7 +137,7 @@ export function Catalog() {
             <h2 className="font-display text-2xl uppercase tracking-wide text-(--color-wine)">Promociones</h2>
             <div className="mt-2">
               {catalog.promotions.map((promo) => (
-                <PromotionRow key={promo.id} promo={promo} />
+                <PromotionRow key={promo.id} promo={promo} onOpen={() => setActivePromo(promo)} />
               ))}
             </div>
           </div>
@@ -154,6 +163,8 @@ export function Catalog() {
       {activeItem && !activeItem.item.soldOut && (
         <ProductModal item={activeItem.item} categoryName={activeItem.categoryName} onClose={() => setActiveItem(null)} />
       )}
+
+      {activePromo && <PromotionModal promo={activePromo} onClose={() => setActivePromo(null)} />}
     </section>
   )
 }
