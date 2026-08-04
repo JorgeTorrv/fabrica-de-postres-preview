@@ -105,6 +105,39 @@ menú digital y generación de pedidos por WhatsApp".
   clienta tenga un historial. Si la API falla, el flujo de WhatsApp no se ve
   afectado.
 
+### Segunda pasada: lista plana, no tarjetas
+
+La primera versión del catálogo inline (grid de tarjetas con borde, sombra y
+miniatura por producto) seguía sintiéndose "de landing page" para el
+cliente. Pidió algo mucho más simple, mostrando una captura del menú real
+del negocio como referencia — una lista continua de texto plano, sin
+tarjetas ni fotos por fila, con el precio de cada opción visible sin abrir
+nada.
+
+- **`Catalog.tsx` reescrito como lista plana.** Sin borde, sin sombra, sin
+  miniatura por fila — solo nombre, subtítulo (sabores/nota) y precio,
+  separados por una línea delgada. Si un producto tiene más de una opción de
+  precio (tamaños, presentaciones), cada una se lista debajo con su propio
+  precio en vez de colapsar a "Desde $X" — igual que en el menú real.
+- **Promociones ya no es una sección aparte con tarjetas de imagen
+  (`PromotionsStrip` eliminado).** Se fusionó dentro de `Catalog.tsx` como la
+  primera sección de la lista, con el mismo estilo de fila que las
+  categorías — así es como aparece en el menú real del negocio.
+- **Hero recortado a una franja de texto sin imagen.** Nombre, una línea de
+  contexto y el teléfono. La imagen de hero (`public/images/hero/`) se
+  retiró del repo.
+- **Categorías corregidas para coincidir exactamente con el menú real:**
+  "Big Brownie" y "Mostachones minis" son categorías propias, no productos
+  dentro de "Brownies"/"Mostachón" — la agrupación automática del seed
+  inicial las había anidado por error (ver
+  `AdminPanel_FabricaPostres/drizzle/0002_split_categories.sql`). 16
+  categorías en total.
+- **Se mantuvo el modelo de datos agrupado** (sabores como chips dentro de
+  un producto cuando comparten precio) en vez de aplanar cada sabor a su
+  propia fila — la lista ya muestra todos los precios sin necesidad de
+  abrir el modal, que es lo que pedía la referencia, sin tener que
+  multiplicar el número de productos en la base de datos.
+
 ## Stack
 
 - **React 19 + Vite + TypeScript** — SPA, sin SSR.

@@ -165,7 +165,13 @@
             }
           ],
           "optionsLabel": "Sabor"
-        },
+        }
+      ]
+    },
+    {
+      "id": "big-brownie",
+      "name": "Big Brownie",
+      "items": [
         {
           "id": "big-brownie",
           "name": "Big Brownie",
@@ -377,7 +383,13 @@
             }
           ],
           "optionsLabel": "Sabor"
-        },
+        }
+      ]
+    },
+    {
+      "id": "mostachones-minis",
+      "name": "Mostachones minis",
+      "items": [
         {
           "id": "mostachon-mini",
           "name": "Mostachón mini",

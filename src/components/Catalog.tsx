@@ -1,71 +1,110 @@
 import { useState } from 'react'
 import { ShoppingBag } from 'lucide-react'
 import { useCatalog } from '../hooks/useCatalog'
-import type { MenuItem } from '../data/types'
+import type { MenuItem, Promotion } from '../data/types'
 import { useCart } from '../context/CartContext'
 import { formatCurrency } from '../utils/format'
-import { ImageSlot } from './ImageSlot'
 import { ProductModal } from './ProductModal'
 
-function priceLabel(item: MenuItem): string {
-  if (item.customQuote) return 'Cotización'
-  if (item.options.length === 0) return ''
-  const prices = item.options.map((o) => o.price)
-  const min = Math.min(...prices)
-  const max = Math.max(...prices)
-  if (min === max) return formatCurrency(min)
-  return `Desde ${formatCurrency(min)}`
+const PROMOTIONS_ID = '__promociones__'
+
+function scrollToSection(id: string) {
+  document.getElementById(`cat-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
 
 /**
- * El catálogo completo, ahora como sección principal de la portada (ya no un
- * overlay escondido detrás de un botón). Filtro real por categoría además
- * del scroll a ancla, para no recargar ni perder contexto en móvil.
+ * Fila de producto: lista plana, sin tarjeta ni miniatura — igual que el
+ * menú de referencia del negocio. Si el producto tiene una sola opción de
+ * precio, se muestra a la derecha del nombre; si tiene varias (tamaños,
+ * presentaciones, o sabores con precio distinto), cada una se lista debajo
+ * con su propio precio, sin necesidad de abrir el detalle para verlos.
+ */
+function MenuRow({ item, onOpen }: { item: MenuItem; onOpen: () => void }) {
+  const subtitleParts: string[] = []
+  if (item.flavors && item.flavors.length > 0) subtitleParts.push(item.flavors.join(', '))
+  if (item.note) subtitleParts.push(item.note)
+
+  return (
+    <button
+      type="button"
+      disabled={item.soldOut}
+      onClick={onOpen}
+      className="flex w-full flex-col gap-1 border-b border-(--color-line) py-4 text-left transition-colors last:border-b-0 hover:bg-(--color-cream-dim)/50 disabled:cursor-not-allowed disabled:opacity-50"
+    >
+      <div className="flex items-baseline justify-between gap-4">
+        <span className="font-display text-lg text-(--color-ink)">{item.name}</span>
+        {item.customQuote ? (
+          <span className="flex-none text-sm text-(--color-ink-soft)">Cotización</span>
+        ) : item.options.length === 1 ? (
+          <span className="flex-none font-medium text-(--color-ink)">{formatCurrency(item.options[0].price)}</span>
+        ) : null}
+      </div>
+
+      {subtitleParts.length > 0 && <p className="text-sm text-(--color-ink-soft)">{subtitleParts.join(' · ')}</p>}
+
+      {item.description && <p className="text-sm text-(--color-ink-soft)">{item.description}</p>}
+
+      {item.options.length > 1 && (
+        <ul className="mt-1 flex flex-col gap-0.5">
+          {item.options.map((option) => (
+            <li key={option.label} className="flex items-baseline justify-between gap-4 text-sm">
+              <span className="text-(--color-ink-soft)">{option.label}</span>
+              <span className="flex-none font-medium text-(--color-ink)">{formatCurrency(option.price)}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {item.soldOut && <p className="text-xs font-medium text-(--color-wine)">Agotado</p>}
+      {!item.soldOut && item.recommended && <p className="text-xs text-(--color-wine)">Recomendación de la casa</p>}
+    </button>
+  )
+}
+
+function PromotionRow({ promo }: { promo: Promotion }) {
+  return (
+    <div className="flex flex-col gap-1 border-b border-(--color-line) py-4 last:border-b-0">
+      <div className="flex items-baseline justify-between gap-4">
+        <span className="font-display text-lg text-(--color-ink)">{promo.title}</span>
+        {promo.price != null && <span className="flex-none font-medium text-(--color-ink)">{formatCurrency(promo.price)}</span>}
+      </div>
+      {promo.description && <p className="text-sm text-(--color-ink-soft)">{promo.description}</p>}
+    </div>
+  )
+}
+
+/**
+ * El menú completo: una lista plana y continua, sin tarjetas ni fotos por
+ * fila (las fotos, cuando existan, viven en el detalle del producto). Las
+ * promociones son la primera sección, igual que en el menú real del
+ * negocio. Nav superior para saltar entre categorías en una lista larga.
  */
 export function Catalog() {
   const { catalog } = useCatalog()
   const { itemCount, openCart } = useCart()
-  const [activeCategory, setActiveCategory] = useState<string | null>(null)
   const [activeItem, setActiveItem] = useState<{ item: MenuItem; categoryName: string } | null>(null)
 
-  const scrollToCategory = (id: string) => {
-    setActiveCategory(id)
-    document.getElementById(`cat-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  }
-
-  const visibleCategories = activeCategory ? catalog.categories.filter((c) => c.id === activeCategory) : catalog.categories
+  const jumpTargets = [
+    ...(catalog.promotions.length > 0 ? [{ id: PROMOTIONS_ID, name: 'Promociones' }] : []),
+    ...catalog.categories.map((c) => ({ id: c.id, name: c.name })),
+  ]
 
   return (
     <section id="menu" className="bg-(--color-cream)">
       <div className="sticky top-[64px] z-30 border-b border-(--color-line) bg-(--color-cream)/95 backdrop-blur lg:top-[76px]">
         <div className="mx-auto flex items-center justify-between gap-4 px-6 py-3 lg:px-10">
-          <div className="flex min-w-0 flex-1 gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            <button
-              type="button"
-              onClick={() => setActiveCategory(null)}
-              className={`flex-none rounded-full border px-4 py-2 text-sm transition-colors ${
-                activeCategory === null
-                  ? 'border-(--color-wine) bg-(--color-wine) text-(--color-cream)'
-                  : 'border-(--color-line) text-(--color-ink-soft) hover:border-(--color-wine)'
-              }`}
-            >
-              Todo
-            </button>
-            {catalog.categories.map((category) => (
+          <nav className="flex min-w-0 flex-1 gap-4 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {jumpTargets.map((target) => (
               <button
-                key={category.id}
+                key={target.id}
                 type="button"
-                onClick={() => scrollToCategory(category.id)}
-                className={`flex-none rounded-full border px-4 py-2 text-sm transition-colors ${
-                  activeCategory === category.id
-                    ? 'border-(--color-wine) bg-(--color-wine) text-(--color-cream)'
-                    : 'border-(--color-line) text-(--color-ink-soft) hover:border-(--color-wine)'
-                }`}
+                onClick={() => scrollToSection(target.id)}
+                className="flex-none text-sm text-(--color-ink-soft) transition-colors hover:text-(--color-wine)"
               >
-                {category.name}
+                {target.name}
               </button>
             ))}
-          </div>
+          </nav>
 
           <button
             type="button"
@@ -83,60 +122,37 @@ export function Catalog() {
         </div>
       </div>
 
-      <div className="mx-auto max-w-5xl px-6 py-12 lg:px-10">
-        {visibleCategories.map((category) => (
-          <div key={category.id} id={`cat-${category.id}`} className="mb-16 scroll-mt-32 last:mb-4">
-            <h2 className="font-display text-3xl text-(--color-ink)">{category.name}</h2>
-            {category.description && <p className="mt-1.5 text-sm text-(--color-ink-soft)">{category.description}</p>}
+      <div className="mx-auto max-w-2xl px-6 py-10 lg:px-0">
+        {catalog.promotions.length > 0 && (
+          <div id={`cat-${PROMOTIONS_ID}`} className="mb-10 scroll-mt-32">
+            <h2 className="font-display text-2xl uppercase tracking-wide text-(--color-wine)">Promociones</h2>
+            <div className="mt-2">
+              {catalog.promotions.map((promo) => (
+                <PromotionRow key={promo.id} promo={promo} />
+              ))}
+            </div>
+          </div>
+        )}
 
-            <div className="mt-7 grid gap-4 sm:grid-cols-2">
+        {catalog.categories.map((category) => (
+          <div key={category.id} id={`cat-${category.id}`} className="mb-10 scroll-mt-32">
+            <h2 className="font-display text-2xl uppercase tracking-wide text-(--color-wine)">{category.name}</h2>
+            {category.description && <p className="mt-1 text-sm text-(--color-ink-soft)">{category.description}</p>}
+            <div className="mt-2">
               {category.items.map((item) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  disabled={item.soldOut}
-                  onClick={() => setActiveItem({ item, categoryName: category.name })}
-                  className="flex items-center gap-4 rounded-2xl border border-(--color-line) bg-(--color-paper) p-3 text-left transition-shadow hover:shadow-(--shadow-soft) disabled:cursor-not-allowed disabled:opacity-60"
-                >
-                  <ImageSlot
-                    src={item.image ?? ''}
-                    alt={item.name}
-                    placeholderLabel={item.name}
-                    className="h-20 w-20 flex-none rounded-xl"
-                  />
-                  <div className="min-w-0 flex-1">
-                    <p className="font-display text-lg leading-tight text-(--color-ink)">{item.name}</p>
-                    {item.description && (
-                      <p className="mt-0.5 line-clamp-1 text-xs text-(--color-ink-soft)">{item.description}</p>
-                    )}
-                    {item.soldOut ? (
-                      <p className="mt-0.5 text-xs font-medium text-(--color-wine)">Agotado</p>
-                    ) : item.recommended ? (
-                      <p className="mt-0.5 text-xs text-(--color-wine)">Recomendado</p>
-                    ) : item.flavors && item.flavors.length > 0 ? (
-                      <p className="mt-0.5 truncate text-xs text-(--color-ink-soft)">
-                        {item.flavors.length} sabores disponibles
-                      </p>
-                    ) : null}
-                  </div>
-                  <span className="flex-none font-medium text-(--color-ink)">{priceLabel(item)}</span>
-                </button>
+                <MenuRow key={item.id} item={item} onOpen={() => setActiveItem({ item, categoryName: category.name })} />
               ))}
             </div>
           </div>
         ))}
 
-        {visibleCategories.length === 0 && (
-          <p className="text-center text-(--color-ink-soft)">No hay productos disponibles en esta categoría por ahora.</p>
+        {catalog.categories.length === 0 && (
+          <p className="text-center text-(--color-ink-soft)">El menú no está disponible por ahora.</p>
         )}
       </div>
 
       {activeItem && !activeItem.item.soldOut && (
-        <ProductModal
-          item={activeItem.item}
-          categoryName={activeItem.categoryName}
-          onClose={() => setActiveItem(null)}
-        />
+        <ProductModal item={activeItem.item} categoryName={activeItem.categoryName} onClose={() => setActiveItem(null)} />
       )}
     </section>
   )

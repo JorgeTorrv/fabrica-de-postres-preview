@@ -33,8 +33,7 @@ src/
     Catalog.tsx        catálogo completo (antes MenuOverlay), sección principal de la portada
     ProductModal.tsx   modal de producto: sabores, opciones, extras, comentario, cantidad
     CartDrawer.tsx     carrito + datos de entrega + envío por WhatsApp
-    PromotionsStrip.tsx  promociones y productos destacados (datos reales de la API)
-    Hero.tsx           hero compacto
+    Hero.tsx           franja mínima (nombre, tagline, teléfono) — sin imagen
     AboutSection.tsx   "Sobre nosotros" breve, al final
     Contact.tsx        dirección, teléfono, horario, mapa
     Header.tsx / Footer.tsx
@@ -55,7 +54,7 @@ src/
 scripts/
   fetch-catalog.mjs    corre antes de `vite build`, actualiza catalog-fallback.json
 public/
-  images/{logo,hero}/  únicas fotos que siguen siendo archivos estáticos de este repo
+  images/logo/         única foto que sigue siendo un archivo estático de este repo
 ```
 
 ## De dónde sale el catálogo: `useCatalog`
@@ -76,12 +75,10 @@ cambia si se rediseña la portada o el flujo del carrito.
 
 ## Cómo agregar las fotos reales
 
-- **Logo y hero** (`public/images/logo/`, `public/images/hero/`): siguen el
-  patrón de siempre — mientras no exista el archivo, se muestra un
-  placeholder con el nombre esperado; en cuanto guardas la foto con ese
-  nombre exacto, aparece sola.
-  - `logo/logo.png`
-  - `hero/hero-principal.jpg` — foto ancha de una mesa de postres.
+- **Logo** (`public/images/logo/logo.png`): sigue el patrón de siempre —
+  mientras no exista el archivo, se muestra un placeholder; en cuanto
+  guardas la foto con ese nombre exacto, aparece sola. El hero ya no lleva
+  imagen (ver `CONTEXTO.md`).
 - **Fotos de productos y promociones**: se suben desde el panel admin
   (botón "Subir foto" en cada producto/promoción), no en este repo. Ver
   `AdminPanel_FabricaPostres/README.md`.

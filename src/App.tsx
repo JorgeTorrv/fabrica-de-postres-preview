@@ -1,6 +1,5 @@
 import { Header } from './components/Header'
 import { Hero } from './components/Hero'
-import { PromotionsStrip } from './components/PromotionsStrip'
 import { Catalog } from './components/Catalog'
 import { AboutSection } from './components/AboutSection'
 import { Contact } from './components/Contact'
@@ -13,7 +12,6 @@ function App() {
       <Header />
       <main>
         <Hero />
-        <PromotionsStrip />
         <Catalog />
         <AboutSection />
         <Contact />
