@@ -186,7 +186,7 @@ export function CartDrawer() {
                 <p className="mt-1.5 text-xs text-(--color-wine)">Escribe un teléfono válido (10 dígitos).</p>
               )}
 
-              <div className="mt-3 grid grid-cols-2 gap-3">
+              <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <input
                   type="date"
                   value={requestedDate}
