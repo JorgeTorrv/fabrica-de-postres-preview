@@ -186,20 +186,20 @@ export function CartDrawer() {
                 <p className="mt-1.5 text-xs text-(--color-wine)">Escribe un teléfono válido (10 dígitos).</p>
               )}
 
-              <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <div className="mt-3 grid grid-cols-2 gap-3">
                 <input
                   type="date"
                   value={requestedDate}
                   onChange={(e) => setRequestedDate(e.target.value)}
                   aria-label="Fecha deseada (opcional)"
-                  className="w-full rounded-lg border border-(--color-line) bg-(--color-paper) px-3.5 py-2.5 text-sm text-(--color-ink) focus:border-(--color-wine) focus:outline-none"
+                  className="w-full min-w-0 rounded-lg border border-(--color-line) bg-(--color-paper) px-3.5 py-2.5 text-sm text-(--color-ink) focus:border-(--color-wine) focus:outline-none"
                 />
                 <input
                   type="time"
                   value={requestedTime}
                   onChange={(e) => setRequestedTime(e.target.value)}
                   aria-label="Hora deseada (opcional)"
-                  className="w-full rounded-lg border border-(--color-line) bg-(--color-paper) px-3.5 py-2.5 text-sm text-(--color-ink) focus:border-(--color-wine) focus:outline-none"
+                  className="w-full min-w-0 rounded-lg border border-(--color-line) bg-(--color-paper) px-3.5 py-2.5 text-sm text-(--color-ink) focus:border-(--color-wine) focus:outline-none"
                 />
               </div>
 
