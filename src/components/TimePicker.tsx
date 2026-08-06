@@ -1,19 +1,75 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Clock, X } from 'lucide-react'
 
 // Debe coincidir con BUSINESS.hoursDaily (10:00 – 20:00).
 const OPEN_HOUR = 10
 const CLOSE_HOUR = 20
 const MINUTES = [0, 15, 30, 45]
-
 const HOURS = Array.from({ length: CLOSE_HOUR - OPEN_HOUR + 1 }, (_, i) => OPEN_HOUR + i)
 
-function hourLabel(h: number): string {
-  return String(h).padStart(2, '0')
+const ROW_HEIGHT = 44
+const VISIBLE_ROWS = 5
+const WHEEL_HEIGHT = ROW_HEIGHT * VISIBLE_ROWS
+const WHEEL_PAD = (WHEEL_HEIGHT - ROW_HEIGHT) / 2
+
+const FADE_MASK =
+  'linear-gradient(to bottom, transparent, black 28%, black 72%, transparent)'
+
+type WheelColumnProps = {
+  items: number[]
+  value: number
+  onChange: (value: number) => void
 }
 
-function formatDisplay(value: string): string {
-  return value
+/**
+ * Una columna de rueda estilo iOS: el valor "seleccionado" es lo que queda
+ * centrado tras el scroll (con snap), no algo que se tapea en una lista. La
+ * franja de selección y el resaltado quedan fijos en el centro; lo que se
+ * mueve es el contenido detrás.
+ */
+function WheelColumn({ items, value, onChange }: WheelColumnProps) {
+  const ref = useRef<HTMLDivElement>(null)
+  const programmatic = useRef(false)
+
+  useEffect(() => {
+    const el = ref.current
+    const index = items.indexOf(value)
+    if (!el || index === -1) return
+    programmatic.current = true
+    el.scrollTo({ top: index * ROW_HEIGHT, behavior: 'instant' })
+    const id = setTimeout(() => {
+      programmatic.current = false
+    }, 50)
+    return () => clearTimeout(id)
+  }, [])
+
+  const handleScroll = () => {
+    if (programmatic.current) return
+    const el = ref.current
+    if (!el) return
+    const index = Math.max(0, Math.min(items.length - 1, Math.round(el.scrollTop / ROW_HEIGHT)))
+    const next = items[index]
+    if (next !== value) onChange(next)
+  }
+
+  return (
+    <div
+      ref={ref}
+      onScroll={handleScroll}
+      className="snap-y snap-mandatory overflow-y-scroll [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      style={{ height: WHEEL_HEIGHT, paddingTop: WHEEL_PAD, paddingBottom: WHEEL_PAD, maskImage: FADE_MASK, WebkitMaskImage: FADE_MASK }}
+    >
+      {items.map((item) => (
+        <div
+          key={item}
+          className="flex snap-center items-center justify-center text-lg tabular-nums text-(--color-ink)"
+          style={{ height: ROW_HEIGHT }}
+        >
+          {String(item).padStart(2, '0')}
+        </div>
+      ))}
+    </div>
+  )
 }
 
 type TimePickerProps = {
@@ -24,9 +80,9 @@ type TimePickerProps = {
 }
 
 /**
- * Selector de hora propio (no input nativo — ver DatePicker para el motivo).
- * Dos columnas, hora y minuto, como un picker clásico, en vez de una lista
- * plana de 21 horarios — limitado al horario del negocio (10am–8pm).
+ * Selector de hora propio (no input nativo — ver DatePicker para el motivo),
+ * como una rueda de iOS: dos columnas hora/minuto con un solo separador ":"
+ * fijo en el centro, limitado al horario del negocio (10:00–20:00), 24h.
  */
 export function TimePicker({ value, onChange, placeholder, ariaLabel }: TimePickerProps) {
   const [open, setOpen] = useState(false)
@@ -56,9 +112,7 @@ export function TimePicker({ value, onChange, placeholder, ariaLabel }: TimePick
         className="flex min-h-11 w-full min-w-0 items-center gap-1.5 rounded-lg border border-(--color-line) bg-(--color-paper) px-3.5 py-2.5 text-sm text-(--color-ink) focus:border-(--color-wine) focus:outline-none"
       >
         <Clock className="h-4 w-4 flex-none text-(--color-ink-soft)" strokeWidth={1.5} />
-        <span className="truncate">
-          {value ? formatDisplay(value) : <span className="text-(--color-ink-soft)">{placeholder}</span>}
-        </span>
+        <span className="truncate">{value || <span className="text-(--color-ink-soft)">{placeholder}</span>}</span>
       </button>
 
       {open && (
@@ -82,34 +136,15 @@ export function TimePicker({ value, onChange, placeholder, ariaLabel }: TimePick
               </button>
             </div>
 
-            <div className="mt-3 grid grid-cols-2 gap-3">
-              <div className="flex max-h-56 flex-col gap-1 overflow-y-auto rounded-lg border border-(--color-line) p-1.5">
-                {HOURS.map((h) => (
-                  <button
-                    key={h}
-                    type="button"
-                    onClick={() => setHour(h)}
-                    className={`rounded-md px-2 py-2 text-sm transition-colors ${
-                      hour === h ? 'bg-(--color-wine) text-(--color-cream)' : 'text-(--color-ink) hover:bg-(--color-cream-dim)'
-                    }`}
-                  >
-                    {hourLabel(h)}
-                  </button>
-                ))}
-              </div>
-              <div className="flex flex-col gap-1 rounded-lg border border-(--color-line) p-1.5">
-                {MINUTES.map((m) => (
-                  <button
-                    key={m}
-                    type="button"
-                    onClick={() => setMinute(m)}
-                    className={`rounded-md px-2 py-2 text-sm transition-colors ${
-                      minute === m ? 'bg-(--color-wine) text-(--color-cream)' : 'text-(--color-ink) hover:bg-(--color-cream-dim)'
-                    }`}
-                  >
-                    :{String(m).padStart(2, '0')}
-                  </button>
-                ))}
+            <div className="relative mt-3">
+              <div
+                className="pointer-events-none absolute inset-x-0 rounded-xl bg-(--color-cream-dim)"
+                style={{ top: WHEEL_PAD, height: ROW_HEIGHT }}
+              />
+              <div className="flex items-center justify-center gap-2">
+                <WheelColumn items={HOURS} value={hour} onChange={setHour} />
+                <span className="pointer-events-none text-lg font-medium text-(--color-ink)">:</span>
+                <WheelColumn items={MINUTES} value={minute} onChange={setMinute} />
               </div>
             </div>
 
@@ -118,7 +153,7 @@ export function TimePicker({ value, onChange, placeholder, ariaLabel }: TimePick
               onClick={confirm}
               className="mt-4 w-full rounded-full bg-(--color-wine) px-4 py-2.5 text-sm font-medium text-(--color-cream) hover:bg-(--color-wine-deep)"
             >
-              Confirmar {formatDisplay(`${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`)}
+              Confirmar {String(hour).padStart(2, '0')}:{String(minute).padStart(2, '0')}
             </button>
           </div>
         </div>
