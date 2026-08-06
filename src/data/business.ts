@@ -11,8 +11,10 @@ export const BUSINESS = {
   /** Mismo horario los 7 días — se repite tal cual en el modal de horarios. */
   hoursDaily: '10:00 – 20:00',
   mapsUrl: 'https://maps.app.goo.gl/gY3pSxB11cFB6fHM9',
-  mapsEmbedUrl:
-    'https://www.google.com/maps?q=Lomas+de+Rosales+401C,+Lomas+de+Rosales,+89100+Tampico,+Tamps.&output=embed',
+  /** Busca por nombre del negocio, no por texto de dirección — así el embed
+   * muestra el pin del negocio verificado (reseñas, fotos) en vez de un
+   * geocode genérico de la calle. */
+  mapsEmbedUrl: 'https://www.google.com/maps?q=Fábrica+de+Postres+Tampico&output=embed',
   facebookUrl: 'https://www.facebook.com/profile.php?id=61555879929126',
   instagramUrl: 'https://www.instagram.com/fabricadepostrestampico/',
   rating: 4.7,

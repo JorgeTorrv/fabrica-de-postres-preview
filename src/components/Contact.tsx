@@ -33,13 +33,20 @@ export function Contact() {
           </div>
         </div>
 
-        <div className="aspect-[4/5] w-full overflow-hidden rounded-[2rem] shadow-(--shadow-lift) sm:aspect-square">
+        <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[2rem] shadow-(--shadow-lift) sm:aspect-square">
           <iframe
             title={`Ubicación de ${BUSINESS.name} en el mapa`}
             src={BUSINESS.mapsEmbedUrl}
-            className="h-full w-full grayscale-[15%]"
+            className="pointer-events-none h-full w-full grayscale-[15%]"
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
+          />
+          <a
+            href={BUSINESS.mapsUrl}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={`Abrir ${BUSINESS.name} en Google Maps`}
+            className="absolute inset-0"
           />
         </div>
       </div>
