@@ -5,6 +5,8 @@ import { formatCurrency } from '../utils/format'
 import { buildOrderMessage, buildWhatsAppUrl, type DeliveryMethod } from '../utils/whatsapp'
 import { registerOrder } from '../lib/orders'
 import { ImageSlot } from './ImageSlot'
+import { DatePicker } from './DatePicker'
+import { TimePicker } from './TimePicker'
 
 const EMPTY_ADDRESS = { street: '', neighborhood: '', references: '' }
 const PHONE_DIGITS_MIN = 10
@@ -187,19 +189,17 @@ export function CartDrawer() {
               )}
 
               <div className="mt-3 grid grid-cols-2 gap-3">
-                <input
-                  type="date"
+                <DatePicker
                   value={requestedDate}
-                  onChange={(e) => setRequestedDate(e.target.value)}
-                  aria-label="Fecha deseada (opcional)"
-                  className="w-full min-w-0 rounded-lg border border-(--color-line) bg-(--color-paper) px-3.5 py-2.5 text-sm text-(--color-ink) focus:border-(--color-wine) focus:outline-none"
+                  onChange={setRequestedDate}
+                  placeholder="Fecha"
+                  ariaLabel="Fecha deseada (opcional)"
                 />
-                <input
-                  type="time"
+                <TimePicker
                   value={requestedTime}
-                  onChange={(e) => setRequestedTime(e.target.value)}
-                  aria-label="Hora deseada (opcional)"
-                  className="w-full min-w-0 rounded-lg border border-(--color-line) bg-(--color-paper) px-3.5 py-2.5 text-sm text-(--color-ink) focus:border-(--color-wine) focus:outline-none"
+                  onChange={setRequestedTime}
+                  placeholder="Hora"
+                  ariaLabel="Hora deseada (opcional)"
                 />
               </div>
 
