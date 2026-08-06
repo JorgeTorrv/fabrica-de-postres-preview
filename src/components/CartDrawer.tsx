@@ -4,6 +4,7 @@ import { useCart } from '../context/CartContext'
 import { formatCurrency } from '../utils/format'
 import { buildOrderMessage, buildWhatsAppUrl, type DeliveryMethod } from '../utils/whatsapp'
 import { registerOrder } from '../lib/orders'
+import { useBodyScrollLock } from '../hooks/useBodyScrollLock'
 import { ImageSlot } from './ImageSlot'
 import { DatePicker } from './DatePicker'
 import { TimePicker } from './TimePicker'
@@ -27,6 +28,8 @@ export function CartDrawer() {
   const [requestedDate, setRequestedDate] = useState('')
   const [requestedTime, setRequestedTime] = useState('')
   const [showValidation, setShowValidation] = useState(false)
+
+  useBodyScrollLock(isCartOpen)
 
   if (!isCartOpen) return null
 

@@ -4,6 +4,7 @@ import type { MenuItem } from '../data/types'
 import { useCart } from '../context/CartContext'
 import { formatCurrency } from '../utils/format'
 import { asset } from '../utils/asset'
+import { useBodyScrollLock } from '../hooks/useBodyScrollLock'
 import { ImageSlot } from './ImageSlot'
 
 type ProductModalProps = {
@@ -21,6 +22,8 @@ export function ProductModal({ item, categoryName, onClose }: ProductModalProps)
   const [quantity, setQuantity] = useState(1)
   const [comment, setComment] = useState('')
   const [justAdded, setJustAdded] = useState(false)
+
+  useBodyScrollLock()
 
   const option = item.options[optionIndex]
 

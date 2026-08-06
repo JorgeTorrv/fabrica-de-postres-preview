@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { X } from 'lucide-react'
 import { BUSINESS } from '../data/business'
+import { useBodyScrollLock } from '../hooks/useBodyScrollLock'
 
 const DAYS = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']
 
@@ -9,6 +10,8 @@ type HorariosModalProps = {
 }
 
 export function HorariosModal({ onClose }: HorariosModalProps) {
+  useBodyScrollLock()
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose()
     window.addEventListener('keydown', onKey)

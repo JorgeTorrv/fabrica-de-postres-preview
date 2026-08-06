@@ -3,6 +3,7 @@ import { Minus, Plus, X } from 'lucide-react'
 import type { Promotion } from '../data/types'
 import { useCart } from '../context/CartContext'
 import { formatCurrency } from '../utils/format'
+import { useBodyScrollLock } from '../hooks/useBodyScrollLock'
 import { ImageSlot } from './ImageSlot'
 
 type PromotionModalProps = {
@@ -20,6 +21,8 @@ export function PromotionModal({ promo, onClose }: PromotionModalProps) {
   const [quantity, setQuantity] = useState(1)
   const [comment, setComment] = useState('')
   const [justAdded, setJustAdded] = useState(false)
+
+  useBodyScrollLock()
 
   const handleAdd = () => {
     addItem({

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Clock, X } from 'lucide-react'
+import { useBodyScrollLock } from '../hooks/useBodyScrollLock'
 
 // Debe coincidir con BUSINESS.hoursDaily (10:00 – 20:00).
 const OPEN_HOUR = 10
@@ -31,6 +32,10 @@ function WheelColumn({ items, value, onChange }: WheelColumnProps) {
   const ref = useRef<HTMLDivElement>(null)
   const programmatic = useRef(false)
 
+  // Deps vacío a propósito: solo debe sincronizar el scroll al valor inicial
+  // cuando el componente monta (se abre el picker). Después de eso el
+  // usuario controla el scroll — reaccionar a cambios de `value` aquí haría
+  // que la rueda saltara de vuelta mientras el usuario la está moviendo.
   useEffect(() => {
     const el = ref.current
     const index = items.indexOf(value)
@@ -88,6 +93,8 @@ export function TimePicker({ value, onChange, placeholder, ariaLabel }: TimePick
   const [open, setOpen] = useState(false)
   const [hour, setHour] = useState<number>(() => (value ? Number(value.split(':')[0]) : OPEN_HOUR))
   const [minute, setMinute] = useState<number>(() => (value ? Number(value.split(':')[1]) : 0))
+
+  useBodyScrollLock(open)
 
   const openPicker = () => {
     if (value) {

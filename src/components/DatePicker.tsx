@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Calendar, ChevronLeft, ChevronRight, X } from 'lucide-react'
+import { useBodyScrollLock } from '../hooks/useBodyScrollLock'
 
 const WEEKDAY_LABELS = ['L', 'M', 'M', 'J', 'V', 'S', 'D']
 const MONTH_LABELS = [
@@ -62,6 +63,8 @@ export function DatePicker({ value, onChange, placeholder, ariaLabel }: DatePick
   const [open, setOpen] = useState(false)
   const selected = parseISODate(value)
   const [viewDate, setViewDate] = useState(() => selected ?? new Date())
+
+  useBodyScrollLock(open)
 
   const year = viewDate.getFullYear()
   const month = viewDate.getMonth()
