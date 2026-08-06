@@ -17,7 +17,9 @@
               "price": 85
             }
           ],
-          "optionsLabel": "Presentación"
+          "optionsLabel": "Presentación",
+          "featured": true,
+          "image": "https://fabrica-postres-admin.pages.dev/api/images/menu/pastel-zanahoria-28004c1e.jpg"
         },
         {
           "id": "pastel-chocolate-hersheys",
