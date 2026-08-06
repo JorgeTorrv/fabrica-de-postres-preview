@@ -129,20 +129,18 @@ export function Catalog() {
   return (
     <section id="menu" className="bg-(--color-cream)">
       <div className="sticky top-[64px] z-30 border-b border-(--color-line) bg-(--color-cream)/95 backdrop-blur lg:top-[76px]">
-        <div className="mx-auto px-6 py-5 lg:px-10">
-          <nav className="flex gap-5 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            {jumpTargets.map((target) => (
-              <button
-                key={target.id}
-                type="button"
-                onClick={() => scrollToSection(target.id)}
-                className="flex-none text-base text-(--color-ink-soft) transition-colors hover:text-(--color-wine)"
-              >
-                {target.name}
-              </button>
-            ))}
-          </nav>
-        </div>
+        <nav className="mx-auto flex items-center gap-5 overflow-x-auto px-6 py-5 lg:px-10 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {jumpTargets.map((target) => (
+            <button
+              key={target.id}
+              type="button"
+              onClick={() => scrollToSection(target.id)}
+              className="flex-none text-base text-(--color-ink-soft) transition-colors hover:text-(--color-wine)"
+            >
+              {target.name}
+            </button>
+          ))}
+        </nav>
       </div>
 
       <div className="mx-auto max-w-2xl px-6 py-10 lg:px-0">
