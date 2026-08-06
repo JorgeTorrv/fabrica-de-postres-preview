@@ -28,8 +28,8 @@ export function Header() {
         visible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
       }`}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-10">
-        <a href="#top" className="flex items-center">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:grid lg:grid-cols-3 lg:px-10">
+        <a href="#top" className="flex items-center lg:justify-self-start">
           <img
             src={asset('/images/logo/logo.png')}
             alt="Fábrica de Postres · Eventos y Pastelería"
@@ -37,7 +37,7 @@ export function Header() {
           />
         </a>
 
-        <nav className="hidden items-center gap-9 lg:flex">
+        <nav className="hidden items-center gap-9 lg:flex lg:justify-self-center">
           {NAV_LINKS.map((link) => (
             <a
               key={link.href}
@@ -49,7 +49,7 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 lg:justify-self-end">
           <button
             type="button"
             onClick={openCart}
