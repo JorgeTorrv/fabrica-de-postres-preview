@@ -1255,5 +1255,6 @@
       "description": "No incluye sabor Dubai",
       "price": 120
     }
-  ]
+  ],
+  "catalogView": "list"
 }

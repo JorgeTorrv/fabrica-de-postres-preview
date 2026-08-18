@@ -57,4 +57,6 @@ export type Promotion = {
 export type Catalog = {
   categories: MenuCategory[]
   promotions: Promotion[]
+  /** Controlado desde el panel (Ajustes). Opcional por compatibilidad con caché/fallback viejos. */
+  catalogView?: 'list' | 'gallery'
 }
