@@ -19,7 +19,7 @@ export function Hero() {
   const [showHours, setShowHours] = useState(false)
 
   return (
-    <section id="top" className="flex min-h-dvh flex-col items-center justify-center gap-10 px-6 py-12 text-center">
+    <section id="top" className="flex min-h-dvh flex-col items-center justify-center gap-10 bg-white px-6 py-12 text-center">
       <img
         src={asset('/images/logo/logo.png')}
         alt={`${BUSINESS.name} · ${BUSINESS.tagline}`}
