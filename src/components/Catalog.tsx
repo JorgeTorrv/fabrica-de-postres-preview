@@ -196,8 +196,8 @@ export function Catalog() {
   ]
 
   return (
-    <section id="menu" className="bg-(--color-cream)">
-      <div className="sticky top-[64px] z-30 border-b border-(--color-line) bg-(--color-cream)/95 backdrop-blur lg:top-[76px]">
+    <section id="menu" className="bg-white">
+      <div className="sticky top-[64px] z-30 border-b border-(--color-line) bg-white/95 backdrop-blur lg:top-[76px]">
         <nav className="mx-auto flex items-center gap-5 overflow-x-auto px-6 py-5 lg:px-10 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {jumpTargets.map((target) => (
             <button

@@ -49,7 +49,8 @@
               "price": 85
             }
           ],
-          "optionsLabel": "Presentación"
+          "optionsLabel": "Presentación",
+          "image": "https://fabrica-postres-admin.pages.dev/api/images/menu/pastel-red-velvet-005621e0.jpg"
         },
         {
           "id": "pastel-chocolate-aleman",
@@ -64,7 +65,8 @@
               "price": 85
             }
           ],
-          "optionsLabel": "Presentación"
+          "optionsLabel": "Presentación",
+          "image": "https://fabrica-postres-admin.pages.dev/api/images/menu/pastel-chocolate-aleman-1e545b6a.jpg"
         },
         {
           "id": "pastel-vainilla",
@@ -1230,31 +1232,36 @@
       "id": "promo-galletas-ny",
       "title": "5 Galletas Estilo NY",
       "description": "No incluye sabor Dubai",
-      "price": 300
+      "price": 300,
+      "image": "https://fabrica-postres-admin.pages.dev/api/images/menu/promo-galletas-ny-b5700712.jpg"
     },
     {
       "id": "promo-2-rebanadas",
       "title": "2 Rebanadas",
       "description": "Lunes, martes, jueves, viernes, sábado y domingo",
-      "price": 150
+      "price": 150,
+      "image": "https://fabrica-postres-admin.pages.dev/api/images/menu/promo-2-rebanadas-6165c479.jpg"
     },
     {
       "id": "promo-2-rebanadas-miercoles",
       "title": "2 Rebanadas Miércoles",
       "description": "Precio especial de miércoles",
-      "price": 120
+      "price": 120,
+      "image": "https://fabrica-postres-admin.pages.dev/api/images/menu/promo-2-rebanadas-miercoles-3d4e516b.jpg"
     },
     {
       "id": "promo-latte-rebanada",
       "title": "Latte y Rebanada",
-      "price": 140
+      "price": 140,
+      "image": "https://fabrica-postres-admin.pages.dev/api/images/menu/promo-latte-rebanada-315c85d1.jpg"
     },
     {
       "id": "promo-latte-galleta",
       "title": "Latte con Galleta",
       "description": "No incluye sabor Dubai",
-      "price": 120
+      "price": 120,
+      "image": "https://fabrica-postres-admin.pages.dev/api/images/menu/promo-latte-galleta-9e07d2ea.jpg"
     }
   ],
-  "catalogView": "list"
+  "catalogView": "gallery"
 }
