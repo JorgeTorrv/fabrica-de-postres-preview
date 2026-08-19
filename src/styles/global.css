@@ -24,7 +24,10 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    background-color: var(--color-cream);
+    /* Blanco puro (no --color-cream): es lo que se asoma en el rebote/notch
+       de iOS al cargar, cuando el header (crema) todavía está oculto y lo
+       único visible es el hero, que ahora es blanco puro. */
+    background-color: #fff;
   }
 
   body {
