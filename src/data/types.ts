@@ -8,6 +8,11 @@ export type ExtraOption = {
   price: number
 }
 
+export type RatingSummary = {
+  avg: number
+  count: number
+}
+
 export type MenuItem = {
   id: string
   name: string
@@ -32,6 +37,8 @@ export type MenuItem = {
   availableDays?: string[]
   /** URL absoluta servida por la API del panel admin, o undefined si aún no hay foto. */
   image?: string
+  /** Undefined si nadie lo ha calificado todavía. */
+  rating?: RatingSummary
 }
 
 export type MenuCategory = {
@@ -52,6 +59,8 @@ export type Promotion = {
   /** true si hoy no es uno de los días disponibles. */
   soldOut?: boolean
   image?: string
+  /** Undefined si nadie la ha calificado todavía. */
+  rating?: RatingSummary
 }
 
 export type Catalog = {

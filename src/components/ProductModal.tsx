@@ -1,11 +1,13 @@
 import { useMemo, useState } from 'react'
 import { Minus, Plus, X } from 'lucide-react'
-import type { MenuItem } from '../data/types'
+import type { MenuItem, RatingSummary } from '../data/types'
 import { useCart } from '../context/CartContext'
 import { formatCurrency } from '../utils/format'
 import { asset } from '../utils/asset'
 import { useBodyScrollLock } from '../hooks/useBodyScrollLock'
 import { ImageSlot } from './ImageSlot'
+import { StarRating } from './StarRating'
+import { RatingInput } from './RatingInput'
 
 type ProductModalProps = {
   item: MenuItem
@@ -22,6 +24,7 @@ export function ProductModal({ item, categoryName, onClose }: ProductModalProps)
   const [quantity, setQuantity] = useState(1)
   const [comment, setComment] = useState('')
   const [justAdded, setJustAdded] = useState(false)
+  const [liveRating, setLiveRating] = useState<RatingSummary | undefined>(item.rating)
 
   useBodyScrollLock()
 
@@ -95,9 +98,16 @@ export function ProductModal({ item, categoryName, onClose }: ProductModalProps)
             {item.name}
             {item.featured && <img src={asset('/images/Icons/CerezaIcon.png')} alt="Destacado" className="h-12 w-12" />}
           </h3>
+          {liveRating && <div className="mt-1.5">
+            <StarRating avg={liveRating.avg} count={liveRating.count} size="md" />
+          </div>}
           {item.description && <p className="mt-2 text-sm text-(--color-ink-soft)">{item.description}</p>}
           {item.note && <p className="mt-2 text-sm italic text-(--color-ink-soft)">{item.note}</p>}
           {item.soldOut && <p className="mt-3 text-sm font-medium text-(--color-wine)">Agotado por ahora</p>}
+
+          <div className="mt-7">
+            <RatingInput itemType="product" itemId={item.id} onRated={setLiveRating} />
+          </div>
 
           <div className={item.soldOut ? 'pointer-events-none opacity-50' : undefined}>
           {item.flavors && item.flavors.length > 0 && (

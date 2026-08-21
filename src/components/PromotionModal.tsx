@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { Minus, Plus, X } from 'lucide-react'
-import type { Promotion } from '../data/types'
+import type { Promotion, RatingSummary } from '../data/types'
 import { useCart } from '../context/CartContext'
 import { formatCurrency } from '../utils/format'
 import { useBodyScrollLock } from '../hooks/useBodyScrollLock'
 import { ImageSlot } from './ImageSlot'
+import { StarRating } from './StarRating'
+import { RatingInput } from './RatingInput'
 
 type PromotionModalProps = {
   promo: Promotion
@@ -21,6 +23,7 @@ export function PromotionModal({ promo, onClose }: PromotionModalProps) {
   const [quantity, setQuantity] = useState(1)
   const [comment, setComment] = useState('')
   const [justAdded, setJustAdded] = useState(false)
+  const [liveRating, setLiveRating] = useState<RatingSummary | undefined>(promo.rating)
 
   useBodyScrollLock()
 
@@ -57,8 +60,15 @@ export function PromotionModal({ promo, onClose }: PromotionModalProps) {
         <div className="flex-1 overflow-y-auto px-7 py-7">
           <p className="text-sm text-(--color-ink-soft)">Promoción</p>
           <h3 className="mt-1 font-display text-3xl text-(--color-ink)">{promo.title}</h3>
+          {liveRating && <div className="mt-1.5">
+            <StarRating avg={liveRating.avg} count={liveRating.count} size="md" />
+          </div>}
           {promo.description && <p className="mt-2 text-sm text-(--color-ink-soft)">{promo.description}</p>}
           {promo.soldOut && <p className="mt-3 text-sm font-medium text-(--color-wine)">Agotado por ahora</p>}
+
+          <div className="mt-7">
+            <RatingInput itemType="promotion" itemId={promo.id} onRated={setLiveRating} />
+          </div>
 
           <div className={promo.soldOut ? 'pointer-events-none opacity-50' : undefined}>
             <div className="mt-7">

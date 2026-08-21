@@ -8,6 +8,7 @@ import { DAY_LABELS, partialDays } from '../data/days'
 import { ProductModal } from './ProductModal'
 import { PromotionModal } from './PromotionModal'
 import { ImageSlot } from './ImageSlot'
+import { StarRating } from './StarRating'
 
 const PROMOTIONS_ID = '__promociones__'
 
@@ -132,26 +133,46 @@ function PromotionRow({ promo, onOpen }: { promo: Promotion; onOpen: () => void 
   )
 }
 
+/** Precio + texto del botón de una tarjeta de galería, según tenga una opción, varias, o sea a cotizar. */
+function galleryPriceInfo(item: MenuItem): { price: string; cta: string } {
+  if (item.customQuote) return { price: 'Cotización', cta: 'Personalizar' }
+  if (item.options.length <= 1) {
+    return { price: formatCurrency(item.options[0]?.price ?? 0), cta: 'Agregar al carrito' }
+  }
+  const min = Math.min(...item.options.map((o) => o.price))
+  return { price: `Desde ${formatCurrency(min)}`, cta: 'Seleccionar opciones' }
+}
+
 /**
- * Tarjeta de galería: la foto manda (arriba, grande), el nombre y las
- * presentaciones/precios van debajo. Toda la tarjeta abre el mismo modal
- * que la vista de lista.
+ * Tarjeta de galería: foto cuadrada arriba, nombre/estrellas/precio y un
+ * botón centrados debajo — pensada para verse en cuadrícula (2 columnas en
+ * móvil, 4 en escritorio). Toda la tarjeta abre el mismo modal que la vista
+ * de lista; el "botón" de abajo es visual, no un control aparte.
  */
 function GalleryProductCard({ item, onOpen }: { item: MenuItem; onOpen: () => void }) {
+  const { price, cta } = galleryPriceInfo(item)
+
   return (
     <button
       type="button"
       onClick={onOpen}
-      className="flex w-full flex-col overflow-hidden rounded-2xl border border-(--color-line) bg-(--color-paper) text-left shadow-(--shadow-soft) transition-transform active:scale-[0.99]"
+      className="flex flex-col overflow-hidden rounded-2xl border border-(--color-line) bg-(--color-paper) text-left shadow-(--shadow-soft) transition-transform active:scale-[0.98]"
     >
-      <ImageSlot
-        src={item.image ?? DEMO_GALLERY_IMAGE}
-        alt={item.name}
-        placeholderLabel={item.name}
-        className="h-60 w-full sm:h-72"
-      />
-      <div className="flex flex-col gap-1 px-5 py-4">
-        <ItemDetails item={item} />
+      <ImageSlot src={item.image ?? DEMO_GALLERY_IMAGE} alt={item.name} placeholderLabel={item.name} className="aspect-square w-full" />
+      <div className="flex flex-1 flex-col items-center gap-1.5 px-3 py-4 text-center">
+        <p className="flex items-center gap-1 font-display text-base leading-tight text-(--color-wine) sm:text-lg">
+          {item.name}
+          {item.featured && <img src={asset('/images/Icons/CerezaIcon.png')} alt="Destacado" className="h-5 w-5 flex-none" />}
+        </p>
+        {item.rating && <StarRating avg={item.rating.avg} count={item.rating.count} />}
+        <p className="text-sm font-medium text-(--color-ink) sm:text-base">{price}</p>
+        <span
+          className={`mt-1 w-full rounded-full px-3 py-2.5 text-xs font-medium sm:text-sm ${
+            item.soldOut ? 'bg-(--color-cream-dim) text-(--color-ink-soft)' : 'bg-(--color-cream-dim) text-(--color-ink)'
+          }`}
+        >
+          {item.soldOut ? 'Agotado' : cta}
+        </span>
       </div>
     </button>
   )
@@ -162,16 +183,16 @@ function GalleryPromotionCard({ promo, onOpen }: { promo: Promotion; onOpen: () 
     <button
       type="button"
       onClick={onOpen}
-      className="flex w-full flex-col overflow-hidden rounded-2xl border border-(--color-line) bg-(--color-paper) text-left shadow-(--shadow-soft) transition-transform active:scale-[0.99]"
+      className="flex flex-col overflow-hidden rounded-2xl border border-(--color-line) bg-(--color-paper) text-left shadow-(--shadow-soft) transition-transform active:scale-[0.98]"
     >
-      <ImageSlot
-        src={promo.image ?? DEMO_GALLERY_IMAGE}
-        alt={promo.title}
-        placeholderLabel={promo.title}
-        className="h-60 w-full sm:h-72"
-      />
-      <div className="flex flex-col gap-1 px-5 py-4">
-        <PromotionDetails promo={promo} />
+      <ImageSlot src={promo.image ?? DEMO_GALLERY_IMAGE} alt={promo.title} placeholderLabel={promo.title} className="aspect-square w-full" />
+      <div className="flex flex-1 flex-col items-center gap-1.5 px-3 py-4 text-center">
+        <p className="font-display text-base leading-tight text-(--color-wine) sm:text-lg">{promo.title}</p>
+        {promo.rating && <StarRating avg={promo.rating.avg} count={promo.rating.count} />}
+        {promo.price != null && <p className="text-sm font-medium text-(--color-ink) sm:text-base">{formatCurrency(promo.price)}</p>}
+        <span className="mt-1 w-full rounded-full bg-(--color-cream-dim) px-3 py-2.5 text-xs font-medium text-(--color-ink) sm:text-sm">
+          {promo.soldOut ? 'Agotado' : 'Agregar al carrito'}
+        </span>
       </div>
     </button>
   )
@@ -212,11 +233,11 @@ export function Catalog() {
         </nav>
       </div>
 
-      <div className="mx-auto max-w-2xl px-6 py-10 lg:px-0">
+      <div className={isGallery ? 'mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-10' : 'mx-auto max-w-2xl px-6 py-10 lg:px-0'}>
         {catalog.promotions.length > 0 && (
           <div id={`cat-${PROMOTIONS_ID}`} className="mb-10 scroll-mt-32">
             <h2 className="font-display text-2xl uppercase tracking-wide text-(--color-wine)">Promociones</h2>
-            <div className={isGallery ? 'mt-4 flex flex-col gap-6' : 'mt-2'}>
+            <div className={isGallery ? 'mt-4 grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6' : 'mt-2'}>
               {catalog.promotions.map((promo) =>
                 isGallery ? (
                   <GalleryPromotionCard key={promo.id} promo={promo} onOpen={() => setActivePromo(promo)} />
@@ -232,7 +253,7 @@ export function Catalog() {
           <div key={category.id} id={`cat-${category.id}`} className="mb-10 scroll-mt-32">
             <h2 className="font-display text-2xl uppercase tracking-wide text-(--color-wine)">{category.name}</h2>
             {category.description && <p className="mt-1 text-sm text-(--color-ink-soft)">{category.description}</p>}
-            <div className={isGallery ? 'mt-4 flex flex-col gap-6' : 'mt-2'}>
+            <div className={isGallery ? 'mt-4 grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6' : 'mt-2'}>
               {category.items.map((item) =>
                 isGallery ? (
                   <GalleryProductCard
