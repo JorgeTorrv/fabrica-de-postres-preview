@@ -7,18 +7,8 @@
         {
           "id": "pastel-zanahoria",
           "name": "Zanahoria",
-          "options": [
-            {
-              "label": "Pastel para 10 personas",
-              "price": 580
-            },
-            {
-              "label": "Rebanada",
-              "price": 85
-            }
-          ],
+          "options": [],
           "optionsLabel": "Presentación",
-          "featured": true,
           "image": "https://fabrica-postres-admin.pages.dev/api/images/menu/pastel-zanahoria-28004c1e.jpg"
         },
         {
