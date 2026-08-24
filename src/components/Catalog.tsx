@@ -227,18 +227,28 @@ export function Catalog() {
   return (
     <section id="menu" className="bg-(--color-cream)">
       <div className="sticky top-[64px] z-30 border-b border-(--color-line) bg-(--color-cream)/95 backdrop-blur lg:top-[76px]">
-        <nav className="mx-auto flex max-w-6xl items-center gap-5 overflow-x-auto px-6 py-5 lg:justify-center lg:px-10 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          {jumpTargets.map((target) => (
-            <button
-              key={target.id}
-              type="button"
-              onClick={() => scrollToSection(target.id)}
-              className="flex-none text-base text-(--color-ink-soft) transition-colors hover:text-(--color-sage)"
-            >
-              {target.name}
-            </button>
-          ))}
-        </nav>
+        {/*
+          El scroll vive en este wrapper (ancho completo); nav adentro se
+          dimensiona a su contenido (w-max) y se centra con mx-auto — así se
+          ve centrado cuando cabe, y usa todo el ancho disponible antes de
+          necesitar scroll cuando no cabe. Poner el centrado con
+          justify-center directo en el elemento que scrollea corta el inicio
+          del contenido que se desborda (bug conocido de flexbox).
+        */}
+        <div className="overflow-x-auto px-6 py-5 lg:px-10 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <nav className="mx-auto flex w-max items-center gap-5">
+            {jumpTargets.map((target) => (
+              <button
+                key={target.id}
+                type="button"
+                onClick={() => scrollToSection(target.id)}
+                className="flex-none text-base text-(--color-sage) transition-opacity hover:opacity-70"
+              >
+                {target.name}
+              </button>
+            ))}
+          </nav>
+        </div>
       </div>
 
       <div className={isGallery ? 'mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-10' : 'mx-auto max-w-2xl px-6 py-10 lg:px-0'}>

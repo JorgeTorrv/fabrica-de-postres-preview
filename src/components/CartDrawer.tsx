@@ -150,7 +150,7 @@ export function CartDrawer() {
                             <Plus className="h-3.5 w-3.5" strokeWidth={1.5} />
                           </button>
                         </div>
-                        <span className="text-sm font-medium text-(--color-ink)">
+                        <span className="text-sm font-medium text-(--color-sage)">
                           {item.customQuote
                             ? 'A cotizar'
                             : formatCurrency((item.optionPrice + item.extras.reduce((s, e) => s + e.price, 0)) * item.quantity)}

@@ -1272,7 +1272,11 @@
       "title": "Latte con Galleta",
       "description": "No incluye sabor Dubai",
       "price": 120,
-      "image": "https://fabrica-postres-admin.pages.dev/api/images/menu/promo-latte-galleta-9e07d2ea.jpg"
+      "image": "https://fabrica-postres-admin.pages.dev/api/images/menu/promo-latte-galleta-9e07d2ea.jpg",
+      "rating": {
+        "avg": 0.5,
+        "count": 1
+      }
     }
   ],
   "catalogView": "gallery"
