@@ -54,7 +54,7 @@ export function Header() {
             type="button"
             onClick={openCart}
             aria-label="Abrir carrito"
-            className="relative flex h-10 w-10 items-center justify-center rounded-full text-(--color-ink) transition-colors hover:bg-(--color-cream-dim)"
+            className="relative flex h-10 w-10 items-center justify-center rounded-full text-(--color-wine-deep) transition-colors hover:bg-(--color-cream-dim)"
           >
             <ShoppingBag className="h-5 w-5" strokeWidth={1.5} />
             {itemCount > 0 && (
@@ -67,7 +67,7 @@ export function Header() {
           <a
             href={`tel:+${BUSINESS.whatsapp}`}
             aria-label="Llamar a Fábrica de Postres"
-            className="flex h-10 w-10 items-center justify-center rounded-full text-(--color-ink) transition-colors hover:bg-(--color-cream-dim) lg:hidden"
+            className="flex h-10 w-10 items-center justify-center rounded-full text-(--color-wine-deep) transition-colors hover:bg-(--color-cream-dim) lg:hidden"
           >
             <Phone className="h-5 w-5" strokeWidth={1.5} />
           </a>

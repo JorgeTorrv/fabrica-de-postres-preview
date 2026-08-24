@@ -148,7 +148,7 @@ export function ProductModal({ item, categoryName, onClose }: ProductModalProps)
                     }`}
                   >
                     <span className="text-(--color-ink)">{opt.label}</span>
-                    <span className="font-medium text-(--color-ink)">{formatCurrency(opt.price)}</span>
+                    <span className="font-medium text-(--color-sage)">{formatCurrency(opt.price)}</span>
                   </button>
                 ))}
               </div>
@@ -197,7 +197,7 @@ export function ProductModal({ item, categoryName, onClose }: ProductModalProps)
                       />
                       {extra.label}
                     </span>
-                    <span className="text-(--color-ink-soft)">+{formatCurrency(extra.price)}</span>
+                    <span className="text-(--color-sage)">+{formatCurrency(extra.price)}</span>
                   </label>
                 ))}
               </div>

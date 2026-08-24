@@ -59,7 +59,7 @@ function ItemDetails({ item }: { item: MenuItem }) {
         {item.customQuote ? (
           <span className="flex-none text-sm text-(--color-ink-soft)">Cotización</span>
         ) : item.options.length === 1 ? (
-          <span className="flex-none font-medium text-(--color-ink)">{formatCurrency(item.options[0].price)}</span>
+          <span className="flex-none font-medium text-(--color-sage)">{formatCurrency(item.options[0].price)}</span>
         ) : null}
       </div>
 
@@ -72,7 +72,7 @@ function ItemDetails({ item }: { item: MenuItem }) {
           {item.options.map((option) => (
             <li key={option.label} className="flex items-baseline justify-between gap-4 text-sm">
               <span className="text-(--color-ink-soft)">{option.label}</span>
-              <span className="flex-none font-medium text-(--color-ink)">{formatCurrency(option.price)}</span>
+              <span className="flex-none font-medium text-(--color-sage)">{formatCurrency(option.price)}</span>
             </li>
           ))}
         </ul>
@@ -91,7 +91,7 @@ function PromotionDetails({ promo }: { promo: Promotion }) {
     <>
       <div className="flex items-baseline justify-between gap-4">
         <span className="font-display text-lg text-(--color-ink)">{promo.title}</span>
-        {promo.price != null && <span className="flex-none font-medium text-(--color-ink)">{formatCurrency(promo.price)}</span>}
+        {promo.price != null && <span className="flex-none font-medium text-(--color-sage)">{formatCurrency(promo.price)}</span>}
       </div>
       {promo.description && <p className="text-sm text-(--color-ink-soft)">{promo.description}</p>}
 
@@ -165,7 +165,7 @@ function GalleryProductCard({ item, onOpen }: { item: MenuItem; onOpen: () => vo
           {item.featured && <img src={asset('/images/Icons/CerezaIcon.png')} alt="Destacado" className="h-5 w-5 flex-none" />}
         </p>
         <StarRating avg={item.rating?.avg ?? 0} count={item.rating?.count ?? 0} />
-        <p className="text-sm font-medium text-(--color-ink) sm:text-base">{price}</p>
+        <p className="text-sm font-medium text-(--color-sage) sm:text-base">{price}</p>
         <span
           className={`mt-1 w-full rounded-full px-3 py-2.5 text-xs font-medium transition-colors sm:text-sm ${
             item.soldOut
@@ -193,7 +193,7 @@ function GalleryPromotionCard({ promo, onOpen }: { promo: Promotion; onOpen: () 
           {promo.title}
         </p>
         <StarRating avg={promo.rating?.avg ?? 0} count={promo.rating?.count ?? 0} />
-        {promo.price != null && <p className="text-sm font-medium text-(--color-ink) sm:text-base">{formatCurrency(promo.price)}</p>}
+        {promo.price != null && <p className="text-sm font-medium text-(--color-sage) sm:text-base">{formatCurrency(promo.price)}</p>}
         <span
           className={`mt-1 w-full rounded-full px-3 py-2.5 text-xs font-medium text-(--color-ink) transition-colors sm:text-sm ${
             promo.soldOut ? 'bg-(--color-cream-dim)' : 'bg-(--color-cream-dim) group-hover:bg-(--color-wine)'
