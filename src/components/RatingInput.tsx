@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { Star } from 'lucide-react'
+import { StarRow } from './StarIcons'
 import { submitRating } from '../lib/ratings'
 import { getRatedStars, markRated } from '../utils/ratedItems'
 import type { RatingSummary } from '../data/types'
@@ -25,9 +25,10 @@ function snapToHalf(value: number): number {
  * cualquier punto de la fila califica directo con la media estrella más
  * cercana a ese punto, sin necesidad de hover previo.
  *
- * Sin login: el backend limita a una calificación por red por ítem (ver
- * rater-key en el panel admin); aquí además se recuerda en este navegador
- * para no reinvitar a calificar lo mismo.
+ * Sin login y sin límite por persona — cualquiera puede votar las veces que
+ * quiera (la única protección contra abuso es Turnstile, invisible, al
+ * mandar el voto). Aquí se recuerda en este navegador para no reinvitar a
+ * calificar lo mismo, aunque volver a tocar sí permite cambiar el voto.
  */
 export function RatingInput({ itemType, itemId, onRated }: RatingInputProps) {
   const trackRef = useRef<HTMLDivElement>(null)
@@ -36,7 +37,6 @@ export function RatingInput({ itemType, itemId, onRated }: RatingInputProps) {
   const [justRated, setJustRated] = useState(false)
 
   const displayStars = hoverStars ?? myStars ?? 0
-  const pct = Math.max(0, Math.min(100, (displayStars / STAR_COUNT) * 100))
 
   const valueFromPointer = (clientX: number): number => {
     const rect = trackRef.current?.getBoundingClientRect()
@@ -70,19 +70,7 @@ export function RatingInput({ itemType, itemId, onRated }: RatingInputProps) {
           onMouseMove={(e) => setHoverStars(valueFromPointer(e.clientX))}
           onMouseLeave={() => setHoverStars(null)}
         >
-          <div className="flex text-(--color-line)">
-            {Array.from({ length: STAR_COUNT }).map((_, i) => (
-              <Star key={i} className="h-9 w-9" strokeWidth={1.5} fill="currentColor" />
-            ))}
-          </div>
-          <div
-            className="absolute inset-y-2 left-0 flex overflow-hidden text-(--color-gold)"
-            style={{ width: `${pct}%` }}
-          >
-            {Array.from({ length: STAR_COUNT }).map((_, i) => (
-              <Star key={i} className="h-9 w-9" strokeWidth={1.5} fill="currentColor" />
-            ))}
-          </div>
+          <StarRow value={displayStars} sizeClass="h-9 w-9" />
         </div>
         {justRated && <span className="text-xs text-(--color-ink-soft)">¡Gracias por tu calificación!</span>}
       </div>
