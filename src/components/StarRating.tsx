@@ -1,4 +1,5 @@
 import { Star } from 'lucide-react'
+import { roundToDisplayStars } from '../utils/starDisplay'
 
 type StarRatingProps = {
   avg: number
@@ -8,13 +9,15 @@ type StarRatingProps = {
 
 /**
  * Estrellas de solo lectura con relleno parcial (dos filas superpuestas: una
- * gris de fondo, una dorada recortada al % del promedio) — así un 4.3 se ve
- * como tal, no redondeado a 4 o 5 estrellas completas.
+ * gris de fondo, una dorada recortada al % de la estrella redondeada) — el
+ * promedio se redondea a pasos de 0.5 antes de mostrarse (ver
+ * `roundToDisplayStars`), no se muestra el porcentaje exacto.
  */
 export function StarRating({ avg, count, size = 'sm' }: StarRatingProps) {
   if (count === 0) return null
 
-  const pct = Math.max(0, Math.min(100, (avg / 5) * 100))
+  const displayValue = roundToDisplayStars(avg)
+  const pct = Math.max(0, Math.min(100, (displayValue / 5) * 100))
   const starSize = size === 'sm' ? 'h-3.5 w-3.5' : 'h-5 w-5'
 
   return (
