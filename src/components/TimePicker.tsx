@@ -132,7 +132,7 @@ export function TimePicker({ value, onChange, placeholder, ariaLabel }: TimePick
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between">
-              <h3 className="font-display text-lg text-(--color-ink)">Selecciona una hora</h3>
+              <h3 className="font-display text-lg text-(--color-sage)">Selecciona una hora</h3>
               <button
                 type="button"
                 onClick={() => setOpen(false)}

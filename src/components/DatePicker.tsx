@@ -110,7 +110,7 @@ export function DatePicker({ value, onChange, placeholder, ariaLabel }: DatePick
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between">
-              <h3 className="font-display text-lg text-(--color-ink)">Selecciona una fecha</h3>
+              <h3 className="font-display text-lg text-(--color-sage)">Selecciona una fecha</h3>
               <button
                 type="button"
                 onClick={() => setOpen(false)}
@@ -130,7 +130,7 @@ export function DatePicker({ value, onChange, placeholder, ariaLabel }: DatePick
               >
                 <ChevronLeft className="h-4 w-4" strokeWidth={1.5} />
               </button>
-              <p className="text-sm font-medium text-(--color-ink)">
+              <p className="text-sm font-medium text-(--color-wine-deep)">
                 {MONTH_LABELS[month]} {year}
               </p>
               <button

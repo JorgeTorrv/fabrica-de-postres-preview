@@ -28,7 +28,7 @@ export function HorariosModal({ onClose }: HorariosModalProps) {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between">
-          <h3 className="font-display text-2xl uppercase tracking-wide text-(--color-ink)">Horarios</h3>
+          <h3 className="font-display text-2xl uppercase tracking-wide text-(--color-sage)">Horarios</h3>
           <button
             type="button"
             onClick={onClose}
