@@ -98,9 +98,9 @@ export function ProductModal({ item, categoryName, onClose }: ProductModalProps)
             {item.name}
             {item.featured && <img src={asset('/images/Icons/CerezaIcon.png')} alt="Destacado" className="h-12 w-12" />}
           </h3>
-          {liveRating && <div className="mt-1.5">
-            <StarRating avg={liveRating.avg} count={liveRating.count} size="md" />
-          </div>}
+          <div className="mt-1.5">
+            <StarRating avg={liveRating?.avg ?? 0} count={liveRating?.count ?? 0} size="md" />
+          </div>
           {item.description && <p className="mt-2 text-sm text-(--color-ink-soft)">{item.description}</p>}
           {item.note && <p className="mt-2 text-sm italic text-(--color-ink-soft)">{item.note}</p>}
           {item.soldOut && <p className="mt-3 text-sm font-medium text-(--color-wine)">Agotado por ahora</p>}

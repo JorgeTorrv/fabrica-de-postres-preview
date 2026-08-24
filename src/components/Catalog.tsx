@@ -164,7 +164,7 @@ function GalleryProductCard({ item, onOpen }: { item: MenuItem; onOpen: () => vo
           {item.name}
           {item.featured && <img src={asset('/images/Icons/CerezaIcon.png')} alt="Destacado" className="h-5 w-5 flex-none" />}
         </p>
-        {item.rating && <StarRating avg={item.rating.avg} count={item.rating.count} />}
+        <StarRating avg={item.rating?.avg ?? 0} count={item.rating?.count ?? 0} />
         <p className="text-sm font-medium text-(--color-ink) sm:text-base">{price}</p>
         <span
           className={`mt-1 w-full rounded-full px-3 py-2.5 text-xs font-medium sm:text-sm ${
@@ -188,7 +188,7 @@ function GalleryPromotionCard({ promo, onOpen }: { promo: Promotion; onOpen: () 
       <ImageSlot src={promo.image ?? DEMO_GALLERY_IMAGE} alt={promo.title} placeholderLabel={promo.title} className="aspect-square w-full" />
       <div className="flex flex-1 flex-col items-center gap-1.5 px-3 py-4 text-center">
         <p className="font-display text-base leading-tight text-(--color-wine) sm:text-lg">{promo.title}</p>
-        {promo.rating && <StarRating avg={promo.rating.avg} count={promo.rating.count} />}
+        <StarRating avg={promo.rating?.avg ?? 0} count={promo.rating?.count ?? 0} />
         {promo.price != null && <p className="text-sm font-medium text-(--color-ink) sm:text-base">{formatCurrency(promo.price)}</p>}
         <span className="mt-1 w-full rounded-full bg-(--color-cream-dim) px-3 py-2.5 text-xs font-medium text-(--color-ink) sm:text-sm">
           {promo.soldOut ? 'Agotado' : 'Agregar al carrito'}

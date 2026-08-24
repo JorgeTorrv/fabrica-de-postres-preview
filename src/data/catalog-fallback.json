@@ -81,7 +81,11 @@
               "price": 85
             }
           ],
-          "optionsLabel": "Presentación"
+          "optionsLabel": "Presentación",
+          "rating": {
+            "avg": 5,
+            "count": 1
+          }
         },
         {
           "id": "pastel-pina",
@@ -96,7 +100,11 @@
               "price": 85
             }
           ],
-          "optionsLabel": "Presentación"
+          "optionsLabel": "Presentación",
+          "rating": {
+            "avg": 4,
+            "count": 2
+          }
         },
         {
           "id": "pastel-marmoleado",
@@ -1233,7 +1241,11 @@
       "title": "5 Galletas Estilo NY",
       "description": "No incluye sabor Dubai",
       "price": 300,
-      "image": "https://fabrica-postres-admin.pages.dev/api/images/menu/promo-galletas-ny-b5700712.jpg"
+      "image": "https://fabrica-postres-admin.pages.dev/api/images/menu/promo-galletas-ny-b5700712.jpg",
+      "rating": {
+        "avg": 5,
+        "count": 1
+      }
     },
     {
       "id": "promo-2-rebanadas",

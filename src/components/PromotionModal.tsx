@@ -60,9 +60,9 @@ export function PromotionModal({ promo, onClose }: PromotionModalProps) {
         <div className="flex-1 overflow-y-auto px-7 py-7">
           <p className="text-sm text-(--color-ink-soft)">Promoción</p>
           <h3 className="mt-1 font-display text-3xl text-(--color-ink)">{promo.title}</h3>
-          {liveRating && <div className="mt-1.5">
-            <StarRating avg={liveRating.avg} count={liveRating.count} size="md" />
-          </div>}
+          <div className="mt-1.5">
+            <StarRating avg={liveRating?.avg ?? 0} count={liveRating?.count ?? 0} size="md" />
+          </div>
           {promo.description && <p className="mt-2 text-sm text-(--color-ink-soft)">{promo.description}</p>}
           {promo.soldOut && <p className="mt-3 text-sm font-medium text-(--color-wine)">Agotado por ahora</p>}
 
