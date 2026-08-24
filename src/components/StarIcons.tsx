@@ -25,9 +25,16 @@ function OneStar({ fill, sizeClass }: { fill: Fill; sizeClass: string }) {
   }
   return (
     <span className={`relative inline-flex flex-none ${sizeClass}`}>
-      <Star className="absolute inset-0 h-full w-full text-(--color-line)" strokeWidth={1.5} fill="currentColor" />
+      <Star className={`absolute inset-0 ${sizeClass} text-(--color-line)`} strokeWidth={1.5} fill="currentColor" />
+      {/*
+        El ícono de adentro debe medir lo mismo que uno completo (sizeClass)
+        y NO h-full/w-full — si se le da el tamaño del contenedor recortado
+        (50% de ancho) el propio SVG se encoge/deforma en vez de solo
+        recortarse visualmente. Se deja a tamaño real y el overflow-hidden
+        del contenedor de abajo tapa la mitad derecha.
+      */}
       <span className="absolute inset-0 overflow-hidden" style={{ width: '50%' }}>
-        <Star className="h-full w-full text-(--color-gold)" strokeWidth={1.5} fill="currentColor" />
+        <Star className={`${sizeClass} text-(--color-gold)`} strokeWidth={1.5} fill="currentColor" />
       </span>
     </span>
   )

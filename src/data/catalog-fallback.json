@@ -1233,11 +1233,7 @@
       "title": "5 Galletas Estilo NY",
       "description": "No incluye sabor Dubai",
       "price": 300,
-      "image": "https://fabrica-postres-admin.pages.dev/api/images/menu/promo-galletas-ny-b5700712.jpg",
-      "rating": {
-        "avg": 1.5,
-        "count": 1
-      }
+      "image": "https://fabrica-postres-admin.pages.dev/api/images/menu/promo-galletas-ny-b5700712.jpg"
     },
     {
       "id": "promo-2-rebanadas",
