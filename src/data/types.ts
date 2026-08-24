@@ -68,4 +68,6 @@ export type Catalog = {
   promotions: Promotion[]
   /** Controlado desde el panel (Ajustes). Opcional por compatibilidad con caché/fallback viejos. */
   catalogView?: 'list' | 'gallery'
+  /** Temporal — comparar en vivo las dos variantes de rosa salmón, ver Ajustes. */
+  accentColor?: 'bright' | 'terracotta'
 }
