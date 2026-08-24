@@ -32,7 +32,7 @@ export function ImageSlot({ src, alt, className = '', placeholderLabel, variant 
         .toUpperCase()
       return (
         <div
-          className={`flex items-center justify-center bg-(--color-wine) font-display text-sm text-(--color-cream) ${className}`}
+          className={`flex items-center justify-center bg-(--color-wine) font-display text-sm text-(--color-ink) ${className}`}
         >
           {initials}
         </div>

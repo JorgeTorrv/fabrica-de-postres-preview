@@ -42,7 +42,7 @@ export function Header() {
             <a
               key={link.href}
               href={link.href}
-              className="text-sm text-(--color-ink-soft) transition-colors hover:text-(--color-wine)"
+              className="text-sm text-(--color-ink-soft) transition-colors hover:text-(--color-wine-deep)"
             >
               {link.label}
             </a>
@@ -58,7 +58,7 @@ export function Header() {
           >
             <ShoppingBag className="h-5 w-5" strokeWidth={1.5} />
             {itemCount > 0 && (
-              <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-(--color-wine) text-[10px] font-medium text-(--color-cream)">
+              <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-(--color-wine) text-[10px] font-medium text-(--color-ink)">
                 {itemCount}
               </span>
             )}

@@ -110,7 +110,7 @@ export function CartDrawer() {
                           type="button"
                           onClick={() => removeItem(item.cartId)}
                           aria-label="Quitar del carrito"
-                          className="flex-none text-(--color-ink-soft) hover:text-(--color-wine)"
+                          className="flex-none text-(--color-ink-soft) hover:text-(--color-wine-deep)"
                         >
                           <Trash2 className="h-4 w-4" strokeWidth={1.5} />
                         </button>
@@ -164,7 +164,7 @@ export function CartDrawer() {
               <button
                 type="button"
                 onClick={clearCart}
-                className="mt-2 text-xs text-(--color-ink-soft) underline decoration-(--color-line) underline-offset-4 hover:text-(--color-wine)"
+                className="mt-2 text-xs text-(--color-ink-soft) underline decoration-(--color-line) underline-offset-4 hover:text-(--color-wine-deep)"
               >
                 Vaciar carrito
               </button>
@@ -188,7 +188,7 @@ export function CartDrawer() {
                 />
               </div>
               {showValidation && !phoneComplete && (
-                <p className="mt-1.5 text-xs text-(--color-wine)">Escribe un teléfono válido (10 dígitos).</p>
+                <p className="mt-1.5 text-xs text-(--color-wine-deep)">Escribe un teléfono válido (10 dígitos).</p>
               )}
 
               <div className="mt-3 grid grid-cols-2 gap-3">
@@ -231,7 +231,7 @@ export function CartDrawer() {
                             : 'border-(--color-line) hover:border-(--color-wine)'
                         }`}
                       >
-                        <Icon className="h-5 w-5 text-(--color-wine)" strokeWidth={1.5} />
+                        <Icon className="h-5 w-5 text-(--color-wine-deep)" strokeWidth={1.5} />
                         <span className="text-sm font-medium text-(--color-ink)">{label}</span>
                         <span className="text-xs leading-tight text-(--color-ink-soft)">{hint}</span>
                       </button>
@@ -283,7 +283,7 @@ export function CartDrawer() {
               <button
                 type="button"
                 onClick={handleSend}
-                className="mt-4 w-full rounded-full bg-(--color-wine) px-7 py-4 text-sm font-medium text-(--color-cream) transition-colors hover:bg-(--color-wine-deep)"
+                className="mt-4 w-full rounded-full bg-(--color-wine) px-7 py-4 text-sm font-medium text-(--color-ink) transition-colors hover:bg-(--color-wine-deep) hover:text-(--color-cream)"
               >
                 Enviar pedido por WhatsApp
               </button>

@@ -158,7 +158,7 @@ export function TimePicker({ value, onChange, placeholder, ariaLabel }: TimePick
             <button
               type="button"
               onClick={confirm}
-              className="mt-4 w-full rounded-full bg-(--color-wine) px-4 py-2.5 text-sm font-medium text-(--color-cream) hover:bg-(--color-wine-deep)"
+              className="mt-4 w-full rounded-full bg-(--color-wine) px-4 py-2.5 text-sm font-medium text-(--color-ink) transition-colors hover:bg-(--color-wine-deep) hover:text-(--color-cream)"
             >
               Confirmar {String(hour).padStart(2, '0')}:{String(minute).padStart(2, '0')}
             </button>

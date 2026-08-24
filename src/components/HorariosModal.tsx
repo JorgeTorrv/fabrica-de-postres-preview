@@ -33,7 +33,7 @@ export function HorariosModal({ onClose }: HorariosModalProps) {
             type="button"
             onClick={onClose}
             aria-label="Cerrar"
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-(--color-line) text-(--color-ink) transition-colors hover:border-(--color-wine) hover:text-(--color-wine)"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-(--color-line) text-(--color-ink) transition-colors hover:border-(--color-wine) hover:text-(--color-wine-deep)"
           >
             <X className="h-5 w-5" strokeWidth={1.5} />
           </button>

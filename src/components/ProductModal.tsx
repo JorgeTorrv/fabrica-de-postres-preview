@@ -103,7 +103,7 @@ export function ProductModal({ item, categoryName, onClose }: ProductModalProps)
           </div>
           {item.description && <p className="mt-2 text-sm text-(--color-ink-soft)">{item.description}</p>}
           {item.note && <p className="mt-2 text-sm italic text-(--color-ink-soft)">{item.note}</p>}
-          {item.soldOut && <p className="mt-3 text-sm font-medium text-(--color-wine)">Agotado por ahora</p>}
+          {item.soldOut && <p className="mt-3 text-sm font-medium text-(--color-wine-deep)">Agotado por ahora</p>}
 
           <div className="mt-7">
             <RatingInput itemType="product" itemId={item.id} onRated={setLiveRating} />
@@ -121,7 +121,7 @@ export function ProductModal({ item, categoryName, onClose }: ProductModalProps)
                     onClick={() => setFlavor(f)}
                     className={`rounded-full border px-4 py-2 text-sm transition-colors ${
                       flavor === f
-                        ? 'border-(--color-wine) bg-(--color-wine) text-(--color-cream)'
+                        ? 'border-(--color-wine) bg-(--color-wine) text-(--color-ink)'
                         : 'border-(--color-line) text-(--color-ink-soft) hover:border-(--color-wine)'
                     }`}
                   >
@@ -168,7 +168,7 @@ export function ProductModal({ item, categoryName, onClose }: ProductModalProps)
                     onClick={() => toggleFilling(opt.label)}
                     className={`rounded-full border px-4 py-2 text-sm transition-colors ${
                       selectedFillings.includes(opt.label)
-                        ? 'border-(--color-wine) bg-(--color-wine) text-(--color-cream)'
+                        ? 'border-(--color-wine) bg-(--color-wine) text-(--color-ink)'
                         : 'border-(--color-line) text-(--color-ink-soft) hover:border-(--color-wine)'
                     }`}
                   >
@@ -251,7 +251,7 @@ export function ProductModal({ item, categoryName, onClose }: ProductModalProps)
             className={`flex w-full items-center justify-between rounded-full px-7 py-4 text-sm font-medium transition-colors ${
               item.soldOut
                 ? 'cursor-not-allowed bg-(--color-cream-dim) text-(--color-ink-soft)'
-                : 'bg-(--color-wine) text-(--color-cream) hover:bg-(--color-wine-deep)'
+                : 'bg-(--color-wine) text-(--color-ink) hover:bg-(--color-wine-deep) hover:text-(--color-cream)'
             }`}
           >
             <span>{item.soldOut ? 'Agotado' : justAdded ? 'Agregado al carrito' : 'Agregar al carrito'}</span>

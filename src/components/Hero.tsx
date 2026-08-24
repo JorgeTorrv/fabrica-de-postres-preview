@@ -30,7 +30,7 @@ export function Hero() {
         <button
           type="button"
           onClick={scrollToMenu}
-          className="w-full rounded-full bg-(--color-wine) px-7 py-4 text-sm font-semibold uppercase tracking-wide text-(--color-cream) transition-colors hover:bg-(--color-wine-deep)"
+          className="w-full rounded-full bg-(--color-wine) px-7 py-4 text-sm font-semibold uppercase tracking-wide text-(--color-ink) transition-colors hover:bg-(--color-wine-deep) hover:text-(--color-cream)"
         >
           Ver menú
         </button>
@@ -39,7 +39,7 @@ export function Hero() {
           <button
             type="button"
             onClick={() => setShowHours(true)}
-            className="flex flex-1 items-center justify-center gap-2 rounded-full border border-(--color-ink)/15 px-4 py-3 text-xs font-medium uppercase tracking-wide text-(--color-ink) transition-colors hover:border-(--color-wine) hover:text-(--color-wine)"
+            className="flex flex-1 items-center justify-center gap-2 rounded-full border border-(--color-ink)/15 px-4 py-3 text-xs font-medium uppercase tracking-wide text-(--color-ink) transition-colors hover:border-(--color-wine) hover:text-(--color-wine-deep)"
           >
             <Clock className="h-4 w-4 flex-none" strokeWidth={1.5} />
             <span className="truncate">Horarios</span>
@@ -48,7 +48,7 @@ export function Hero() {
             href={BUSINESS.mapsUrl}
             target="_blank"
             rel="noreferrer"
-            className="flex flex-1 items-center justify-center gap-2 rounded-full border border-(--color-ink)/15 px-4 py-3 text-xs font-medium uppercase tracking-wide text-(--color-ink) transition-colors hover:border-(--color-wine) hover:text-(--color-wine)"
+            className="flex flex-1 items-center justify-center gap-2 rounded-full border border-(--color-ink)/15 px-4 py-3 text-xs font-medium uppercase tracking-wide text-(--color-ink) transition-colors hover:border-(--color-wine) hover:text-(--color-wine-deep)"
           >
             <MapPin className="h-4 w-4 flex-none" strokeWidth={1.5} />
             <span className="truncate">Ubicación</span>

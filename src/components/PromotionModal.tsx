@@ -64,7 +64,7 @@ export function PromotionModal({ promo, onClose }: PromotionModalProps) {
             <StarRating avg={liveRating?.avg ?? 0} count={liveRating?.count ?? 0} size="md" />
           </div>
           {promo.description && <p className="mt-2 text-sm text-(--color-ink-soft)">{promo.description}</p>}
-          {promo.soldOut && <p className="mt-3 text-sm font-medium text-(--color-wine)">Agotado por ahora</p>}
+          {promo.soldOut && <p className="mt-3 text-sm font-medium text-(--color-wine-deep)">Agotado por ahora</p>}
 
           <div className="mt-7">
             <RatingInput itemType="promotion" itemId={promo.id} onRated={setLiveRating} />
@@ -117,7 +117,7 @@ export function PromotionModal({ promo, onClose }: PromotionModalProps) {
             className={`flex w-full items-center justify-between rounded-full px-7 py-4 text-sm font-medium transition-colors ${
               promo.soldOut
                 ? 'cursor-not-allowed bg-(--color-cream-dim) text-(--color-ink-soft)'
-                : 'bg-(--color-wine) text-(--color-cream) hover:bg-(--color-wine-deep)'
+                : 'bg-(--color-wine) text-(--color-ink) hover:bg-(--color-wine-deep) hover:text-(--color-cream)'
             }`}
           >
             <span>{promo.soldOut ? 'Agotado' : justAdded ? 'Agregado al carrito' : 'Agregar al carrito'}</span>

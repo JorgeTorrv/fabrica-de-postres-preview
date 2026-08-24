@@ -164,7 +164,7 @@ export function DatePicker({ value, onChange, placeholder, ariaLabel }: DatePick
                       onClick={() => pick(day)}
                       className={`flex h-9 w-9 items-center justify-center rounded-full text-sm transition-colors ${
                         selectedHere
-                          ? 'bg-(--color-wine) text-(--color-cream)'
+                          ? 'bg-(--color-wine) text-(--color-ink)'
                           : isToday
                             ? 'border border-(--color-wine) text-(--color-ink)'
                             : 'text-(--color-ink) hover:bg-(--color-cream-dim)'

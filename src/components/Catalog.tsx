@@ -78,7 +78,7 @@ function ItemDetails({ item }: { item: MenuItem }) {
         </ul>
       )}
 
-      {item.soldOut && <p className="text-xs font-medium text-(--color-wine)">Agotado</p>}
+      {item.soldOut && <p className="text-xs font-medium text-(--color-wine-deep)">Agotado</p>}
 
       <DaysBadge days={item.availableDays} />
     </>
@@ -95,7 +95,7 @@ function PromotionDetails({ promo }: { promo: Promotion }) {
       </div>
       {promo.description && <p className="text-sm text-(--color-ink-soft)">{promo.description}</p>}
 
-      {promo.soldOut && <p className="text-xs font-medium text-(--color-wine)">Agotado</p>}
+      {promo.soldOut && <p className="text-xs font-medium text-(--color-wine-deep)">Agotado</p>}
 
       <DaysBadge days={promo.availableDays} />
     </>
@@ -160,7 +160,7 @@ function GalleryProductCard({ item, onOpen }: { item: MenuItem; onOpen: () => vo
     >
       <ImageSlot src={item.image ?? DEMO_GALLERY_IMAGE} alt={item.name} placeholderLabel={item.name} className="aspect-square w-full" />
       <div className="flex flex-1 flex-col items-center gap-1.5 px-3 py-4 text-center">
-        <p className="flex h-10 items-center gap-1 overflow-hidden font-display text-base leading-tight text-(--color-wine) sm:h-12 sm:text-lg">
+        <p className="flex h-10 items-center gap-1 overflow-hidden font-display text-base leading-tight text-(--color-wine-deep) sm:h-12 sm:text-lg">
           {item.name}
           {item.featured && <img src={asset('/images/Icons/CerezaIcon.png')} alt="Destacado" className="h-5 w-5 flex-none" />}
         </p>
@@ -187,7 +187,7 @@ function GalleryPromotionCard({ promo, onOpen }: { promo: Promotion; onOpen: () 
     >
       <ImageSlot src={promo.image ?? DEMO_GALLERY_IMAGE} alt={promo.title} placeholderLabel={promo.title} className="aspect-square w-full" />
       <div className="flex flex-1 flex-col items-center gap-1.5 px-3 py-4 text-center">
-        <p className="flex h-10 items-center overflow-hidden font-display text-base leading-tight text-(--color-wine) sm:h-12 sm:text-lg">
+        <p className="flex h-10 items-center overflow-hidden font-display text-base leading-tight text-(--color-wine-deep) sm:h-12 sm:text-lg">
           {promo.title}
         </p>
         <StarRating avg={promo.rating?.avg ?? 0} count={promo.rating?.count ?? 0} />
@@ -227,7 +227,7 @@ export function Catalog() {
               key={target.id}
               type="button"
               onClick={() => scrollToSection(target.id)}
-              className="flex-none text-base text-(--color-ink-soft) transition-colors hover:text-(--color-wine)"
+              className="flex-none text-base text-(--color-ink-soft) transition-colors hover:text-(--color-wine-deep)"
             >
               {target.name}
             </button>
@@ -238,7 +238,7 @@ export function Catalog() {
       <div className={isGallery ? 'mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-10' : 'mx-auto max-w-2xl px-6 py-10 lg:px-0'}>
         {catalog.promotions.length > 0 && (
           <div id={`cat-${PROMOTIONS_ID}`} className="mb-10 scroll-mt-32">
-            <h2 className="font-display text-2xl uppercase tracking-wide text-(--color-wine)">Promociones</h2>
+            <h2 className="font-display text-2xl font-semibold uppercase tracking-wide text-(--color-sage)">Promociones</h2>
             <div className={isGallery ? 'mt-4 grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6' : 'mt-2'}>
               {catalog.promotions.map((promo) =>
                 isGallery ? (
@@ -253,7 +253,7 @@ export function Catalog() {
 
         {catalog.categories.map((category) => (
           <div key={category.id} id={`cat-${category.id}`} className="mb-10 scroll-mt-32">
-            <h2 className="font-display text-2xl uppercase tracking-wide text-(--color-wine)">{category.name}</h2>
+            <h2 className="font-display text-2xl font-semibold uppercase tracking-wide text-(--color-sage)">{category.name}</h2>
             {category.description && <p className="mt-1 text-sm text-(--color-ink-soft)">{category.description}</p>}
             <div className={isGallery ? 'mt-4 grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6' : 'mt-2'}>
               {category.items.map((item) =>

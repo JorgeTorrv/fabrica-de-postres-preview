@@ -22,7 +22,7 @@ export function Footer() {
             target="_blank"
             rel="noreferrer"
             aria-label="Instagram de Fábrica de Postres"
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-(--color-ink)/15 text-(--color-ink) transition-colors hover:border-(--color-wine) hover:text-(--color-wine)"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-(--color-ink)/15 text-(--color-ink) transition-colors hover:border-(--color-wine) hover:text-(--color-wine-deep)"
           >
             <InstagramIcon className="h-4 w-4" />
           </a>
@@ -31,7 +31,7 @@ export function Footer() {
             target="_blank"
             rel="noreferrer"
             aria-label="Facebook de Fábrica de Postres"
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-(--color-ink)/15 text-(--color-ink) transition-colors hover:border-(--color-wine) hover:text-(--color-wine)"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-(--color-ink)/15 text-(--color-ink) transition-colors hover:border-(--color-wine) hover:text-(--color-wine-deep)"
           >
             <FacebookIcon className="h-4 w-4" />
           </a>
@@ -40,7 +40,7 @@ export function Footer() {
             target="_blank"
             rel="noreferrer"
             aria-label="Ubicación en Google Maps"
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-(--color-ink)/15 text-(--color-ink) transition-colors hover:border-(--color-wine) hover:text-(--color-wine)"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-(--color-ink)/15 text-(--color-ink) transition-colors hover:border-(--color-wine) hover:text-(--color-wine-deep)"
           >
             <MapPin className="h-4 w-4" strokeWidth={1.5} />
           </a>
