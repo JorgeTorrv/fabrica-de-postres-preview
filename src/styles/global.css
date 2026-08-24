@@ -5,21 +5,27 @@
   --font-sans: "Manrope", "Helvetica Neue", sans-serif;
 
   /* Paleta adaptada a pedido de la clienta (valores exactos que dio):
-     salmón terracota (185,120,118) para fondos/acentos vistosos — se deja
-     el nombre --color-wine por no tocar ~15 archivos por un cambio de
-     valor. Como texto plano sobre el beige da 3:1 (bien para texto grande,
-     justo para texto chico), así que --color-wine-deep es la variante que
-     SÍ se usa como texto/ícono normal (misma familia, 6.9:1 de contraste)
-     — --color-wine solo para fondos/bordes/rellenos donde el texto encima
-     es oscuro. Verde (2f4015) para los nombres de categoría. */
+     rosa salmón (255,145,164) para fondos/acentos vistosos — se deja el
+     nombre --color-wine por no tocar ~15 archivos por un cambio de valor.
+     Es demasiado claro para usarse como texto sobre el beige (1.8:1 de
+     contraste), así que --color-wine-deep es la variante que SÍ se usa como
+     texto/ícono (misma familia, 5.6:1 de contraste) — --color-wine solo
+     para fondos/bordes/rellenos donde el texto encima es oscuro. Verde
+     (2f4015) para los nombres de categoría.
+
+     Variante guardada por si se reemplaza más adelante — salmón terracota
+     (185,120,118), menos saturado y más oscuro, probado y descartado:
+       --color-wine: #b97876;
+       --color-wine-deep: #7a403e;
+       --color-wine-soft: #d4acab; */
   --color-cream: #f7ece4;
   --color-cream-dim: #efe0d4;
   --color-paper: #fdf7f2;
   --color-ink: #2a1d17;
   --color-ink-soft: #5a4a40;
-  --color-wine: #b97876;
-  --color-wine-deep: #7a403e;
-  --color-wine-soft: #d4acab;
+  --color-wine: #ff91a4;
+  --color-wine-deep: #b1253e;
+  --color-wine-soft: #ffb2c0;
   --color-gold: #b8873a;
   --color-gold-soft: #d8b276;
   --color-sage: #2f4015;
