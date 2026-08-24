@@ -160,7 +160,7 @@ function GalleryProductCard({ item, onOpen }: { item: MenuItem; onOpen: () => vo
     >
       <ImageSlot src={item.image ?? DEMO_GALLERY_IMAGE} alt={item.name} placeholderLabel={item.name} className="aspect-square w-full" />
       <div className="flex flex-1 flex-col items-center gap-1.5 px-3 py-4 text-center">
-        <p className="flex items-center gap-1 font-display text-base leading-tight text-(--color-wine) sm:text-lg">
+        <p className="flex h-10 items-center gap-1 overflow-hidden font-display text-base leading-tight text-(--color-wine) sm:h-12 sm:text-lg">
           {item.name}
           {item.featured && <img src={asset('/images/Icons/CerezaIcon.png')} alt="Destacado" className="h-5 w-5 flex-none" />}
         </p>
@@ -187,7 +187,9 @@ function GalleryPromotionCard({ promo, onOpen }: { promo: Promotion; onOpen: () 
     >
       <ImageSlot src={promo.image ?? DEMO_GALLERY_IMAGE} alt={promo.title} placeholderLabel={promo.title} className="aspect-square w-full" />
       <div className="flex flex-1 flex-col items-center gap-1.5 px-3 py-4 text-center">
-        <p className="font-display text-base leading-tight text-(--color-wine) sm:text-lg">{promo.title}</p>
+        <p className="flex h-10 items-center overflow-hidden font-display text-base leading-tight text-(--color-wine) sm:h-12 sm:text-lg">
+          {promo.title}
+        </p>
         <StarRating avg={promo.rating?.avg ?? 0} count={promo.rating?.count ?? 0} />
         {promo.price != null && <p className="text-sm font-medium text-(--color-ink) sm:text-base">{formatCurrency(promo.price)}</p>}
         <span className="mt-1 w-full rounded-full bg-(--color-cream-dim) px-3 py-2.5 text-xs font-medium text-(--color-ink) sm:text-sm">
