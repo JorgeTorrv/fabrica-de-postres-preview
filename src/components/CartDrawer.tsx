@@ -272,7 +272,7 @@ export function CartDrawer() {
 
               <div className="mt-4 flex items-center justify-between text-sm">
                 <span className="text-(--color-ink-soft)">Total estimado</span>
-                <span className="font-display text-xl text-(--color-ink)">{formatCurrency(subtotal)}</span>
+                <span className="font-display text-xl text-(--color-sage)">{formatCurrency(subtotal)}</span>
               </div>
               {hasQuoteItems && (
                 <p className="mt-1 text-xs text-(--color-ink-soft)">

@@ -93,7 +93,7 @@ export function ProductModal({ item, categoryName, onClose }: ProductModalProps)
         </div>
 
         <div className="flex-1 overflow-y-auto px-7 py-7 sm:px-9">
-          <p className="text-sm text-(--color-ink-soft)">{categoryName}</p>
+          <p className="text-sm font-medium text-(--color-sage)">{categoryName}</p>
           <h3 className="mt-1 flex items-center gap-2 font-display text-3xl text-(--color-ink)">
             {item.name}
             {item.featured && <img src={asset('/images/Icons/CerezaIcon.png')} alt="Destacado" className="h-12 w-12" />}

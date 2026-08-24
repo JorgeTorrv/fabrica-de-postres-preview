@@ -156,7 +156,7 @@ function GalleryProductCard({ item, onOpen }: { item: MenuItem; onOpen: () => vo
     <button
       type="button"
       onClick={onOpen}
-      className="flex flex-col overflow-hidden rounded-2xl border border-(--color-line) bg-(--color-paper) text-left shadow-(--shadow-soft) transition-transform active:scale-[0.98]"
+      className="group flex flex-col overflow-hidden rounded-2xl border border-(--color-line) bg-(--color-paper) text-left shadow-(--shadow-soft) transition-transform active:scale-[0.98]"
     >
       <ImageSlot src={item.image ?? DEMO_GALLERY_IMAGE} alt={item.name} placeholderLabel={item.name} className="aspect-square w-full" />
       <div className="flex flex-1 flex-col items-center gap-1.5 px-3 py-4 text-center">
@@ -167,8 +167,10 @@ function GalleryProductCard({ item, onOpen }: { item: MenuItem; onOpen: () => vo
         <StarRating avg={item.rating?.avg ?? 0} count={item.rating?.count ?? 0} />
         <p className="text-sm font-medium text-(--color-ink) sm:text-base">{price}</p>
         <span
-          className={`mt-1 w-full rounded-full px-3 py-2.5 text-xs font-medium sm:text-sm ${
-            item.soldOut ? 'bg-(--color-cream-dim) text-(--color-ink-soft)' : 'bg-(--color-cream-dim) text-(--color-ink)'
+          className={`mt-1 w-full rounded-full px-3 py-2.5 text-xs font-medium transition-colors sm:text-sm ${
+            item.soldOut
+              ? 'bg-(--color-cream-dim) text-(--color-ink-soft)'
+              : 'bg-(--color-cream-dim) text-(--color-ink) group-hover:bg-(--color-wine)'
           }`}
         >
           {item.soldOut ? 'Agotado' : cta}
@@ -183,7 +185,7 @@ function GalleryPromotionCard({ promo, onOpen }: { promo: Promotion; onOpen: () 
     <button
       type="button"
       onClick={onOpen}
-      className="flex flex-col overflow-hidden rounded-2xl border border-(--color-line) bg-(--color-paper) text-left shadow-(--shadow-soft) transition-transform active:scale-[0.98]"
+      className="group flex flex-col overflow-hidden rounded-2xl border border-(--color-line) bg-(--color-paper) text-left shadow-(--shadow-soft) transition-transform active:scale-[0.98]"
     >
       <ImageSlot src={promo.image ?? DEMO_GALLERY_IMAGE} alt={promo.title} placeholderLabel={promo.title} className="aspect-square w-full" />
       <div className="flex flex-1 flex-col items-center gap-1.5 px-3 py-4 text-center">
@@ -192,7 +194,11 @@ function GalleryPromotionCard({ promo, onOpen }: { promo: Promotion; onOpen: () 
         </p>
         <StarRating avg={promo.rating?.avg ?? 0} count={promo.rating?.count ?? 0} />
         {promo.price != null && <p className="text-sm font-medium text-(--color-ink) sm:text-base">{formatCurrency(promo.price)}</p>}
-        <span className="mt-1 w-full rounded-full bg-(--color-cream-dim) px-3 py-2.5 text-xs font-medium text-(--color-ink) sm:text-sm">
+        <span
+          className={`mt-1 w-full rounded-full px-3 py-2.5 text-xs font-medium text-(--color-ink) transition-colors sm:text-sm ${
+            promo.soldOut ? 'bg-(--color-cream-dim)' : 'bg-(--color-cream-dim) group-hover:bg-(--color-wine)'
+          }`}
+        >
           {promo.soldOut ? 'Agotado' : 'Agregar al carrito'}
         </span>
       </div>
@@ -221,13 +227,13 @@ export function Catalog() {
   return (
     <section id="menu" className="bg-(--color-cream)">
       <div className="sticky top-[64px] z-30 border-b border-(--color-line) bg-(--color-cream)/95 backdrop-blur lg:top-[76px]">
-        <nav className="mx-auto flex items-center gap-5 overflow-x-auto px-6 py-5 lg:px-10 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <nav className="mx-auto flex max-w-6xl items-center gap-5 overflow-x-auto px-6 py-5 lg:justify-center lg:px-10 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {jumpTargets.map((target) => (
             <button
               key={target.id}
               type="button"
               onClick={() => scrollToSection(target.id)}
-              className="flex-none text-base text-(--color-ink-soft) transition-colors hover:text-(--color-wine-deep)"
+              className="flex-none text-base text-(--color-ink-soft) transition-colors hover:text-(--color-sage)"
             >
               {target.name}
             </button>

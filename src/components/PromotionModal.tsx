@@ -58,7 +58,7 @@ export function PromotionModal({ promo, onClose }: PromotionModalProps) {
         </div>
 
         <div className="flex-1 overflow-y-auto px-7 py-7">
-          <p className="text-sm text-(--color-ink-soft)">Promoción</p>
+          <p className="text-sm font-medium text-(--color-sage)">Promoción</p>
           <h3 className="mt-1 font-display text-3xl text-(--color-ink)">{promo.title}</h3>
           <div className="mt-1.5">
             <StarRating avg={liveRating?.avg ?? 0} count={liveRating?.count ?? 0} size="md" />
