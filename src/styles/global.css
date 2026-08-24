@@ -4,18 +4,23 @@
   --font-display: "Fraunces", "Georgia", serif;
   --font-sans: "Manrope", "Helvetica Neue", sans-serif;
 
-  --color-cream: #fbf4ea;
-  --color-cream-dim: #f3e9d9;
-  --color-paper: #fffaf2;
+  /* Paleta adaptada de la referencia de la clienta: beige bajito de fondo,
+     "rosita salmón" para texto vistoso/acentos (mismo rol que antes tenía
+     el vino oscuro — se deja el nombre --color-wine por no tocar 13
+     archivos por un cambio de valor), tinta oscura café-casi-negro para
+     texto, y un verde suave para detalles puntuales (poco uso a propósito). */
+  --color-cream: #f7ece4;
+  --color-cream-dim: #efe0d4;
+  --color-paper: #fdf7f2;
   --color-ink: #2a1d17;
   --color-ink-soft: #5a4a40;
-  --color-wine: #7a1f2b;
-  --color-wine-deep: #5c1420;
-  --color-wine-soft: #a8394a;
+  --color-wine: #96554d;
+  --color-wine-deep: #7a423b;
+  --color-wine-soft: #c78e83;
   --color-gold: #b8873a;
   --color-gold-soft: #d8b276;
-  --color-sage: #6b7a5e;
-  --color-line: #e4d5bd;
+  --color-sage: #8fa079;
+  --color-line: #e8d9ce;
 
   --shadow-soft: 0 20px 45px -25px rgba(42, 29, 23, 0.35);
   --shadow-lift: 0 30px 60px -20px rgba(42, 29, 23, 0.4);
