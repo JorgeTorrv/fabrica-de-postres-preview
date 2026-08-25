@@ -206,13 +206,12 @@ export function ProductModal({ item, categoryName, onClose }: ProductModalProps)
 
           <div className="mt-7">
             <label htmlFor="comment" className="text-sm font-medium text-(--color-ink)">
-              Comentario para este producto
+              Instrucciones especiales
             </label>
             <textarea
               id="comment"
               value={comment}
               onChange={(e) => setComment(e.target.value)}
-              placeholder="Ej. sin nuez, con dedicatoria 'Feliz cumpleaños Ana', para las 5pm..."
               rows={2}
               className="mt-2 w-full resize-none rounded-xl border border-(--color-line) bg-(--color-paper) px-4 py-3 text-sm text-(--color-ink) placeholder:text-(--color-ink-soft)/70 focus:border-(--color-wine) focus:outline-none"
             />

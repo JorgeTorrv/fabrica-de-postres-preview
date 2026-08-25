@@ -73,7 +73,7 @@ export function PromotionModal({ promo, onClose }: PromotionModalProps) {
           <div className={promo.soldOut ? 'pointer-events-none opacity-50' : undefined}>
             <div className="mt-7">
               <label htmlFor="promo-comment" className="text-sm font-medium text-(--color-ink)">
-                Comentario
+                Instrucciones especiales
               </label>
               <textarea
                 id="promo-comment"
