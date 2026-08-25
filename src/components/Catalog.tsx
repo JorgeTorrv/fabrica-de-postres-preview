@@ -78,7 +78,7 @@ function ItemDetails({ item }: { item: MenuItem }) {
         </ul>
       )}
 
-      {item.soldOut && <p className="text-xs font-medium text-(--color-wine-deep)">Agotado</p>}
+      {item.soldOut && <p className="text-xs font-medium text-(--color-ink-soft)">Agotado</p>}
 
       <DaysBadge days={item.availableDays} />
     </>
@@ -95,7 +95,7 @@ function PromotionDetails({ promo }: { promo: Promotion }) {
       </div>
       {promo.description && <p className="text-sm text-(--color-ink-soft)">{promo.description}</p>}
 
-      {promo.soldOut && <p className="text-xs font-medium text-(--color-wine-deep)">Agotado</p>}
+      {promo.soldOut && <p className="text-xs font-medium text-(--color-ink-soft)">Agotado</p>}
 
       <DaysBadge days={promo.availableDays} />
     </>
@@ -160,7 +160,7 @@ function GalleryProductCard({ item, onOpen }: { item: MenuItem; onOpen: () => vo
     >
       <ImageSlot src={item.image ?? DEMO_GALLERY_IMAGE} alt={item.name} placeholderLabel={item.name} className="aspect-square w-full" />
       <div className="flex flex-1 flex-col items-center gap-1.5 px-3 py-4 text-center">
-        <p className="flex h-10 items-center gap-1 overflow-hidden font-display text-base leading-tight text-(--color-wine-deep) sm:h-12 sm:text-lg">
+        <p className="flex h-10 items-center gap-1 overflow-hidden font-display text-base leading-tight text-(--color-ink) sm:h-12 sm:text-lg">
           {item.name}
           {item.featured && <img src={asset('/images/Icons/CerezaIcon.png')} alt="Destacado" className="h-5 w-5 flex-none" />}
         </p>
@@ -189,7 +189,7 @@ function GalleryPromotionCard({ promo, onOpen }: { promo: Promotion; onOpen: () 
     >
       <ImageSlot src={promo.image ?? DEMO_GALLERY_IMAGE} alt={promo.title} placeholderLabel={promo.title} className="aspect-square w-full" />
       <div className="flex flex-1 flex-col items-center gap-1.5 px-3 py-4 text-center">
-        <p className="flex h-10 items-center overflow-hidden font-display text-base leading-tight text-(--color-wine-deep) sm:h-12 sm:text-lg">
+        <p className="flex h-10 items-center overflow-hidden font-display text-base leading-tight text-(--color-ink) sm:h-12 sm:text-lg">
           {promo.title}
         </p>
         <StarRating avg={promo.rating?.avg ?? 0} count={promo.rating?.count ?? 0} />

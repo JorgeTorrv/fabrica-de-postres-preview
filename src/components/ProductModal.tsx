@@ -103,7 +103,7 @@ export function ProductModal({ item, categoryName, onClose }: ProductModalProps)
           </div>
           {item.description && <p className="mt-2 text-sm text-(--color-ink-soft)">{item.description}</p>}
           {item.note && <p className="mt-2 text-sm italic text-(--color-ink-soft)">{item.note}</p>}
-          {item.soldOut && <p className="mt-3 text-sm font-medium text-(--color-wine-deep)">Agotado por ahora</p>}
+          {item.soldOut && <p className="mt-3 text-sm font-medium text-(--color-ink-soft)">Agotado por ahora</p>}
 
           <div className="mt-7">
             <RatingInput itemType="product" itemId={item.id} onRated={setLiveRating} />

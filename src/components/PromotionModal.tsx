@@ -64,7 +64,7 @@ export function PromotionModal({ promo, onClose }: PromotionModalProps) {
             <StarRating avg={liveRating?.avg ?? 0} count={liveRating?.count ?? 0} size="md" />
           </div>
           {promo.description && <p className="mt-2 text-sm text-(--color-ink-soft)">{promo.description}</p>}
-          {promo.soldOut && <p className="mt-3 text-sm font-medium text-(--color-wine-deep)">Agotado por ahora</p>}
+          {promo.soldOut && <p className="mt-3 text-sm font-medium text-(--color-ink-soft)">Agotado por ahora</p>}
 
           <div className="mt-7">
             <RatingInput itemType="promotion" itemId={promo.id} onRated={setLiveRating} />
