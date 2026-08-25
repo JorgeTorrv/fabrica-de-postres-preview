@@ -9,6 +9,19 @@ const NAV_LINKS = [
   { label: 'Contacto', href: '#contacto' },
 ]
 
+/**
+ * Igual que `scrollToMenu` en Hero.tsx: salta a la primera sección `#cat-*`
+ * (con su `scroll-mt-[150px]`) en vez de a `#menu` directo, para que el
+ * header fijo + la barra sticky no tapen el nombre de la categoría.
+ */
+function handleMenuClick(e: React.MouseEvent<HTMLAnchorElement>) {
+  e.preventDefault()
+  const menu = document.getElementById('menu')
+  if (!menu) return
+  const firstSection = menu.querySelector('[id^="cat-"]')
+  ;(firstSection ?? menu).scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
+
 export function Header() {
   const [scrolled, setScrolled] = useState(false)
   const { itemCount, openCart } = useCart()
@@ -42,6 +55,7 @@ export function Header() {
             <a
               key={link.href}
               href={link.href}
+              onClick={link.href === '#menu' ? handleMenuClick : undefined}
               className="text-sm text-(--color-ink-soft) transition-colors hover:text-(--color-wine-deep)"
             >
               {link.label}
