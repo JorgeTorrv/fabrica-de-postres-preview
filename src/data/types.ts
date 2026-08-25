@@ -69,7 +69,9 @@ export type Catalog = {
   /** Controlado desde el panel (Ajustes). Opcional por compatibilidad con caché/fallback viejos. */
   catalogView?: 'list' | 'gallery'
   /** Temporal — comparar en vivo las dos variantes de rosa salmón, ver Ajustes. */
-  accentColor?: 'bright' | 'terracotta' | 'coral'
+  accentColor?: 'bright' | 'terracotta' | 'coral' | 'custom'
+  /** Hex del acento personalizado (si accentColor === 'custom'). */
+  accentColorCustom?: string
   /** Temporal — comparar en vivo el borde de las tarjetas de galería, ver Ajustes. */
   cardBorderColor?: 'line' | 'sage'
 }

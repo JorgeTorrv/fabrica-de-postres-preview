@@ -57,8 +57,8 @@ export function useCatalog(): { catalog: Catalog; loading: boolean; stale: boole
   const [stale, setStale] = useState(true)
 
   useEffect(() => {
-    applyAccentColor(parseAccentColor(catalog.accentColor))
-  }, [catalog.accentColor])
+    applyAccentColor(parseAccentColor(catalog.accentColor), catalog.accentColorCustom)
+  }, [catalog.accentColor, catalog.accentColorCustom])
 
   useEffect(() => {
     applyCardBorderColor(catalog.cardBorderColor === 'sage' ? 'sage' : 'line')

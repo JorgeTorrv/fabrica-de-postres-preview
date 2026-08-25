@@ -13,6 +13,23 @@
           "image": "https://fabrica-postres-admin.pages.dev/api/images/menu/pastel-zanahoria-28004c1e.jpg"
         },
         {
+          "id": "oreo",
+          "name": "oreo",
+          "description": "pastel de oreo",
+          "options": [
+            {
+              "label": "Rebanada",
+              "price": 80
+            },
+            {
+              "label": "completo",
+              "price": 250
+            }
+          ],
+          "optionsLabel": "Porciones",
+          "customQuote": true
+        },
+        {
           "id": "pastel-chocolate-hersheys",
           "name": "Chocolate Hershey's",
           "options": [
@@ -1239,7 +1256,7 @@
     },
     {
       "id": "promo-2-rebanadas-miercoles",
-      "title": "2 Rebanadas Miércoles",
+      "title": "Miércoles 2 Rebanadas",
       "description": "Precio especial de miércoles",
       "price": 120,
       "image": "https://fabrica-postres-admin.pages.dev/api/images/menu/promo-2-rebanadas-miercoles-3d4e516b.jpg"
@@ -1259,6 +1276,7 @@
     }
   ],
   "catalogView": "gallery",
-  "accentColor": "coral",
+  "accentColor": "terracotta",
+  "accentColorCustom": "#64a05a",
   "cardBorderColor": "sage"
 }
