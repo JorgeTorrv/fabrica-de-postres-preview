@@ -13,23 +13,6 @@
           "image": "https://fabrica-postres-admin.pages.dev/api/images/menu/pastel-zanahoria-28004c1e.jpg"
         },
         {
-          "id": "oreo",
-          "name": "oreo",
-          "description": "pastel de oreo",
-          "options": [
-            {
-              "label": "Rebanada",
-              "price": 80
-            },
-            {
-              "label": "completo",
-              "price": 250
-            }
-          ],
-          "optionsLabel": "Porciones",
-          "customQuote": true
-        },
-        {
           "id": "pastel-chocolate-hersheys",
           "name": "Chocolate Hershey's",
           "options": [
@@ -1276,7 +1259,7 @@
     }
   ],
   "catalogView": "gallery",
-  "accentColor": "terracotta",
-  "accentColorCustom": "#64a05a",
-  "cardBorderColor": "sage"
+  "accentColor": "coral",
+  "accentColorCustom": "#008f39",
+  "sageColor": "current"
 }

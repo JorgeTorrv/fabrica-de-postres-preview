@@ -30,9 +30,6 @@
   --color-gold-soft: #d8b276;
   --color-sage: #2f4015;
   --color-line: #e8d9ce;
-  /* Temporal — toggle en Ajustes del panel: borde de las tarjetas de
-     galería, comparar --color-line (valor por default) contra verde. */
-  --color-card-border: #e8d9ce;
 
   --shadow-soft: 0 20px 45px -25px rgba(42, 29, 23, 0.35);
   --shadow-lift: 0 30px 60px -20px rgba(42, 29, 23, 0.4);

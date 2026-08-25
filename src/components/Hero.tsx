@@ -4,8 +4,19 @@ import { BUSINESS } from '../data/business'
 import { asset } from '../utils/asset'
 import { HorariosModal } from './HorariosModal'
 
+/**
+ * Salta directo a la primera sección con contenido (Promociones o la
+ * primera categoría) en vez de al inicio de `#menu` — esas secciones ya
+ * tienen `scroll-mt-32` (mismo offset que usan los links de la barra de
+ * categorías) para no quedar tapadas por el header fijo + la barra
+ * sticky. Saltar a `#menu` directo no tiene ese offset y el nombre de la
+ * categoría termina medio tapado.
+ */
 function scrollToMenu() {
-  document.getElementById('menu')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  const menu = document.getElementById('menu')
+  if (!menu) return
+  const firstSection = menu.querySelector('[id^="cat-"]')
+  ;(firstSection ?? menu).scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
 
 /**

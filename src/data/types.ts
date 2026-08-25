@@ -72,6 +72,8 @@ export type Catalog = {
   accentColor?: 'bright' | 'terracotta' | 'coral' | 'custom'
   /** Hex del acento personalizado (si accentColor === 'custom'). */
   accentColorCustom?: string
-  /** Temporal — comparar en vivo el borde de las tarjetas de galería, ver Ajustes. */
-  cardBorderColor?: 'line' | 'sage'
+  /** Temporal — comparar en vivo las variantes de verde, ver Ajustes. */
+  sageColor?: 'current' | 'new' | 'custom'
+  /** Hex del verde personalizado (si sageColor === 'custom'). */
+  sageColorCustom?: string
 }

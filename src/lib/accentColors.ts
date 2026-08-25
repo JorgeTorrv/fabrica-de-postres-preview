@@ -127,17 +127,26 @@ export function applyAccentColor(variant: AccentColor, customHex?: string) {
 }
 
 /**
- * Temporal: borde de las tarjetas de galería, comparar el tono actual
- * (--color-line) contra el verde (--color-sage). Mismo mecanismo que
- * applyAccentColor — sobreescribe --color-card-border en el documento.
+ * Temporal: variantes de verde probadas. Afecta TODO lo verde del sitio —
+ * nombres de categoría, precios, y el borde de las tarjetas de galería
+ * (que sigue siempre a --color-sage, ya no hay un tono de borde aparte).
+ * Sin variante "deep" — el verde ya se usa directo como texto/borde en
+ * los dos casos fijos, ambos con contraste suficiente de fábrica.
  */
-export type CardBorderColor = 'line' | 'sage'
+export type SageColor = 'current' | 'new' | 'custom'
 
-const CARD_BORDER_VARIANTS: Record<CardBorderColor, string> = {
-  line: '#e8d9ce',
-  sage: '#2f4015',
+const SAGE_VARIANTS: Record<Exclude<SageColor, 'custom'>, string> = {
+  current: '#2f4015',
+  new: '#008f39',
 }
 
-export function applyCardBorderColor(variant: CardBorderColor) {
-  document.documentElement.style.setProperty('--color-card-border', CARD_BORDER_VARIANTS[variant])
+export function parseSageColor(value?: string): SageColor {
+  if (value === 'new') return 'new'
+  if (value === 'custom') return 'custom'
+  return 'current'
+}
+
+export function applySageColor(variant: SageColor, customHex?: string) {
+  const hex = variant === 'custom' ? customHex || '#2f4015' : SAGE_VARIANTS[variant]
+  document.documentElement.style.setProperty('--color-sage', hex)
 }

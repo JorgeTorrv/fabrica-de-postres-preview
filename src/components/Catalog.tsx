@@ -156,7 +156,7 @@ function GalleryProductCard({ item, onOpen }: { item: MenuItem; onOpen: () => vo
     <button
       type="button"
       onClick={onOpen}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-(--color-card-border) bg-(--color-paper) text-left shadow-(--shadow-soft) transition-transform active:scale-[0.98]"
+      className="group flex flex-col overflow-hidden rounded-2xl border border-(--color-sage) bg-(--color-paper) text-left shadow-(--shadow-soft) transition-transform active:scale-[0.98]"
     >
       <ImageSlot src={item.image ?? DEMO_GALLERY_IMAGE} alt={item.name} placeholderLabel={item.name} className="aspect-square w-full" />
       <div className="flex flex-1 flex-col items-center gap-1.5 px-3 py-4 text-center">
@@ -170,7 +170,7 @@ function GalleryProductCard({ item, onOpen }: { item: MenuItem; onOpen: () => vo
           className={`mt-1 w-full rounded-full px-3 py-2.5 text-xs font-medium transition-colors sm:text-sm ${
             item.soldOut
               ? 'bg-(--color-cream-dim) text-(--color-ink-soft)'
-              : 'bg-(--color-cream-dim) text-(--color-ink) group-hover:bg-(--color-wine)'
+              : 'bg-[#efaeb3] text-(--color-ink) group-hover:bg-[#eb989f]'
           }`}
         >
           {item.soldOut ? 'Agotado' : cta}
@@ -185,7 +185,7 @@ function GalleryPromotionCard({ promo, onOpen }: { promo: Promotion; onOpen: () 
     <button
       type="button"
       onClick={onOpen}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-(--color-card-border) bg-(--color-paper) text-left shadow-(--shadow-soft) transition-transform active:scale-[0.98]"
+      className="group flex flex-col overflow-hidden rounded-2xl border border-(--color-sage) bg-(--color-paper) text-left shadow-(--shadow-soft) transition-transform active:scale-[0.98]"
     >
       <ImageSlot src={promo.image ?? DEMO_GALLERY_IMAGE} alt={promo.title} placeholderLabel={promo.title} className="aspect-square w-full" />
       <div className="flex flex-1 flex-col items-center gap-1.5 px-3 py-4 text-center">
@@ -196,7 +196,7 @@ function GalleryPromotionCard({ promo, onOpen }: { promo: Promotion; onOpen: () 
         {promo.price != null && <p className="text-sm font-medium text-(--color-sage) sm:text-base">{formatCurrency(promo.price)}</p>}
         <span
           className={`mt-1 w-full rounded-full px-3 py-2.5 text-xs font-medium text-(--color-ink) transition-colors sm:text-sm ${
-            promo.soldOut ? 'bg-(--color-cream-dim)' : 'bg-(--color-cream-dim) group-hover:bg-(--color-wine)'
+            promo.soldOut ? 'bg-(--color-cream-dim)' : 'bg-[#efaeb3] group-hover:bg-[#eb989f]'
           }`}
         >
           {promo.soldOut ? 'Agotado' : 'Agregar al carrito'}
@@ -226,7 +226,7 @@ export function Catalog() {
 
   return (
     <section id="menu" className="bg-(--color-cream)">
-      <div className="sticky top-[64px] z-30 border-b border-(--color-line) bg-(--color-cream)/95 backdrop-blur lg:top-[76px]">
+      <div className="sticky top-[76px] z-30 border-b border-(--color-line) bg-(--color-cream)/95 backdrop-blur lg:top-[80px]">
         {/*
           El scroll vive en este wrapper (ancho completo); nav adentro se
           dimensiona a su contenido (w-max) y se centra con mx-auto — así se
@@ -253,7 +253,7 @@ export function Catalog() {
 
       <div className={isGallery ? 'mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-10' : 'mx-auto max-w-2xl px-6 py-10 lg:px-0'}>
         {catalog.promotions.length > 0 && (
-          <div id={`cat-${PROMOTIONS_ID}`} className="mb-10 scroll-mt-32">
+          <div id={`cat-${PROMOTIONS_ID}`} className="mb-10 scroll-mt-[150px]">
             <h2 className="font-display text-2xl font-semibold uppercase tracking-wide text-(--color-sage)">Promociones</h2>
             <div className={isGallery ? 'mt-4 grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6' : 'mt-2'}>
               {catalog.promotions.map((promo) =>
@@ -268,7 +268,7 @@ export function Catalog() {
         )}
 
         {catalog.categories.map((category) => (
-          <div key={category.id} id={`cat-${category.id}`} className="mb-10 scroll-mt-32">
+          <div key={category.id} id={`cat-${category.id}`} className="mb-10 scroll-mt-[150px]">
             <h2 className="font-display text-2xl font-semibold uppercase tracking-wide text-(--color-sage)">{category.name}</h2>
             {category.description && <p className="mt-1 text-sm text-(--color-ink-soft)">{category.description}</p>}
             <div className={isGallery ? 'mt-4 grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6' : 'mt-2'}>

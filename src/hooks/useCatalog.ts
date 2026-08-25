@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { API_URL } from '../lib/config'
 import fallbackCatalog from '../data/catalog-fallback.json'
-import { applyAccentColor, applyCardBorderColor, parseAccentColor } from '../lib/accentColors'
+import { applyAccentColor, applySageColor, parseAccentColor, parseSageColor } from '../lib/accentColors'
 import type { Catalog } from '../data/types'
 
 const STORAGE_KEY = 'fabrica-de-postres-catalog-cache'
@@ -61,8 +61,8 @@ export function useCatalog(): { catalog: Catalog; loading: boolean; stale: boole
   }, [catalog.accentColor, catalog.accentColorCustom])
 
   useEffect(() => {
-    applyCardBorderColor(catalog.cardBorderColor === 'sage' ? 'sage' : 'line')
-  }, [catalog.cardBorderColor])
+    applySageColor(parseSageColor(catalog.sageColor), catalog.sageColorCustom)
+  }, [catalog.sageColor, catalog.sageColorCustom])
 
   useEffect(() => {
     let cancelled = false
