@@ -9,6 +9,7 @@
           "name": "Zanahoria",
           "options": [],
           "optionsLabel": "Presentación",
+          "featured": true,
           "image": "https://fabrica-postres-admin.pages.dev/api/images/menu/pastel-zanahoria-28004c1e.jpg"
         },
         {
@@ -1223,7 +1224,11 @@
       "title": "5 Galletas Estilo NY",
       "description": "No incluye sabor Dubai",
       "price": 300,
-      "image": "https://fabrica-postres-admin.pages.dev/api/images/menu/promo-galletas-ny-b5700712.jpg"
+      "image": "https://fabrica-postres-admin.pages.dev/api/images/menu/promo-galletas-ny-b5700712.jpg",
+      "rating": {
+        "avg": 3.5,
+        "count": 1
+      }
     },
     {
       "id": "promo-2-rebanadas",
@@ -1254,6 +1259,6 @@
     }
   ],
   "catalogView": "gallery",
-  "accentColor": "terracotta",
+  "accentColor": "coral",
   "cardBorderColor": "sage"
 }

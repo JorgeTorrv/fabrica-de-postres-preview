@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { API_URL } from '../lib/config'
 import fallbackCatalog from '../data/catalog-fallback.json'
-import { applyAccentColor, applyCardBorderColor } from '../lib/accentColors'
+import { applyAccentColor, applyCardBorderColor, parseAccentColor } from '../lib/accentColors'
 import type { Catalog } from '../data/types'
 
 const STORAGE_KEY = 'fabrica-de-postres-catalog-cache'
@@ -57,7 +57,7 @@ export function useCatalog(): { catalog: Catalog; loading: boolean; stale: boole
   const [stale, setStale] = useState(true)
 
   useEffect(() => {
-    applyAccentColor(catalog.accentColor === 'terracotta' ? 'terracotta' : 'bright')
+    applyAccentColor(parseAccentColor(catalog.accentColor))
   }, [catalog.accentColor])
 
   useEffect(() => {
