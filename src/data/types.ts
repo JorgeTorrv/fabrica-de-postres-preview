@@ -70,4 +70,6 @@ export type Catalog = {
   catalogView?: 'list' | 'gallery'
   /** Temporal — comparar en vivo las dos variantes de rosa salmón, ver Ajustes. */
   accentColor?: 'bright' | 'terracotta'
+  /** Temporal — comparar en vivo el borde de las tarjetas de galería, ver Ajustes. */
+  cardBorderColor?: 'line' | 'sage'
 }

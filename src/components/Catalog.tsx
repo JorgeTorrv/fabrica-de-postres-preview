@@ -156,7 +156,7 @@ function GalleryProductCard({ item, onOpen }: { item: MenuItem; onOpen: () => vo
     <button
       type="button"
       onClick={onOpen}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-(--color-line) bg-(--color-paper) text-left shadow-(--shadow-soft) transition-transform active:scale-[0.98]"
+      className="group flex flex-col overflow-hidden rounded-2xl border border-(--color-card-border) bg-(--color-paper) text-left shadow-(--shadow-soft) transition-transform active:scale-[0.98]"
     >
       <ImageSlot src={item.image ?? DEMO_GALLERY_IMAGE} alt={item.name} placeholderLabel={item.name} className="aspect-square w-full" />
       <div className="flex flex-1 flex-col items-center gap-1.5 px-3 py-4 text-center">
@@ -185,7 +185,7 @@ function GalleryPromotionCard({ promo, onOpen }: { promo: Promotion; onOpen: () 
     <button
       type="button"
       onClick={onOpen}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-(--color-line) bg-(--color-paper) text-left shadow-(--shadow-soft) transition-transform active:scale-[0.98]"
+      className="group flex flex-col overflow-hidden rounded-2xl border border-(--color-card-border) bg-(--color-paper) text-left shadow-(--shadow-soft) transition-transform active:scale-[0.98]"
     >
       <ImageSlot src={promo.image ?? DEMO_GALLERY_IMAGE} alt={promo.title} placeholderLabel={promo.title} className="aspect-square w-full" />
       <div className="flex flex-1 flex-col items-center gap-1.5 px-3 py-4 text-center">

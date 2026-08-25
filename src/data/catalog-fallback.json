@@ -1254,5 +1254,6 @@
     }
   ],
   "catalogView": "gallery",
-  "accentColor": "terracotta"
+  "accentColor": "terracotta",
+  "cardBorderColor": "line"
 }
