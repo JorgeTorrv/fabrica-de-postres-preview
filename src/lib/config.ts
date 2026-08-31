@@ -3,4 +3,4 @@
  * panel admin, ver AdminPanel_FabricaPostres). Se puede sobreescribir con
  * VITE_API_URL para desarrollo local contra `wrangler pages dev`.
  */
-export const API_URL: string = import.meta.env.VITE_API_URL || 'https://fabrica-de-postres-admin.pages.dev'
+export const API_URL: string = import.meta.env.VITE_API_URL || 'https://adminfp.fabricadepostres.com'
