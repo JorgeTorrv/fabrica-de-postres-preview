@@ -13,9 +13,11 @@ type ProductModalProps = {
   item: MenuItem
   categoryName: string
   onClose: () => void
+  /** Avisa a la tarjeta de atrás (en la grilla) del nuevo avg/count, sin esperar el próximo poll. */
+  onRatingChange?: (rating: RatingSummary) => void
 }
 
-export function ProductModal({ item, categoryName, onClose }: ProductModalProps) {
+export function ProductModal({ item, categoryName, onClose, onRatingChange }: ProductModalProps) {
   const { addItem } = useCart()
   const [flavor, setFlavor] = useState<string | undefined>(item.flavors?.[0])
   const [optionIndex, setOptionIndex] = useState(0)
@@ -25,6 +27,11 @@ export function ProductModal({ item, categoryName, onClose }: ProductModalProps)
   const [comment, setComment] = useState('')
   const [justAdded, setJustAdded] = useState(false)
   const [liveRating, setLiveRating] = useState<RatingSummary | undefined>(item.rating)
+
+  const handleRated = (rating: RatingSummary) => {
+    setLiveRating(rating)
+    onRatingChange?.(rating)
+  }
 
   useBodyScrollLock()
 
@@ -106,7 +113,7 @@ export function ProductModal({ item, categoryName, onClose }: ProductModalProps)
           {item.soldOut && <p className="mt-3 text-sm font-medium text-(--color-ink-soft)">Agotado por ahora</p>}
 
           <div className="mt-7">
-            <RatingInput itemType="product" itemId={item.id} currentRating={liveRating} onRated={setLiveRating} />
+            <RatingInput itemType="product" itemId={item.id} currentRating={liveRating} onRated={handleRated} />
           </div>
 
           <div className={item.soldOut ? 'pointer-events-none opacity-50' : undefined}>

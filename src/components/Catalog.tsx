@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Clock } from 'lucide-react'
 import { useCatalog } from '../hooks/useCatalog'
-import type { MenuItem, Promotion } from '../data/types'
+import type { MenuItem, Promotion, RatingSummary } from '../data/types'
 import { formatCurrency } from '../utils/format'
 import { asset } from '../utils/asset'
 import { DAY_LABELS, partialDays } from '../data/days'
@@ -146,7 +146,7 @@ function galleryPriceInfo(item: MenuItem): { price: string; cta: string } {
  * móvil, 4 en escritorio). Toda la tarjeta abre el mismo modal que la vista
  * de lista; el "botón" de abajo es visual, no un control aparte.
  */
-function GalleryProductCard({ item, onOpen }: { item: MenuItem; onOpen: () => void }) {
+function GalleryProductCard({ item, rating, onOpen }: { item: MenuItem; rating?: RatingSummary; onOpen: () => void }) {
   const { price, cta } = galleryPriceInfo(item)
 
   return (
@@ -161,7 +161,7 @@ function GalleryProductCard({ item, onOpen }: { item: MenuItem; onOpen: () => vo
           {item.name}
           {item.featured && <img src={asset('/images/Icons/CerezaIcon.png')} alt="Destacado" className="h-5 w-5 flex-none" />}
         </p>
-        <StarRating avg={item.rating?.avg ?? 0} count={item.rating?.count ?? 0} />
+        <StarRating avg={rating?.avg ?? 0} count={rating?.count ?? 0} />
         <p className="text-sm font-medium text-(--color-sage) sm:text-base">{price}</p>
         <span
           className={`mt-1 w-full rounded-full px-3 py-2.5 text-xs font-medium transition-colors sm:text-sm ${
@@ -177,7 +177,7 @@ function GalleryProductCard({ item, onOpen }: { item: MenuItem; onOpen: () => vo
   )
 }
 
-function GalleryPromotionCard({ promo, onOpen }: { promo: Promotion; onOpen: () => void }) {
+function GalleryPromotionCard({ promo, rating, onOpen }: { promo: Promotion; rating?: RatingSummary; onOpen: () => void }) {
   return (
     <button
       type="button"
@@ -189,7 +189,7 @@ function GalleryPromotionCard({ promo, onOpen }: { promo: Promotion; onOpen: () 
         <p className="flex h-10 items-center overflow-hidden font-display text-base leading-tight text-(--color-ink) sm:h-12 sm:text-lg">
           {promo.title}
         </p>
-        <StarRating avg={promo.rating?.avg ?? 0} count={promo.rating?.count ?? 0} />
+        <StarRating avg={rating?.avg ?? 0} count={rating?.count ?? 0} />
         {promo.price != null && <p className="text-sm font-medium text-(--color-sage) sm:text-base">{formatCurrency(promo.price)}</p>}
         <span
           className={`mt-1 w-full rounded-full px-3 py-2.5 text-xs font-medium text-(--color-ink) transition-colors sm:text-sm ${
@@ -214,6 +214,10 @@ export function Catalog() {
   const { catalog } = useCatalog()
   const [activeItem, setActiveItem] = useState<{ item: MenuItem; categoryName: string } | null>(null)
   const [activePromo, setActivePromo] = useState<Promotion | null>(null)
+  // Calificar en el modal actualiza esto al toque (ver RatingInput) para que
+  // la tarjeta de atrás en la grilla no se quede esperando el próximo poll
+  // (hasta 15s) para mostrar el número nuevo.
+  const [ratingOverrides, setRatingOverrides] = useState<Record<string, RatingSummary>>({})
   const isGallery = catalog.catalogView === 'gallery'
 
   const jumpTargets = [
@@ -255,7 +259,12 @@ export function Catalog() {
             <div className={isGallery ? 'mt-4 grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6' : 'mt-2'}>
               {catalog.promotions.map((promo) =>
                 isGallery ? (
-                  <GalleryPromotionCard key={promo.id} promo={promo} onOpen={() => setActivePromo(promo)} />
+                  <GalleryPromotionCard
+                    key={promo.id}
+                    promo={promo}
+                    rating={ratingOverrides[`promotion:${promo.id}`] ?? promo.rating}
+                    onOpen={() => setActivePromo(promo)}
+                  />
                 ) : (
                   <PromotionRow key={promo.id} promo={promo} onOpen={() => setActivePromo(promo)} />
                 ),
@@ -274,6 +283,7 @@ export function Catalog() {
                   <GalleryProductCard
                     key={item.id}
                     item={item}
+                    rating={ratingOverrides[`product:${item.id}`] ?? item.rating}
                     onOpen={() => setActiveItem({ item, categoryName: category.name })}
                   />
                 ) : (
@@ -290,10 +300,23 @@ export function Catalog() {
       </div>
 
       {activeItem && (
-        <ProductModal item={activeItem.item} categoryName={activeItem.categoryName} onClose={() => setActiveItem(null)} />
+        <ProductModal
+          item={activeItem.item}
+          categoryName={activeItem.categoryName}
+          onClose={() => setActiveItem(null)}
+          onRatingChange={(rating) =>
+            setRatingOverrides((prev) => ({ ...prev, [`product:${activeItem.item.id}`]: rating }))
+          }
+        />
       )}
 
-      {activePromo && <PromotionModal promo={activePromo} onClose={() => setActivePromo(null)} />}
+      {activePromo && (
+        <PromotionModal
+          promo={activePromo}
+          onClose={() => setActivePromo(null)}
+          onRatingChange={(rating) => setRatingOverrides((prev) => ({ ...prev, [`promotion:${activePromo.id}`]: rating }))}
+        />
+      )}
     </section>
   )
 }

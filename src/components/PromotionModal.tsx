@@ -11,6 +11,8 @@ import { RatingInput } from './RatingInput'
 type PromotionModalProps = {
   promo: Promotion
   onClose: () => void
+  /** Avisa a la tarjeta de atrás (en la grilla) del nuevo avg/count, sin esperar el próximo poll. */
+  onRatingChange?: (rating: RatingSummary) => void
 }
 
 /**
@@ -18,12 +20,17 @@ type PromotionModalProps = {
  * comentario, sin opciones/tamaños/sabores/extras — la promoción ya trae su
  * propio precio fijo.
  */
-export function PromotionModal({ promo, onClose }: PromotionModalProps) {
+export function PromotionModal({ promo, onClose, onRatingChange }: PromotionModalProps) {
   const { addItem } = useCart()
   const [quantity, setQuantity] = useState(1)
   const [comment, setComment] = useState('')
   const [justAdded, setJustAdded] = useState(false)
   const [liveRating, setLiveRating] = useState<RatingSummary | undefined>(promo.rating)
+
+  const handleRated = (rating: RatingSummary) => {
+    setLiveRating(rating)
+    onRatingChange?.(rating)
+  }
 
   useBodyScrollLock()
 
@@ -67,7 +74,7 @@ export function PromotionModal({ promo, onClose }: PromotionModalProps) {
           {promo.soldOut && <p className="mt-3 text-sm font-medium text-(--color-ink-soft)">Agotado por ahora</p>}
 
           <div className="mt-7">
-            <RatingInput itemType="promotion" itemId={promo.id} currentRating={liveRating} onRated={setLiveRating} />
+            <RatingInput itemType="promotion" itemId={promo.id} currentRating={liveRating} onRated={handleRated} />
           </div>
 
           <div className={promo.soldOut ? 'pointer-events-none opacity-50' : undefined}>
