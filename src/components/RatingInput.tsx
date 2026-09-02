@@ -53,17 +53,21 @@ export function RatingInput({ itemType, itemId, onRated }: RatingInputProps) {
   }
 
   const handleRate = (stars: number) => {
+    // Optimista: estrellas y "¡Gracias!" salen al toque, sin esperar el
+    // viaje al server (~1-2s por el reto de Turnstile). Solo se revierte
+    // si el server termina rechazando el voto.
     setMyStars(stars)
+    setJustRated(true)
     submitRating(itemType, itemId, stars).then((summary) => {
       if (!summary) {
         // El server no confirmó (Turnstile/red/etc.) — no lo guardamos como
         // calificado localmente, para no "atorar" al usuario en un voto que
         // nunca se contó (era el bug: se veía calificado pero no sumaba).
         setMyStars(getRatedStars(itemType, itemId))
+        setJustRated(false)
         return
       }
       markRated(itemType, itemId, stars)
-      setJustRated(true)
       onRated?.(summary)
     })
   }
