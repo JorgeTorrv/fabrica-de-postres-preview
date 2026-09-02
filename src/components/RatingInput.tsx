@@ -1,6 +1,7 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { StarRow } from './StarIcons'
 import { submitRating } from '../lib/ratings'
+import { preloadTurnstile } from '../lib/turnstile'
 import { getRatedStars, markRated } from '../utils/ratedItems'
 import type { RatingSummary } from '../data/types'
 
@@ -35,6 +36,12 @@ export function RatingInput({ itemType, itemId, onRated }: RatingInputProps) {
   const [myStars, setMyStars] = useState<number | null>(() => getRatedStars(itemType, itemId))
   const [hoverStars, setHoverStars] = useState<number | null>(null)
   const [justRated, setJustRated] = useState(false)
+
+  // Deja el script de Turnstile listo desde que se abre el producto, para
+  // que el primer tap no cargue con esa latencia — ver turnstile.ts.
+  useEffect(() => {
+    preloadTurnstile()
+  }, [])
 
   const displayStars = hoverStars ?? myStars ?? 0
 
