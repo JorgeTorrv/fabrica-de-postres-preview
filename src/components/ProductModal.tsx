@@ -106,7 +106,7 @@ export function ProductModal({ item, categoryName, onClose }: ProductModalProps)
           {item.soldOut && <p className="mt-3 text-sm font-medium text-(--color-ink-soft)">Agotado por ahora</p>}
 
           <div className="mt-7">
-            <RatingInput itemType="product" itemId={item.id} onRated={setLiveRating} />
+            <RatingInput itemType="product" itemId={item.id} currentRating={liveRating} onRated={setLiveRating} />
           </div>
 
           <div className={item.soldOut ? 'pointer-events-none opacity-50' : undefined}>

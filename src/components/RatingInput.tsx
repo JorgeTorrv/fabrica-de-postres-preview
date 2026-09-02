@@ -8,7 +8,25 @@ import type { RatingSummary } from '../data/types'
 type RatingInputProps = {
   itemType: 'product' | 'promotion'
   itemId: string
+  /** avg/count actuales, para poder estimar el nuevo total al toque (antes de que confirme el server). */
+  currentRating?: RatingSummary
   onRated?: (summary: RatingSummary) => void
+}
+
+/** Recalcula avg/count localmente para que el conteo se sienta instantáneo — se corrige con el valor real del server en cuanto responde. */
+function estimateRating(current: RatingSummary | undefined, previousStars: number | null, stars: number): RatingSummary {
+  const avg = current?.avg ?? 0
+  const count = current?.count ?? 0
+  if (previousStars !== null) {
+    // Cambia un voto existente: el conteo no sube, solo se recalcula el promedio.
+    if (count === 0) return { avg: stars, count: 1 }
+    const newAvg = (avg * count - previousStars + stars) / count
+    return { avg: Math.round(newAvg * 10) / 10, count }
+  }
+  // Voto nuevo.
+  const newCount = count + 1
+  const newAvg = (avg * count + stars) / newCount
+  return { avg: Math.round(newAvg * 10) / 10, count: newCount }
 }
 
 const STAR_COUNT = 5
@@ -31,7 +49,7 @@ function snapToHalf(value: number): number {
  * mandar el voto). Aquí se recuerda en este navegador para no reinvitar a
  * calificar lo mismo, aunque volver a tocar sí permite cambiar el voto.
  */
-export function RatingInput({ itemType, itemId, onRated }: RatingInputProps) {
+export function RatingInput({ itemType, itemId, currentRating, onRated }: RatingInputProps) {
   const trackRef = useRef<HTMLDivElement>(null)
   const [myStars, setMyStars] = useState<number | null>(() => getRatedStars(itemType, itemId))
   const [hoverStars, setHoverStars] = useState<number | null>(null)
@@ -53,18 +71,23 @@ export function RatingInput({ itemType, itemId, onRated }: RatingInputProps) {
   }
 
   const handleRate = (stars: number) => {
-    // Optimista: estrellas y "¡Gracias!" salen al toque, sin esperar el
-    // viaje al server (~1-2s por el reto de Turnstile). Solo se revierte
-    // si el server termina rechazando el voto.
+    // Optimista: estrellas, "¡Gracias!" Y el conteo/promedio salen al toque,
+    // sin esperar el viaje al server (~1-2s por el reto de Turnstile) — si
+    // no, da la impresión de que no se guardó. Todo se revierte junto si el
+    // server termina rechazando el voto, y se corrige con el valor real
+    // (por si otro dispositivo votó al mismo tiempo) en cuanto responde.
+    const previousStars = myStars
     setMyStars(stars)
     setJustRated(true)
+    onRated?.(estimateRating(currentRating, previousStars, stars))
+
     submitRating(itemType, itemId, stars).then((summary) => {
       if (!summary) {
-        // El server no confirmó (Turnstile/red/etc.) — no lo guardamos como
-        // calificado localmente, para no "atorar" al usuario en un voto que
-        // nunca se contó (era el bug: se veía calificado pero no sumaba).
+        // El server no confirmó (Turnstile/red/etc.) — revierte todo,
+        // incluido el conteo, para no dejar un número que nunca se guardó.
         setMyStars(getRatedStars(itemType, itemId))
         setJustRated(false)
+        if (currentRating) onRated?.(currentRating)
         return
       }
       markRated(itemType, itemId, stars)

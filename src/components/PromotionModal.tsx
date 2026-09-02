@@ -67,7 +67,7 @@ export function PromotionModal({ promo, onClose }: PromotionModalProps) {
           {promo.soldOut && <p className="mt-3 text-sm font-medium text-(--color-ink-soft)">Agotado por ahora</p>}
 
           <div className="mt-7">
-            <RatingInput itemType="promotion" itemId={promo.id} onRated={setLiveRating} />
+            <RatingInput itemType="promotion" itemId={promo.id} currentRating={liveRating} onRated={setLiveRating} />
           </div>
 
           <div className={promo.soldOut ? 'pointer-events-none opacity-50' : undefined}>
