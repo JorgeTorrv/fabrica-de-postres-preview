@@ -47,10 +47,17 @@ export function RatingInput({ itemType, itemId, onRated }: RatingInputProps) {
 
   const handleRate = (stars: number) => {
     setMyStars(stars)
-    markRated(itemType, itemId, stars)
-    setJustRated(true)
     submitRating(itemType, itemId, stars).then((summary) => {
-      if (summary) onRated?.(summary)
+      if (!summary) {
+        // El server no confirmó (Turnstile/red/etc.) — no lo guardamos como
+        // calificado localmente, para no "atorar" al usuario en un voto que
+        // nunca se contó (era el bug: se veía calificado pero no sumaba).
+        setMyStars(getRatedStars(itemType, itemId))
+        return
+      }
+      markRated(itemType, itemId, stars)
+      setJustRated(true)
+      onRated?.(summary)
     })
   }
 

@@ -3,7 +3,7 @@
  * como "invisible" del lado de Cloudflare, así que nunca aparece UI (ni
  * checkbox); esto solo frena scripts/bots, nunca a una persona real.
  */
-const SITE_KEY = '0x4AAAAAAEZvq50njP9jfj0c'
+const SITE_KEY = '0x4AAAAAAElHnvFExXD2sZ8a'
 const SCRIPT_SRC = 'https://challenges.cloudflare.com/turnstile/v0/api.js'
 
 declare global {
